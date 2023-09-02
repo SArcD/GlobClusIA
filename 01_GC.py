@@ -65,17 +65,16 @@ else:
     st.warning("No se encontraron archivos CSV en el repositorio.")
 
 # Función para cargar y mostrar el DataFrame seleccionado
-# Función para cargar y mostrar el DataFrame seleccionado
+
 def load_and_display_dataframe(selected_file):
     try:
-        # Construir la URL del archivo CSV
-        csv_url = selected_file  # selected_file debe ser solo la URL de descarga
+        # selected_file debe ser una cadena que representa la URL de descarga
+        csv_url = selected_file
         df = pd.read_csv(csv_url)
         st.write("DataFrame Cargado:")
         st.dataframe(df)
     except Exception as e:
         st.error(f"Error al cargar el archivo CSV: {str(e)}")
-
 
 # Muestra el DataFrame seleccionado si se ha elegido un archivo
 if "selected_file" in locals():
