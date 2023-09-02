@@ -25,7 +25,7 @@ pyrs
 plotly
 pillow
 requests
-BeautifulSoup
+beautifulsoup4
 pydotplus
 #export_text 
 #export_graphviz
