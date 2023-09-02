@@ -55,7 +55,6 @@ def load_and_display_dataframe(selected_file):
     except Exception as e:
         st.error(f"Error al cargar el archivo CSV: {str(e)}")
 
-
 # Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
     selected_file_tuple = st.selectbox("Selecciona un archivo CSV:", csv_files)
