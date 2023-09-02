@@ -31,7 +31,7 @@ def get_csv_files(repo_url):
 # Obtiene la lista de archivos CSV en el repositorio
 csv_files = get_csv_files(repo_url)
 
-# Muestra la lista de archivos CSV encontrados
+# Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
     selected_file = st.selectbox("Selecciona un archivo CSV:", csv_files)
 else:
@@ -42,10 +42,11 @@ def load_and_display_dataframe(selected_file):
     try:
         csv_url = f"{repo_url.rstrip('/')}/{selected_file}"
         df = pd.read_csv(csv_url)
+        st.write("DataFrame Cargado:")
         st.dataframe(df)
     except Exception as e:
         st.error(f"Error al cargar el archivo CSV: {str(e)}")
 
-# Muestra el DataFrame seleccionado
+# Muestra el DataFrame seleccionado si se ha elegido un archivo
 if "selected_file" in locals():
     load_and_display_dataframe(selected_file)
