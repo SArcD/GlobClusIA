@@ -24,6 +24,9 @@ skope-rules
 pyrs
 plotly
 pillow
+requests
+re
+BeautifulSoup
 pydotplus
 #export_text 
 #export_graphviz
