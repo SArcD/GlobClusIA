@@ -66,6 +66,7 @@ else:
 
 # Función para cargar y mostrar el DataFrame seleccionado
 
+# Función para cargar y mostrar el DataFrame seleccionado
 def load_and_display_dataframe(selected_file):
     try:
         # selected_file debe ser una cadena que representa la URL de descarga
@@ -75,6 +76,7 @@ def load_and_display_dataframe(selected_file):
         st.dataframe(df)
     except Exception as e:
         st.error(f"Error al cargar el archivo CSV: {str(e)}")
+
 
 # Muestra el DataFrame seleccionado si se ha elegido un archivo
 if "selected_file" in locals():
