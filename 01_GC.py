@@ -60,11 +60,9 @@ csv_files = get_csv_files(repo_url)
 
 # Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
-    selected_file_tuple = st.selectbox("Selecciona un archivo CSV:", csv_files)
-    selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
+    selected_file = st.selectbox("Selecciona un archivo CSV:", csv_files)
 else:
     st.warning("No se encontraron archivos CSV en el repositorio.")
-
 
 # Función para cargar y mostrar el DataFrame seleccionado
 
@@ -80,30 +78,9 @@ def load_and_display_dataframe(selected_file):
         st.error(f"Error al cargar el archivo CSV: {str(e)}")
 
 
-# Muestra el DataFrame seleccionado si se ha elegido un archivo
-if "selected_file" in locals():
-    load_and_display_dataframe(selected_file)
-
-# Muestra el DataFrame seleccionado si se ha elegido un archivo
-if "selected_file" in locals():
-    df = load_and_display_dataframe(selected_file)
-    if df is not None:
-        st.write("DataFrame Cargado:")
-        st.dataframe(df)
-
-        # Obtener las columnas numéricas del DataFrame
-        numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
-
-        if len(numeric_columns) < 2:
-            st.warning("No hay suficientes columnas numéricas para crear un gráfico bidimensional.")
-        else:
-            st.write("Selecciona las columnas para el gráfico:")
-            # Menús desplegables para seleccionar columnas
-            column1 = st.selectbox("Selecciona la primera columna:", numeric_columns)
-            column2 = st.selectbox("Selecciona la segunda columna:", numeric_columns)
-
-            # Botón para generar el gráfico
-            if st.button("Generar Gráfico"):
-                # Crear gráfico bidimensional en Plotly
-                fig = px.scatter(df, x=column1, y=column2, title=f"Gráfico de {column1} vs. {column2}")
-                st.plotly_chart(fig)
+# Muestra la lista de archivos CSV encontrados en un menú desplegable
+if csv_files:
+    selected_file_tuple = st.selectbox("Selecciona un archivo CSV:", csv_files)
+    selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
+else:
+    st.warning("No se encontraron archivos CSV en el repositorio.")
