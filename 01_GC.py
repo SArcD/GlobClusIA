@@ -60,9 +60,11 @@ csv_files = get_csv_files(repo_url)
 
 # Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
-    selected_file = st.selectbox("Selecciona un archivo CSV:", csv_files)
+    selected_file_tuple = st.selectbox("Selecciona un archivo CSV:", csv_files)
+    selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
 else:
     st.warning("No se encontraron archivos CSV en el repositorio.")
+
 
 # Función para cargar y mostrar el DataFrame seleccionado
 
