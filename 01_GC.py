@@ -87,3 +87,5 @@ if "selected_file" in locals():
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
+
+resume=st.dataframe(df.describe())
