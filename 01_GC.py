@@ -134,7 +134,7 @@ if "selected_file" in locals():
                     # Verificar si se debe invertir el eje vertical
                     if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                         fig.update_yaxes(autorange="reversed")
-                        st.plotly_chart(fig)
+                    st.plotly_chart(fig)
             else:
                 # Botón para generar el gráfico sin inversión del eje vertical
                 if st.button("Generar Gráfico"):
