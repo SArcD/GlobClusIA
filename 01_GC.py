@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
-import re
 import plotly.express as px
 
 # Título de la aplicación
@@ -40,7 +38,7 @@ if csv_files:
     selected_file_tuple = st.selectbox("Select a CSV file:", csv_files)
     selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
 else:
-    st.warning("No CSV files where found within the repository.")
+    st.warning("No CSV files were found within the repository.")
 
 # Función para cargar y mostrar el DataFrame seleccionado
 def load_and_display_dataframe(selected_file):
@@ -71,7 +69,7 @@ if "selected_file" in locals():
             # Menús desplegables para seleccionar columnas
             column1 = st.selectbox("Select the horizontal axis for the plot:", numeric_columns)
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
-
+            
             # Verifica si el parámetro seleccionado para el eje vertical es "phot_g_mean_mag" o "phot_rp_mean_mag"
             if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag"]:
                 # Botón para generar el gráfico con eje vertical invertido
@@ -83,10 +81,8 @@ if "selected_file" in locals():
                     fig.update_yaxes(autorange="reversed")
                     
                     st.plotly_chart(fig)
-             else:
+            else:
                 # Botón para generar el gráfico sin inversión del eje vertical
-            
-                # Botón para generar el gráfico
                 if st.button("Generar Gráfico"):
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
