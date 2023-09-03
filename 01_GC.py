@@ -55,7 +55,7 @@ def load_and_display_dataframe(selected_file):
 if "selected_file" in locals():
     df = load_and_display_dataframe(selected_file)
     if df is not None:
-         Supongamos que tienes un DataFrame llamado df
+        #Supongamos que tienes un DataFrame llamado df
         df['source_id'] = df['source_id'].astype(str)
         st.write("DataFrame:")
         st.dataframe(df)
