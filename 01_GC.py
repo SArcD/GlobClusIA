@@ -35,29 +35,3 @@ def get_csv_files(repo_url):
 #OK
 #*********
 
-# Obtener la lista de archivos CSV en el repositorio
-csv_files = get_csv_files(repo_url)
-
-# Muestra la lista de archivos CSV encontrados en un menú desplegable
-if csv_files:
-    selected_file = st.selectbox("Selecciona un archivo CSV:", csv_files)
-else:
-    st.warning("No se encontraron archivos CSV en el repositorio.")
-
-# Función para cargar y mostrar el DataFrame seleccionado
-def load_and_display_dataframe(selected_file):
-    try:
-        # selected_file debe ser una cadena que representa la URL de descarga
-        csv_url = selected_file
-        df = pd.read_csv(csv_url)
-        st.write("DataFrame Cargado:")
-        st.dataframe(df)
-    except Exception as e:
-        st.error(f"Error al cargar el archivo CSV: {str(e)}")
-
-# Muestra la lista de archivos CSV encontrados en un menú desplegable
-if csv_files:
-    selected_file_tuple = st.selectbox("Selecciona un archivo CSV:", csv_files)
-    selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
-else:
-    st.warning("No se encontraron archivos CSV en el repositorio.")
