@@ -114,16 +114,36 @@ if "selected_file" in locals():
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
             
             # Verifica si el parámetro seleccionado para el eje vertical es "phot_g_mean_mag" o "phot_rp_mean_mag"
-            if column2 in [["phot_g_mean_mag", "phot_rp_mean_mag, phot_bp_mean_mag"]]:
+            #if column2 in [["phot_g_mean_mag", "phot_rp_mean_mag, phot_bp_mean_mag"]]:
+                # Botón para generar el gráfico con eje vertical invertido
+             #   if st.button("Generar Gráfico"):
+                    # Crear gráfico bidimensional en Plotly
+             #       fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
+                    
+                    # Invertir el eje vertical
+             #       fig.update_yaxes(autorange="reversed")
+                    
+             #       st.plotly_chart(fig)
+
+            if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                 # Botón para generar el gráfico con eje vertical invertido
                 if st.button("Generar Gráfico"):
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-                    
-                    # Invertir el eje vertical
+        
+                    # Verificar si se debe invertir el eje vertical
+                    if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                     fig.update_yaxes(autorange="reversed")
-                    
+        
                     st.plotly_chart(fig)
+            else:
+                # Botón para generar el gráfico sin inversión del eje vertical
+                if st.button("Generar Gráfico"):
+                    # Crear gráfico bidimensional en Plotly
+                    fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
+                    st.plotly_chart(fig)
+
+            
             else:
                 # Botón para generar el gráfico sin inversión del eje vertical
                 if st.button("Color Magnitude diagram"):
