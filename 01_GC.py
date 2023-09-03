@@ -4,7 +4,7 @@ import requests
 import plotly.express as px
 
 # Título de la aplicación
-st.title("Visualizador de Archivos CSV en GitHub")
+st.title("Color-Magnitude Diagram of galactic globular clusters")
 
 # URL del repositorio de GitHub
 repo_url = st.text_input("Introduce the repository's URL:", "")
