@@ -160,5 +160,5 @@ with st.expander("Parámetros y Significados"):
         ["ebpminrp_gspphot", "Índice de color E(BP-RP) estimado a partir del fotometría GSP-Phot"]
     ]
 
-    st.table(data)
+    st.dataframe(data)
 
