@@ -1,6 +1,10 @@
+
+
 import streamlit as st
 import pandas as pd
 import requests
+from bs4 import BeautifulSoup
+import re
 import plotly.express as px
 
 # Título de la aplicación
@@ -65,21 +69,18 @@ if "selected_file" in locals():
             st.warning("No hay suficientes columnas numéricas para crear un gráfico bidimensional.")
         else:
             st.write("Selecciona las columnas para el gráfico:")
+            # Menús desplegables para seleccionar columnas
+            column1 = st.selectbox("Selecciona la primera columna:", numeric_columns)
+            column2 = st.selectbox("Selecciona la segunda columna:", numeric_columns)
+
+            # Botones para reordenar ejes
+            if st.button("Reordenar ejes ascendente"):
+                df.sort_values(by=[column1, column2], ascending=[True, True], inplace=True)
+            if st.button("Reordenar ejes descendente"):
+                df.sort_values(by=[column1, column2], ascending=[False, False], inplace=True)
             
             # Botón para generar el gráfico
             if st.button("Generar Gráfico"):
                 # Crear gráfico bidimensional en Plotly
-                column1 = st.selectbox("Selecciona la primera columna:", numeric_columns)
-                column2 = st.selectbox("Selecciona la segunda columna:", numeric_columns)
                 fig = px.scatter(df, x=column1, y=column2, title=f"Gráfico de {column1} vs. {column2}")
                 st.plotly_chart(fig)
-                
-                # Botones para reordenar ejes individualmente
-                if st.button("Reordenar eje x ascendente"):
-                    df.sort_values(by=[column1], ascending=[True], inplace=True)
-                if st.button("Reordenar eje x descendente"):
-                    df.sort_values(by=[column1], ascending=[False], inplace=True)
-                if st.button("Reordenar eje y ascendente"):
-                    df.sort_values(by=[column2], ascending=[True], inplace=True)
-                if st.button("Reordenar eje y descendente"):
-                    df.sort_values(by=[column2], ascending=[False], inplace=True)
