@@ -62,7 +62,7 @@ if "selected_file" in locals():
         import streamlit as st
 
         # Crea un expansor con un título
-        with st.expander("Parámetros y Significados"):
+        with st.expander("Parmeters and their meaning"):
             # Tabla con los nombres de los parámetros y sus significados en inglés
             st.table([
                 ["Parámetro", "Significado"],
