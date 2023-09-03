@@ -128,6 +128,9 @@ if "selected_file" in locals():
 
 resume=st.dataframe(df.describe())
 
+
+import streamlit as st
+from tabulate import tabulate
 # Crea un expansor con un título
 with st.expander("Parámetros tomados de Gaia DR3"):
     # Tabla con los nombres de los parámetros y sus significados en inglés
