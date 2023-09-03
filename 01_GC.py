@@ -58,7 +58,9 @@ if "selected_file" in locals():
         # Supongamos que tienes un DataFrame llamado df
         df['source_id'] = df['source_id'].astype(str)
         st.write("DataFrame:")
-        st.dataframe(df)
+        #st.dataframe(df)
+        st.dataframe(df.style.set_properties(**{'font-weight': 'bold'}, subset=pd.IndexSlice[:, :]))
+
 
 #
 
