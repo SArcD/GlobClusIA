@@ -56,10 +56,24 @@ if "selected_file" in locals():
     df = load_and_display_dataframe(selected_file)
     if df is not None:
         # Supongamos que tienes un DataFrame llamado df
-        df['source_id'] = df['source_id'].astype(str)
-        st.write("DataFrame:")
+        #df['source_id'] = df['source_id'].astype(str)
+        #st.write("DataFrame:")
         #st.dataframe(df)
-        st.dataframe(df.style.set_properties(**{'font-weight': 'bold'}, subset=pd.IndexSlice[:, :]))
+        # Supongamos que tienes un DataFrame llamado df
+        df['source_id'] = df['source_id'].astype(str)
+
+        # Obtener los encabezados del DataFrame
+        column_headers = df.columns
+
+        # Crear una tabla manual con Markdown con encabezados en negritas
+        markdown_table = "| " + " | ".join(["**" + header + "**" for header in column_headers]) + " |\n"
+        markdown_table += "| " + " | ".join(["---"] * len(column_headers)) + " |\n"
+
+        for index, row in df.iterrows():
+            markdown_table += "| " + " | ".join([str(row[header]) for header in column_headers]) + " |\n"
+
+        # Mostrar la tabla con encabezados en negritas
+        st.markdown(markdown_table)
 
 
 #
