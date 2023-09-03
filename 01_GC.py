@@ -142,14 +142,13 @@ if "selected_file" in locals():
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
 
-            
-            else:
+            #else:
                 # Botón para generar el gráfico sin inversión del eje vertical
-                if st.button("Color Magnitude diagram"):
-                    # Crear gráfico bidimensional en Plotly
-                    fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-                    st.plotly_chart(fig)
+            #    if st.button("Color Magnitude diagram"):
+            #        # Crear gráfico bidimensional en Plotly
+            #        fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
+            #        st.plotly_chart(fig)
 
-resume=st.dataframe(df.describe())
+#resume=st.dataframe(df.describe())
 
 
