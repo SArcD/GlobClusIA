@@ -58,6 +58,43 @@ if "selected_file" in locals():
         st.write("DataFrame:")
         st.dataframe(df)
 
+#
+        import streamlit as st
+
+        # Crea un expansor con un título
+        with st.expander("Parámetros y Significados"):
+            # Tabla con los nombres de los parámetros y sus significados en inglés
+            st.table([
+                ["Parámetro", "Significado"],
+                ["source_id", "Unique identifier of the source"],
+                ["ra", "Right ascension in the ICRS reference system"],
+                ["ra_error", "Standard error of right ascension"],
+                ["dec", "Declination in the ICRS reference system"],
+                ["dec_error", "Standard error of declination"],
+                ["parallax", "Parallax in the ICRS reference system"],
+                ["pmra", "Proper motion in right ascension in the ICRS reference system"],
+                ["pmdec", "Proper motion in declination in the ICRS reference system"],
+                ["phot_g_mean_mag", "Mean integrated magnitude in the G band"],
+                ["phot_bp_mean_mag", "Mean integrated magnitude in the BP band"],
+                ["phot_rp_mean_mag", "Mean integrated magnitude in the RP band"],
+                ["bp_rp", "BP-RP color index"],
+                ["bp_g", "BP-G color index"],
+                ["g_rp", "G-RP color index"],
+                ["radial_velocity", "Combined radial velocity"],
+                ["drvs_mag", "Mean integrated magnitude in the RVS band"],
+                ["grvs_error", "Standard error of the mean integrated magnitude in the RVS band"],
+                ["non_single_star", "Non-single star indicator (binary, variable, etc.)"],
+                ["teff_gspphot", "Estimated effective temperature from GSP-Phot photometry"],
+                ["logg_gspphot", "Estimated surface gravity from GSP-Phot photometry"],
+                ["mh_gspphot", "Estimated metallicity from GSP-Phot photometry"],
+                ["azero_gspphot", "Estimated extinction from GSP-Phot photometry"],
+                ["ebpminrp_gspphot", "Estimated E(BP-RP) color index from GSP-Phot photometry"]
+            ])
+
+        #
+
+        
+
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
 
