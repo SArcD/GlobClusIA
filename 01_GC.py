@@ -72,8 +72,22 @@ if "selected_file" in locals():
             column1 = st.selectbox("Select the horizontal axis for the plot:", numeric_columns)
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
 
-            # Botón para generar el gráfico
-            if st.button("Generar Gráfico"):
-                # Crear gráfico bidimensional en Plotly
-                fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-                st.plotly_chart(fig)
+            # Verifica si el parámetro seleccionado para el eje vertical es "phot_g_mean_mag" o "phot_rp_mean_mag"
+            if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag"]:
+                # Botón para generar el gráfico con eje vertical invertido
+                if st.button("Generar Gráfico"):
+                    # Crear gráfico bidimensional en Plotly
+                    fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
+                    
+                    # Invertir el eje vertical
+                    fig.update_yaxes(autorange="reversed")
+                    
+                    st.plotly_chart(fig)
+             else:
+                # Botón para generar el gráfico sin inversión del eje vertical
+            
+                # Botón para generar el gráfico
+                if st.button("Generar Gráfico"):
+                    # Crear gráfico bidimensional en Plotly
+                    fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
+                    st.plotly_chart(fig)
