@@ -67,7 +67,6 @@ if "selected_file" in locals():
             st.warning("No hay suficientes columnas numéricas para crear un gráfico bidimensional.")
         else:
             st.write("Selecciona las columnas para el gráfico:")
-
             # Menús desplegables para seleccionar columnas
             column1 = st.selectbox("Selecciona la primera columna:", numeric_columns)
             column2 = st.selectbox("Selecciona la segunda columna:", numeric_columns)
