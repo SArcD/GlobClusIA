@@ -114,7 +114,7 @@ if "selected_file" in locals():
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
             
             # Verifica si el parámetro seleccionado para el eje vertical es "phot_g_mean_mag" o "phot_rp_mean_mag"
-            if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag, phot_bp_mean_mag"]:
+            if column2 in [["phot_g_mean_mag", "phot_rp_mean_mag, phot_bp_mean_mag"]]:
                 # Botón para generar el gráfico con eje vertical invertido
                 if st.button("Generar Gráfico"):
                     # Crear gráfico bidimensional en Plotly
