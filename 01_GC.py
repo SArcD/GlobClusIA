@@ -127,3 +127,38 @@ if "selected_file" in locals():
                     st.plotly_chart(fig)
 
 resume=st.dataframe(df.describe())
+
+import streamlit as st
+
+# Crea un expansor con un título
+with st.expander("Parámetros y Significados"):
+    # Tabla con los nombres de los parámetros y sus significados en inglés
+    data = [
+        ["Parámetro", "Significado"],
+        ["source_id", "Identificador único de la fuente"],
+        ["ra", "Ascensión recta en el sistema de referencia ICRS"],
+        ["ra_error", "Error estándar de la ascensión recta"],
+        ["dec", "Declinación en el sistema de referencia ICRS"],
+        ["dec_error", "Error estándar de la declinación"],
+        ["parallax", "Paralaje en el sistema de referencia ICRS"],
+        ["pmra", "Movimiento propio en ascensión recta en el sistema de referencia ICRS"],
+        ["pmdec", "Movimiento propio en declinación en el sistema de referencia ICRS"],
+        ["phot_g_mean_mag", "Magnitud media integrada en la banda G"],
+        ["phot_bp_mean_mag", "Magnitud media integrada en la banda BP"],
+        ["phot_rp_mean_mag", "Magnitud media integrada en la banda RP"],
+        ["bp_rp", "Índice de color BP-RP"],
+        ["bp_g", "Índice de color BP-G"],
+        ["g_rp", "Índice de color G-RP"],
+        ["radial_velocity", "Velocidad radial combinada"],
+        ["drvs_mag", "Magnitud media integrada en la banda RVS"],
+        ["grvs_error", "Error estándar de la magnitud media integrada en la banda RVS"],
+        ["non_single_star", "Indicador de estrella no simple (binaria, variable, etc.)"],
+        ["teff_gspphot", "Temperatura efectiva estimada a partir del fotometría GSP-Phot"],
+        ["logg_gspphot", "Gravedad superficial estimada a partir del fotometría GSP-Phot"],
+        ["mh_gspphot", "Metalicidad estimada a partir del fotometría GSP-Phot"],
+        ["azero_gspphot", "Extinción estimada a partir del fotometría GSP-Phot"],
+        ["ebpminrp_gspphot", "Índice de color E(BP-RP) estimado a partir del fotometría GSP-Phot"]
+    ]
+
+    st.table(data)
+
