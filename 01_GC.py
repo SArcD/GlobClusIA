@@ -145,7 +145,7 @@ if "selected_file" in locals():
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 df_cmd = df[columnas_seleccionadas]        
-st.dataframe(df_cmd)
+#st.dataframe(df_cmd)
 
 import streamlit as st
 import pandas as pd
@@ -188,6 +188,8 @@ plt.title("Dendrograma de Clustering Jerárquico")
 plt.xlabel("Índice de la Muestra")
 plt.ylabel("Distancia")
 st.pyplot(fig)
+st.dataframe(df_cmd_cleaned)
+
 
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
