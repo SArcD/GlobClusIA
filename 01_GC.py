@@ -402,35 +402,24 @@ if st.button("Realizar Clustering"):
 
     ###
 
-    import streamlit as st
-    import pandas as pd
-    import numpy as np
-    import plotly.express as px
+import pandas as pd
+import plotly.express as px
 
-    # Variable de estado para controlar si se muestra la gráfica
-    show_graph = False
+# Crear una figura para cada gráfica
+fig1 = px.scatter(df_cmd, x="phot_g_mean_mag", y="g_rp", color="gc",
+                  hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
 
-    # Obtener las columnas numéricas del DataFrame
-    numeric_columns = [col for col in df_cmd.columns if pd.api.types.is_numeric_dtype(df_cmd[col])]
+fig2 = px.scatter(df_cmd, x="phot_bp_mean_mag", y="bp_rp", color="gc",
+                  hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
 
-    if len(numeric_columns) < 2:
-        st.warning("Deben seleccionarse al menos dos columnas.")
-    else:
-        st.write("Selecciona las columnas para el gráfico:")
+fig3 = px.scatter(df_cmd, x="phot_rp_mean_mag", y="bp_rp", color="gc",
+                  hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
 
-        # Menús desplegables para seleccionar columnas
-        column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
-        column2 = st.selectbox("Select the vertical axis:", numeric_columns)
+# Mostrar las gráficas
+fig1.show()
+fig2.show()
+fig3.show()
 
-        fig = px.scatter(
-                    df_cmd,
-                    x=column1,
-                y=column2,
-                color="gc",  # Colorear por la columna "gc"
-                title=f"Plot {column1} vs. {column2}",
-                labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
-            )
-        st.plotly_chart(fig)
 
 
 
