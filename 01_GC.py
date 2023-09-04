@@ -284,7 +284,7 @@ import numpy as np
 from sklearn.manifold import TSNE
 from scipy.stats import gaussian_kde
 
-data=df_cmd
+#data=df_cmd
 labels = df_cmd['gc']
 # Crear una instancia de t-SNE con los hiperparámetros deseados
 tsne = TSNE(n_components=2, perplexity=40, early_exaggeration=10, learning_rate=5)
@@ -298,7 +298,7 @@ fig, ax = plt.subplots()
 # Colorear los puntos según las agrupaciones originales
 for gc in np.unique(labels):
     indices = np.where(labels == gc)
-    ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Cluster {gc}')
+    ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Group {gc}')
 
     # Estimar la densidad de los puntos en el cluster actual
     kde = gaussian_kde(tsne_data[indices].T)
@@ -342,15 +342,16 @@ for cluster in np.unique(labels):
     positions = np.vstack([xx.ravel(), yy.ravel()])
     zz = np.reshape(kde(positions).T, xx.shape)
 
-    #if cluster in [0]:
-    #    opacity = 0.9
-    #    levels = 10
-    #elif cluster ==1:
-    #    opacity = 0.5
-    #    levels = 7
-    #else:
-    opacity = 0.3
-    levels = 5
+    if cluster in [0]:
+        opacity = 0.9
+        levels = 10
+    elif cluster ==1:
+        opacity = 0.5
+        levels = 7
+    else:
+        opacity = 0.3
+        levels = 5
+    
     contour_trace = go.Contour(
         x=x_range,
         y=y_range,
@@ -358,8 +359,8 @@ for cluster in np.unique(labels):
         colorscale='Blues',
         opacity=opacity,
         showscale=False,
-        name=f'Contorno Cluster {gc}'
-            )
+        name=f'Contour {gc}'
+    )
     fig.add_trace(contour_trace)
 
 # Colorear los puntos según las agrupaciones originales
@@ -375,9 +376,9 @@ for gc in np.unique(labels):
         marker=dict(
             size=7,
             line=dict(width=0.5, color='black')
-            ),
+        ),
         name=f'Cluster {gc}'
-            )
+    )
     fig.add_trace(scatter_trace)
 
 # Agregar círculos rojos alrededor de los puntos cuyos nombres coincidan con la lista filtered_df['Nombre']
