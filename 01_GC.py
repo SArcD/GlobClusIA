@@ -255,7 +255,7 @@ st.markdown("""Los clusters representan datos que, de acuerdo con los valores qu
 numeric_data=df_cmd.select_dtypes(include='number')
 m = TSNE(learning_rate=100)
 # Ajustar y transformar el modelo de t-SNE en el conjunto de datos numéricos
-tsne_features = m.fit_transform(numeric_data.drop(['Cluster'],axis=1))
+tsne_features = m.fit_transform(numeric_data.drop(['gc'],axis=1))
 
 
 import pandas as pd
