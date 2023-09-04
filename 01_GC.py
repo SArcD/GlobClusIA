@@ -9,7 +9,7 @@ st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 st.subheader("Individual analysis")
 # URL del repositorio de GitHub
 #repo_url = st.text_input("Introduce the repository's URL:", "")
-repo_url =https://github.com/SArcD/GlobClusIA
+repo_url = "https://github.com/SArcD/GlobClusIA"
 # Función para obtener la lista de archivos CSV en el repositorio utilizando la GitHub API
 def get_csv_files(repo_url):
     try:
