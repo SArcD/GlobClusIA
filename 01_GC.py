@@ -158,8 +158,11 @@ from sklearn.preprocessing import StandardScaler
 # Cargar tu DataFrame df_cmd (asegúrate de tenerlo cargado previamente)
 # df_cmd = ...
 
+# Eliminar filas con valores NaN
+df_cmd_cleaned = df_cmd.dropna()
+
 # Seleccionar solo las columnas numéricas
-columnas_numericas = df_cmd.select_dtypes(include=[np.number])
+columnas_numericas = df_cmd_cleaned.select_dtypes(include=[np.number])
 
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
@@ -173,7 +176,7 @@ Z = linkage(dist_matrix, method='complete')
 
 # Crear un dendrograma
 plt.figure(figsize=(12, 6))
-dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
+dendrogram(Z, labels=df_cmd_cleaned.index, leaf_rotation=90)
 plt.title("Dendrograma de Clustering Jerárquico")
 plt.xlabel("Índice de la Muestra")
 plt.ylabel("Distancia")
@@ -181,6 +184,7 @@ st.pyplot()
 
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
+
 
 
 
