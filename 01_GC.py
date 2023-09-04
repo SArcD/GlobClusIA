@@ -332,7 +332,7 @@ from scipy.stats import gaussian_kde
 fig = go.Figure()
 cluster_colors = ['blue', 'cyan', 'red', 'pink', 'green']
 # Estimar la densidad de los puntos en cada cluster y agregar la superficie de contorno correspondiente
-for cluster in np.unique(labels):
+for gc in np.unique(labels):
     indices = np.where(labels == gc)
 
     kde = gaussian_kde(tsne_data[indices].T)
@@ -342,10 +342,10 @@ for cluster in np.unique(labels):
     positions = np.vstack([xx.ravel(), yy.ravel()])
     zz = np.reshape(kde(positions).T, xx.shape)
 
-    if cluster in [0]:
+    if gc in [1]:
         opacity = 0.9
         levels = 10
-    elif cluster ==1:
+    elif gc ==2:
         opacity = 0.5
         levels = 7
     else:
@@ -380,28 +380,6 @@ for gc in np.unique(labels):
         name=f'Cluster {gc}'
     )
     fig.add_trace(scatter_trace)
-
-# Agregar círculos rojos alrededor de los puntos cuyos nombres coincidan con la lista filtered_df['Nombre']
-#for name in filtered_df['folio']:
-#    indices = data_2021[data_2021['folio'] == name].index
-#    x_coords = tsne_data_2021[indices, 0].flatten()
-#    y_coords = tsne_data_2021[indices, 1].flatten()
-
-#    circle_trace = go.Scatter(
-#        x=x_coords,
-#        y=y_coords,
-#        mode='markers',
-#        marker=dict(
-#            color='black',
-#            size=10,
-#            symbol='circle-open'
-#        ),
-#        hoverinfo='none',  # Para que no aparezcan tooltips adicionales para los círculos
-#        showlegend=False  # Para que los círculos no aparezcan en la leyenda
-#    )
-#    fig.add_trace(circle_trace)
-
-
 
 # Configurar el diseño del gráfico con el ancho de pantalla ajustado
 fig.update_layout(
