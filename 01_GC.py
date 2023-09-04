@@ -162,7 +162,7 @@ from sklearn.cluster import AgglomerativeClustering
 df_cmd = df_cmd.dropna()
 
 # Seleccionar solo las columnas numéricas
-columnas_numericas = df_cmd.select_dtypes(include=[np.number])
+columnas_numericas = df_cmd.select_dtypes(include=[np.number]).drop(columns=['gc'])
 
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
@@ -180,6 +180,9 @@ num_clusters = st.number_input("Número de Clusters", min_value=1, value=4)
 
 # Verificar si el usuario ha ingresado un número de clusters válido
 if st.button("Realizar Clustering"):
+    # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
+    Z = linkage(dist_matrix, method='ward')
+
     # Realizar el clustering jerárquico aglomerativo
     clustering = AgglomerativeClustering(n_clusters=num_clusters, affinity='euclidean', linkage='ward')
     cluster_labels = clustering.fit_predict(columnas_numericas_scaled)
@@ -196,6 +199,7 @@ if st.button("Realizar Clustering"):
     st.pyplot(fig)
     st.write(f"Número de clusters seleccionado: {num_clusters}")
     st.dataframe(df_cmd)
+
 
 ##
 
