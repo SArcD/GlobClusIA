@@ -142,6 +142,11 @@ if "selected_file" in locals():
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
 
+# Seleccionar las columnas deseadas del DataFrame original
+columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gsphot", "mh_gspphot"]
+df_cmd = df[columnas_seleccionadas].copy()        
+st.dataframe(df_cmd)
+
             #else:
                 # Botón para generar el gráfico sin inversión del eje vertical
             #    if st.button("Color Magnitude diagram"):
