@@ -175,7 +175,7 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 Z = linkage(dist_matrix, method='complete')
 
 # Realizar el clustering jerárquico y especificar el número de clusters deseado
-num_clusters = 3  # Cambia esto al número de clusters deseado
+num_clusters = 5  # Cambia esto al número de clusters deseado
 cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
 
 # Agregar la columna de clusters "gc" al DataFrame original
