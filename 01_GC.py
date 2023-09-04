@@ -429,18 +429,18 @@ if st.button("Realizar Clustering"):
         if st.button("Plot by group"):
             show_graph = True  # Cambiar la variable de estado a True
 
-    # Mostrar la gráfica si la variable de estado es True
-    if show_graph:
-        # Crear gráfico bidimensional en Plotly
-        fig = px.scatter(
-            df_cmd,
-            x=column1,
-            y=column2,
-            color="gc",  # Colorear por la columna "gc"
-            title=f"Plot {column1} vs. {column2}",
-            labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
-        )
-        st.plotly_chart(fig)
+        # Mostrar la gráfica si la variable de estado es True
+        if show_graph:
+            # Crear gráfico bidimensional en Plotly
+            fig = px.scatter(
+                df_cmd,
+                x=column1,
+                y=column2,
+                color="gc",  # Colorear por la columna "gc"
+                title=f"Plot {column1} vs. {column2}",
+                labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
+            )
+            st.plotly_chart(fig)
 
 
 
