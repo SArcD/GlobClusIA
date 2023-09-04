@@ -155,8 +155,6 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from sklearn.preprocessing import StandardScaler
 
-# Cargar tu DataFrame df_cmd (asegúrate de tenerlo cargado previamente)
-# df_cmd = ...
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
@@ -168,30 +166,15 @@ columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 scaler = StandardScaler()
 columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 
-num_clusters = 3  # Número inicial de clusters
-max_retries = 3  # Número máximo de repeticiones en caso de clusters con un solo miembro
+# Calcular la matriz de distancias
+dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
-while max_retries > 0:
-    # Calcular la matriz de distancias
-    dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
+# Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
+Z = linkage(dist_matrix, method='complete')
 
-    # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
-    Z = linkage(dist_matrix, method='complete')
-
-    # Realizar el clustering jerárquico y especificar el número de clusters deseado
-    cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
-
-    # Verificar si hay clusters con un solo miembro
-    unique_labels, label_counts = np.unique(cluster_labels, return_counts=True)
-    single_member_clusters = unique_labels[label_counts == 1]
-
-    if len(single_member_clusters) == 0:
-        # No hay clusters con un solo miembro, salir del bucle
-        break
-    else:
-        # Aumentar el número de clusters en 1 y reducir el número de repeticiones
-        num_clusters += 1
-        max_retries -= 1
+# Realizar el clustering jerárquico y especificar el número de clusters deseado
+num_clusters = 2  # Cambia esto al número de clusters deseado
+cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
 
 # Agregar la columna de clusters "gc" al DataFrame original
 df_cmd['gc'] = cluster_labels
@@ -203,7 +186,7 @@ plt.title("Dendrograma de Clustering Jerárquico")
 plt.xlabel("Índice de la Muestra")
 plt.ylabel("Distancia")
 st.pyplot(fig)
-st.dataframe(df_cmd)
+st.dataframe(df_cmd) 
 
 
 
@@ -388,7 +371,6 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import gaussian_kde
 
-# ... Tu código anterior para cargar datos, aplicar PCA y t-SNE ...
 
 # Crear una figura y un eje
 fig, ax = plt.subplots()
