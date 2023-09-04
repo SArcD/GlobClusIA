@@ -207,10 +207,10 @@ st.markdown(
 ).
 
 # Obtener los nombres de las columnas numéricas
-numeric_columns_2021 = data_2021.select_dtypes(include='number').drop(columns=['Cluster']).columns
+columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
 # Calcular el número de filas y columnas del panel
-num_rows = len(numeric_columns_2021)
+num_rows = len(columnas_numericas)
 num_cols = 1  # Una columna para cada parámetro
 
 # Ajustar el espacio vertical y la altura de los subplots
@@ -221,15 +221,15 @@ vertical_spacing = 0.08  # Ajusta el espacio vertical según tu preferencia
 fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=numeric_columns_2021, vertical_spacing=vertical_spacing)
 
 # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
-for i, column in enumerate(numeric_columns_2021):
+for i, column in enumerate(columnas_numericas):
     # Obtener los datos de cada cluster para el parámetro actual
-    cluster_data = [data_2021[data_2021['Cluster'] == cluster][column] for cluster in range(10)]
+    cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
 
     # Agregar el gráfico de caja al subplot correspondiente
     for j in range(10):
         box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'Cluster {j}')
-        box.hovertemplate = 'folio: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-        box.text = data_2021[data_2021['Cluster'] == j]['folio']  # Asignar los valores de la columna 'Nombre' al texto
+        box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
+        box.text = df_cmd[df_cmd['Cluster'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
         fig.add_trace(box, row=i+1, col=1)
 
 # Actualizar el diseño y mostrar el panel de gráficos
