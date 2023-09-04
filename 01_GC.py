@@ -144,7 +144,7 @@ if "selected_file" in locals():
 
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gsphot", "mh_gspphot"]
-df_cmd = df[columnas_seleccionadas].copy()        
+df_cmd = df[columnas_seleccionadas]        
 st.dataframe(df_cmd)
 
             #else:
