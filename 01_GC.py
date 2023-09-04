@@ -275,7 +275,6 @@ df_cmd = df_cmd.reset_index(drop=True)
 # Reset the indices of the DataFrames
 pca_df.reset_index(drop=True, inplace=True)
 df_cmd.reset_index(drop=True, inplace=True)
-# Concatenate the "Nombre" column from data_2021_fem to pca_df
 pca_df = pd.concat([pca_df, df_cmd["source_id"]], axis=1)
 
 import matplotlib.pyplot as plt
@@ -362,42 +361,35 @@ for gc in np.unique(labels):
     )
     fig.add_trace(contour_trace)
 
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.datasets import load_digits
-from sklearn.manifold import TSNE
-import pandas as pd
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-from scipy.stats import gaussian_kde
-
-
-# Crear una figura y un eje
-fig, ax = plt.subplots()
-
 # Colorear los puntos según las agrupaciones originales
 for gc in np.unique(labels):
     indices = np.where(labels == gc)
-    ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Group {gc}')
 
-    # Calcular la estimación de densidad de kernel gaussiano en el espacio de PCA
-    kde = gaussian_kde(pca_data[indices].T)
-    x_range = np.linspace(np.min(tsne_data[:, 0] - 1), np.max(tsne_data[:, 0] + 1), 100)
-    y_range = np.linspace(np.min(tsne_data[:, 1] - 1), np.max(tsne_data[:, 1] + 1), 100)
-    xx, yy = np.meshgrid(x_range, y_range)
-    positions = np.vstack([xx.ravel(), yy.ravel()])
-    zz = np.reshape(kde(positions).T, xx.shape)
+    scatter_trace = go.Scatter(
+        x=tsne_data[indices, 0].flatten(),
+        y=tsne_data[indices, 1].flatten(),
+        mode='markers',
+        text=df_cmd.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
+        hovertemplate="%{text}",
+        marker=dict(
+            size=7,
+            line=dict(width=0.5, color='black')
+        ),
+        name=f'Cluster {gc}'
+    )
+    fig.add_trace(scatter_trace)
 
-    # Agregar las curvas de densidad de kernel al gráfico
-    ax.contour(xx, yy, zz, colors='k', alpha=0.5)
-
-# Agregar leyenda y título al gráfico
-ax.legend()
-ax.set_title('Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel')
-
+# Configurar el diseño del gráfico con el ancho de pantalla ajustado
+fig.update_layout(
+    title='Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel',
+    xaxis_title='Dimensión 1',
+    yaxis_title='Dimensión 2',
+    showlegend=True,
+    legend_title='Clusters',
+    width=1084  # Ajustar el ancho del gráfico
+)
 # Mostrar el gráfico
 st.plotly_chart(fig, use_container_width=True)
-
 
 
 
