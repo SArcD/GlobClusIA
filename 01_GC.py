@@ -405,6 +405,14 @@ if st.button("Realizar Clustering"):
 
     ###
 
+    import streamlit as st
+    import pandas as pd
+    import numpy as np
+    import plotly.express as px
+
+    # Variable de estado para controlar si se muestra la gráfica
+    show_graph = False
+
     # Obtener las columnas numéricas del DataFrame
     numeric_columns = [col for col in df_cmd.columns if pd.api.types.is_numeric_dtype(df_cmd[col])]
 
@@ -415,25 +423,24 @@ if st.button("Realizar Clustering"):
 
         # Menús desplegables para seleccionar columnas
         column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
-        column2 = st.selectbox("Select the verical axis:", numeric_columns)
+        column2 = st.selectbox("Select the vertical axis:", numeric_columns)
 
         # Botón para generar el gráfico
         if st.button("Plot by group"):
-            # Crear gráfico bidimensional en Plotly
-            fig = px.scatter(
-                df_cmd,
-                x=column1,
-                y=column2,
-                color="gc",  # Colorear por la columna "gc"
-                title=f"Plot {column1} vs. {column2}",
-                labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
-            )
+            show_graph = True  # Cambiar la variable de estado a True
 
-            # Verificar si se debe invertir el eje vertical
-            if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
-                fig.update_yaxes(autorange="reversed")
-
-            st.plotly_chart(fig)
+    # Mostrar la gráfica si la variable de estado es True
+    if show_graph:
+        # Crear gráfico bidimensional en Plotly
+        fig = px.scatter(
+            df_cmd,
+            x=column1,
+            y=column2,
+            color="gc",  # Colorear por la columna "gc"
+            title=f"Plot {column1} vs. {column2}",
+            labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
+        )
+        st.plotly_chart(fig)
 
 
 
