@@ -373,7 +373,6 @@ for gc in np.unique(labels):
         text=data.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
         hovertemplate="%{text}",
         marker=dict(
-            color=cluster_colors[gc],
             size=7,
             line=dict(width=0.5, color='black')
             ),
