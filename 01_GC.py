@@ -195,7 +195,49 @@ st.dataframe(df_cmd_cleaned)
 # También puedes cortar el dendrograma para obtener grupos específicos
 
 
+######################## Diagramas de Caja ########################
 
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import streamlit as st
 
+st.markdown(
+    """
+    La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**"""
+).
 
+# Obtener los nombres de las columnas numéricas
+numeric_columns_2021 = data_2021.select_dtypes(include='number').drop(columns=['Cluster']).columns
 
+# Calcular el número de filas y columnas del panel
+num_rows = len(numeric_columns_2021)
+num_cols = 1  # Una columna para cada parámetro
+
+# Ajustar el espacio vertical y la altura de los subplots
+subplot_height = 400  # Ajusta la altura según tu preferencia    
+vertical_spacing = 0.08  # Ajusta el espacio vertical según tu preferencia
+
+# Crear subplots para cada parámetro
+fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=numeric_columns_2021, vertical_spacing=vertical_spacing)
+
+# Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
+for i, column in enumerate(numeric_columns_2021):
+    # Obtener los datos de cada cluster para el parámetro actual
+    cluster_data = [data_2021[data_2021['Cluster'] == cluster][column] for cluster in range(10)]
+
+    # Agregar el gráfico de caja al subplot correspondiente
+    for j in range(10):
+        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'Cluster {j}')
+        box.hovertemplate = 'folio: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
+        box.text = data_2021[data_2021['Cluster'] == j]['folio']  # Asignar los valores de la columna 'Nombre' al texto
+        fig.add_trace(box, row=i+1, col=1)
+
+# Actualizar el diseño y mostrar el panel de gráficos
+fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
+                  title_text='Comparación de Clusters - Gráfico de Caja',
+                  margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
+
+# Mostrar la gráfica de caja en Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**).""")
