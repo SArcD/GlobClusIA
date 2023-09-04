@@ -284,7 +284,8 @@ import numpy as np
 from sklearn.manifold import TSNE
 from scipy.stats import gaussian_kde
 
-labels = data['gc']
+data_df_cmd
+labels = df_cmd['gc']
 # Crear una instancia de t-SNE con los hiperparámetros deseados
 tsne = TSNE(n_components=2, perplexity=40, early_exaggeration=10, learning_rate=5)
 
