@@ -275,7 +275,7 @@ pca_df = pd.DataFrame(data=pca_data, columns=[f'PC{i}' for i in range(1, pca.n_c
 df_cmd = df_cmd.reset_index(drop=True)
 # Reset the indices of the DataFrames
 pca_df.reset_index(drop=True, inplace=True)
-data.reset_index(drop=True, inplace=True)
+df_cmd.reset_index(drop=True, inplace=True)
 # Concatenate the "Nombre" column from data_2021_fem to pca_df
 pca_df = pd.concat([pca_df, df_cmd["source_id"]], axis=1)
 
