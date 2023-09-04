@@ -8,8 +8,8 @@ st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
 st.subheader("Individual analysis")
 # URL del repositorio de GitHub
-repo_url = st.text_input("Introduce the repository's URL:", "")
-
+#repo_url = st.text_input("Introduce the repository's URL:", "")
+repo_url =https://github.com/SArcD/GlobClusIA
 # Función para obtener la lista de archivos CSV en el repositorio utilizando la GitHub API
 def get_csv_files(repo_url):
     try:
@@ -408,14 +408,17 @@ if st.button("Realizar Clustering"):
     # Gráfica 1: phot_g_mean_mag vs g_rp
     fig1 = px.scatter(df_cmd, x="g_rp", y="phot_g_mean_mag", color="gc",
                           hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
+    fig1.update_yaxes(autorange="reversed")
 
     # Gráfica 2: phot_bp_mean_mag vs bp_rp
     fig2 = px.scatter(df_cmd, x="bp_rp", y="phot_bp_mean_mag", color="gc",
                       hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
+    fig2.update_yaxes(autorange="reversed")
 
     # Gráfica 3: phot_rp_mean_mag vs bp_rp
     fig3 = px.scatter(df_cmd, x="bp_rp", y="phot_rp_mean_mag", color="gc",
                       hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
+    fig3.update_yaxes(autorange="reversed")
 
     # Mostrar las gráficas en Streamlit
     st.plotly_chart(fig1)
