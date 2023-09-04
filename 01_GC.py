@@ -175,15 +175,16 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 Z = linkage(dist_matrix, method='complete')
 
 # Crear un dendrograma
-plt.figure(figsize=(12, 6))
+fig, ax = plt.subplots(figsize=(12, 6))
 dendrogram(Z, labels=df_cmd_cleaned.index, leaf_rotation=90)
 plt.title("Dendrograma de Clustering Jerárquico")
 plt.xlabel("Índice de la Muestra")
 plt.ylabel("Distancia")
-st.pyplot()
+st.pyplot(fig)
 
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
+
 
 
 
