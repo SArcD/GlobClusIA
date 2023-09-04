@@ -98,9 +98,6 @@ if "selected_file" in locals():
             st.markdown(tabulate(table_data, tablefmt="pipe", headers="firstrow"))
 
 
-
-                #
-
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
 
@@ -425,22 +422,17 @@ if st.button("Realizar Clustering"):
         column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
         column2 = st.selectbox("Select the vertical axis:", numeric_columns)
 
-        # Botón para generar el gráfico
-        if st.button("Plot by group"):
-            show_graph = True  # Cambiar la variable de estado a True
-
-        # Mostrar la gráfica si la variable de estado es True
-        if show_graph:
-            # Crear gráfico bidimensional en Plotly
-            fig = px.scatter(
-                df_cmd,
-                x=column1,
+        fig = px.scatter(
+                    df_cmd,
+                    x=column1,
                 y=column2,
                 color="gc",  # Colorear por la columna "gc"
                 title=f"Plot {column1} vs. {column2}",
                 labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
             )
-            st.plotly_chart(fig)
+        st.plotly_chart(fig)
+
+
 
 
 
