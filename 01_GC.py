@@ -355,10 +355,10 @@ for gc in np.unique(labels):
     positions = np.vstack([xx.ravel(), yy.ravel()])
     zz = np.reshape(kde(positions).T, xx.shape)
 
-    if gc in [1]:
+    if gc in [0]:
         opacity = 0.9
         levels = 10
-    elif gc ==2:
+    elif gc ==1:
         opacity = 0.5
         levels = 7
     else:
