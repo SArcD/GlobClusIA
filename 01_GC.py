@@ -407,4 +407,38 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 
+###
+
+# Obtener las columnas numéricas del DataFrame
+numeric_columns = [col for col in df_cmd.columns if pd.api.types.is_numeric_dtype(df_cmd[col])]
+
+if len(numeric_columns) < 2:
+    st.warning("Deben seleccionarse al menos dos columnas.")
+else:
+    st.write("Selecciona las columnas para el gráfico:")
+
+    # Menús desplegables para seleccionar columnas
+    column1 = st.selectbox("Selecciona el eje horizontal para el gráfico:", numeric_columns)
+    column2 = st.selectbox("Selecciona el eje vertical para el gráfico:", numeric_columns)
+
+    # Botón para generar el gráfico
+    if st.button("Generar Gráfico"):
+        # Crear gráfico bidimensional en Plotly
+        fig = px.scatter(
+            df_cmd,
+            x=column1,
+            y=column2,
+            color="gc",  # Colorear por la columna "gc"
+            title=f"Gráfico {column1} vs. {column2}",
+            labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
+        )
+
+        # Verificar si se debe invertir el eje vertical
+        if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
+            fig.update_yaxes(autorange="reversed")
+
+        st.plotly_chart(fig)
+
+
+
 
