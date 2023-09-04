@@ -184,7 +184,7 @@ if st.button("Realizar Clustering"):
     Z = linkage(dist_matrix, method='ward')
 
     # Realizar el clustering jerárquico aglomerativo
-    clustering = AgglomerativeClustering(n_clusters=num_clusters, affinity='euclidean', linkage='ward')
+    clustering = AgglomerativeClustering(n_clusters=num_clusters, metric='euclidean', linkage='ward')
     cluster_labels = clustering.fit_predict(columnas_numericas_scaled)
 
     # Agregar la columna de clusters "gc" al DataFrame original
