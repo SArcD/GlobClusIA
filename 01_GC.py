@@ -218,7 +218,7 @@ subplot_height = 400  # Ajusta la altura según tu preferencia
 vertical_spacing = 0.08  # Ajusta el espacio vertical según tu preferencia
 
 # Crear subplots para cada parámetro
-fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=numeric_columns_2021, vertical_spacing=vertical_spacing)
+fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
 
 # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
 for i, column in enumerate(columnas_numericas):
