@@ -202,242 +202,238 @@ if st.button("Realizar Clustering"):
 
 
 ##
-
-
-
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
 
 
 ######################## Diagramas de Caja ########################
 
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-import streamlit as st
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    import streamlit as st
 
-st.markdown(
-    """
-    La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**."""
-)
+    st.markdown(
+        """
+        La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**."""
+    )
 
-# Obtener los nombres de las columnas numéricas
-columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+    # Obtener los nombres de las columnas numéricas
+    columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
-# Calcular el número de filas y columnas del panel
-num_rows = len(columnas_numericas)
-num_cols = 1  # Una columna para cada parámetro
+    # Calcular el número de filas y columnas del panel
+    num_rows = len(columnas_numericas)
+    num_cols = 1  # Una columna para cada parámetro
 
-# Ajustar el espacio vertical y la altura de los subplots
-subplot_height = 400  # Ajusta la altura según tu preferencia    
-vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
+    # Ajustar el espacio vertical y la altura de los subplots
+    subplot_height = 400  # Ajusta la altura según tu preferencia    
+    vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
 
-# Crear subplots para cada parámetro
-fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
+    # Crear subplots para cada parámetro
+    fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
 
-# Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
-for i, column in enumerate(columnas_numericas):
-    # Obtener los datos de cada cluster para el parámetro actual
-    cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
+    # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
+    for i, column in enumerate(columnas_numericas):
+        # Obtener los datos de cada cluster para el parámetro actual
+        cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
 
-    # Agregar el gráfico de caja al subplot correspondiente
-    for j in range(10):
-        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
-        box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-        box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
-        fig.add_trace(box, row=i+1, col=1)
+        # Agregar el gráfico de caja al subplot correspondiente
+        for j in range(10):
+            box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
+            box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
+            box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+            fig.add_trace(box, row=i+1, col=1)
 
-# Actualizar el diseño y mostrar el panel de gráficos
-fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
-                  title_text='Comparación de Clusters - Gráfico de Caja',
-                  margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
+    # Actualizar el diseño y mostrar el panel de gráficos
+    fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
+                      title_text='Comparación de Clusters - Gráfico de Caja',
+                      margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
 
-# Mostrar la gráfica de caja en Streamlit
-st.plotly_chart(fig, use_container_width=True)
+    # Mostrar la gráfica de caja en Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
-st.markdown("""La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**).""")
+    st.markdown("""La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**).""")
 
-################### tsne ##############################
+    ################### tsne ##############################
 
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.datasets import load_digits
-from sklearn.manifold import TSNE
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.datasets import load_digits
+    from sklearn.manifold import TSNE
 
-st.markdown("""Los clusters representan datos que, de acuerdo con los valores que tienen en cada variable, pueden considerarse como mas **similares entre sí que con el resto**. Sin embargo, en muchos casos es dificil graficar los clusters, debido a que el número de variables que pueden estar involucradas puede ser muy alto. Las técnicas tsne y PCA pueden usarse en conjunto para crear una gráfica de todos los puntos en un plano. La Gráfica muestra los puntos agrupados en cada clusters, una vez que se han aplicado las técnicas de **análisis de componentes principales (PCA) y t-distributed neighbor embeding (tsne)**. Los contornos al rededor de cada cluster responden a la densidad de puntos (**donde las líneas están mas concentradas, significa una mayor densidad de puntos). Los pacientes con diagnóstico confirmado de sarcopenia, se muestran encerrados en círculos rojos.**""")
-
-
-numeric_data=df_cmd.select_dtypes(include='number')
-m = TSNE(learning_rate=100)
-# Ajustar y transformar el modelo de t-SNE en el conjunto de datos numéricos
-tsne_features = m.fit_transform(numeric_data.drop(['gc'],axis=1))
+    st.markdown("""Los clusters representan datos que, de acuerdo con los valores que tienen en cada variable, pueden considerarse como mas **similares entre sí que con el resto**. Sin embargo, en muchos casos es dificil graficar los clusters, debido a que el número de variables que pueden estar involucradas puede ser muy alto. Las técnicas tsne y PCA pueden usarse en conjunto para crear una gráfica de todos los puntos en un plano. La Gráfica muestra los puntos agrupados en cada clusters, una vez que se han aplicado las técnicas de **análisis de componentes principales (PCA) y t-distributed neighbor embeding (tsne)**. Los contornos al rededor de cada cluster responden a la densidad de puntos (**donde las líneas están mas concentradas, significa una mayor densidad de puntos). Los pacientes con diagnóstico confirmado de sarcopenia, se muestran encerrados en círculos rojos.**""")
 
 
-import pandas as pd
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+    numeric_data=df_cmd.select_dtypes(include='number')
+    m = TSNE(learning_rate=100)
+    # Ajustar y transformar el modelo de t-SNE en el conjunto de datos numéricos
+    tsne_features = m.fit_transform(numeric_data.drop(['gc'],axis=1))
 
-# Normalizar los datos
-scaler = StandardScaler()
-normalized_data = scaler.fit_transform(numeric_data)
-# Crear una instancia de PCA
-pca = PCA()
-# Aplicar PCA a los datos normalizados
-pca_data = pca.fit_transform(normalized_data)
-# Crear un nuevo DataFrame con las componentes principales
-pca_df = pd.DataFrame(data=pca_data, columns=[f'PC{i}' for i in range(1, pca.n_components_+1)])
+    import pandas as pd
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
 
-df_cmd = df_cmd.reset_index(drop=True)
-# Reset the indices of the DataFrames
-pca_df.reset_index(drop=True, inplace=True)
-df_cmd.reset_index(drop=True, inplace=True)
-pca_df = pd.concat([pca_df, df_cmd["source_id"]], axis=1)
+    # Normalizar los datos
+    scaler = StandardScaler()
+    normalized_data = scaler.fit_transform(numeric_data)
+    # Crear una instancia de PCA
+    pca = PCA()
+    # Aplicar PCA a los datos normalizados
+    pca_data = pca.fit_transform(normalized_data)
+    # Crear un nuevo DataFrame con las componentes principales
+    pca_df = pd.DataFrame(data=pca_data, columns=[f'PC{i}' for i in range(1, pca.n_components_+1)])
 
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.manifold import TSNE
-from scipy.stats import gaussian_kde
+    df_cmd = df_cmd.reset_index(drop=True)
+    # Reset the indices of the DataFrames
+    pca_df.reset_index(drop=True, inplace=True)
+    df_cmd.reset_index(drop=True, inplace=True)
+    pca_df = pd.concat([pca_df, df_cmd["source_id"]], axis=1)
 
-#data=df_cmd
-labels = df_cmd['gc']
-# Crear una instancia de t-SNE con los hiperparámetros deseados
-tsne = TSNE(n_components=2, perplexity=40, early_exaggeration=10, learning_rate=5)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from sklearn.manifold import TSNE
+    from scipy.stats import gaussian_kde
 
-# Ajustar t-SNE a los datos de PCA
-tsne_data = tsne.fit_transform(pca_data)
+    #data=df_cmd
+    labels = df_cmd['gc']
+    # Crear una instancia de t-SNE con los hiperparámetros deseados
+    tsne = TSNE(n_components=2, perplexity=40, early_exaggeration=10, learning_rate=5)
 
-# Crear una figura y un eje
-fig, ax = plt.subplots()
+    # Ajustar t-SNE a los datos de PCA
+    tsne_data = tsne.fit_transform(pca_data)
 
-# Colorear los puntos según las agrupaciones originales
-for gc in np.unique(labels):
-    indices = np.where(labels == gc)
-    ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Group {gc}')
+    # Crear una figura y un eje
+    fig, ax = plt.subplots()
 
-    # Estimar la densidad de los puntos en el cluster actual
-    kde = gaussian_kde(tsne_data[indices].T)
-    x_range = np.linspace(np.min(tsne_data[:, 0]-1), np.max(tsne_data[:, 0]+1), 100)
-    y_range = np.linspace(np.min(tsne_data[:, 1]-1), np.max(tsne_data[:, 1]+1), 100)
-    xx, yy = np.meshgrid(x_range, y_range)
-    positions = np.vstack([xx.ravel(), yy.ravel()])
-    zz = np.reshape(kde(positions).T, xx.shape)
+    # Colorear los puntos según las agrupaciones originales
+    for gc in np.unique(labels):
+        indices = np.where(labels == gc)
+        ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Group {gc}')
 
-    # Agregar las curvas de densidad de kernel al gráfico
-    ax.contour(xx, yy, zz, colors='k', alpha=0.5)
+        # Estimar la densidad de los puntos en el cluster actual
+        kde = gaussian_kde(tsne_data[indices].T)
+        x_range = np.linspace(np.min(tsne_data[:, 0]-1), np.max(tsne_data[:, 0]+1), 100)
+        y_range = np.linspace(np.min(tsne_data[:, 1]-1), np.max(tsne_data[:, 1]+1), 100)
+        xx, yy = np.meshgrid(x_range, y_range)
+        positions = np.vstack([xx.ravel(), yy.ravel()])
+        zz = np.reshape(kde(positions).T, xx.shape)
 
-# Agregar leyenda y título al gráfico
-ax.legend()
-ax.set_title('Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel')
+        # Agregar las curvas de densidad de kernel al gráfico
+        ax.contour(xx, yy, zz, colors='k', alpha=0.5)
 
-# Mostrar el gráfico
-plt.show()
+    # Agregar leyenda y título al gráfico
+    ax.legend()
+    ax.set_title('Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel')
 
-import numpy as np
-import plotly.graph_objects as go
-from sklearn.manifold import TSNE
-from scipy.stats import gaussian_kde
+    # Mostrar el gráfico
+    plt.show()
 
-# Crear una instancia de t-SNE con los hiperparámetros deseados
+    import numpy as np
+    import plotly.graph_objects as go
+    from sklearn.manifold import TSNE
+    from scipy.stats import gaussian_kde
 
-#filtered_df = df2021_pred[df2021_pred['SARCOPENIA'] == 1.0]
+    # Crear una instancia de t-SNE con los hiperparámetros deseados
+
+    #filtered_df = df2021_pred[df2021_pred['SARCOPENIA'] == 1.0]
 
 
-# Crear una figura
-fig = go.Figure()
-cluster_colors = ['blue', 'cyan', 'red', 'pink', 'green']
-# Estimar la densidad de los puntos en cada cluster y agregar la superficie de contorno correspondiente
-for gc in np.unique(labels):
-    indices = np.where(labels == gc)
+    # Crear una figura
+    fig = go.Figure()
+    cluster_colors = ['blue', 'cyan', 'red', 'pink', 'green']
+    # Estimar la densidad de los puntos en cada cluster y agregar la superficie de contorno correspondiente
+    for gc in np.unique(labels):
+        indices = np.where(labels == gc)
 
-    kde = gaussian_kde(tsne_data[indices].T)
-    x_range = np.linspace(np.min(tsne_data[:, 0])-5, np.max(tsne_data[:, 0])+5, 100)
-    y_range = np.linspace(np.min(tsne_data[:, 1])-5, np.max(tsne_data[:, 1])+5, 100)
-    xx, yy = np.meshgrid(x_range, y_range)
-    positions = np.vstack([xx.ravel(), yy.ravel()])
-    zz = np.reshape(kde(positions).T, xx.shape)
+        kde = gaussian_kde(tsne_data[indices].T)
+        x_range = np.linspace(np.min(tsne_data[:, 0])-5, np.max(tsne_data[:, 0])+5, 100)
+        y_range = np.linspace(np.min(tsne_data[:, 1])-5, np.max(tsne_data[:, 1])+5, 100)
+        xx, yy = np.meshgrid(x_range, y_range)
+        positions = np.vstack([xx.ravel(), yy.ravel()])
+        zz = np.reshape(kde(positions).T, xx.shape)
 
-    if gc in [0]:
-        opacity = 0.9
-        levels = 10
-    elif gc ==1:
-        opacity = 0.5
-        levels = 7
-    else:
-        opacity = 0.3
-        levels = 5
+        if gc in [0]:
+            opacity = 0.9
+            levels = 10
+        elif gc ==1:
+            opacity = 0.5
+            levels = 7
+        else:
+            opacity = 0.3
+            levels = 5
     
-    contour_trace = go.Contour(
-        x=x_range,
-        y=y_range,
-        z=zz,
-        colorscale='Blues',
-        opacity=opacity,
-        showscale=False,
-        name=f'Contour {gc}'
-    )
-    fig.add_trace(contour_trace)
-
-# Colorear los puntos según las agrupaciones originales
-for gc in np.unique(labels):
-    indices = np.where(labels == gc)
-
-    scatter_trace = go.Scatter(
-        x=tsne_data[indices, 0].flatten(),
-        y=tsne_data[indices, 1].flatten(),
-        mode='markers',
-        text=df_cmd.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
-        hovertemplate="%{text}",
-        marker=dict(
-            size=7,
-            line=dict(width=0.5, color='black')
-        ),
-        name=f'Cluster {gc}'
-    )
-    fig.add_trace(scatter_trace)
-
-# Configurar el diseño del gráfico con el ancho de pantalla ajustado
-fig.update_layout(
-    title='Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel',
-    xaxis_title='Dimensión 1',
-    yaxis_title='Dimensión 2',
-    showlegend=True,
-    legend_title='Clusters',
-    width=1084  # Ajustar el ancho del gráfico
-)
-# Mostrar el gráfico
-st.plotly_chart(fig, use_container_width=True)
-
-
-###
-
-# Obtener las columnas numéricas del DataFrame
-numeric_columns = [col for col in df_cmd.columns if pd.api.types.is_numeric_dtype(df_cmd[col])]
-
-if len(numeric_columns) < 2:
-    st.warning("Deben seleccionarse al menos dos columnas.")
-else:
-    st.write("Selecciona las columnas para el gráfico:")
-
-    # Menús desplegables para seleccionar columnas
-    column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
-    column2 = st.selectbox("Select the verical axis:", numeric_columns)
-
-    # Botón para generar el gráfico
-    if st.button("Plot by group"):
-        # Crear gráfico bidimensional en Plotly
-        fig = px.scatter(
-            df_cmd,
-            x=column1,
-            y=column2,
-            color="gc",  # Colorear por la columna "gc"
-            title=f"Plot {column1} vs. {column2}",
-            labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
+        contour_trace = go.Contour(
+            x=x_range,
+            y=y_range,
+            z=zz,
+            colorscale='Blues',
+            opacity=opacity,
+            showscale=False,
+            name=f'Contour {gc}'
         )
+        fig.add_trace(contour_trace)
 
-        # Verificar si se debe invertir el eje vertical
-        if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
-            fig.update_yaxes(autorange="reversed")
+    # Colorear los puntos según las agrupaciones originales
+    for gc in np.unique(labels):
+        indices = np.where(labels == gc)
 
-        st.plotly_chart(fig)
+        scatter_trace = go.Scatter(
+            x=tsne_data[indices, 0].flatten(),
+            y=tsne_data[indices, 1].flatten(),
+            mode='markers',
+            text=df_cmd.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
+            hovertemplate="%{text}",
+            marker=dict(
+                size=7,
+                line=dict(width=0.5, color='black')
+            ),
+            name=f'Cluster {gc}'
+        )
+        fig.add_trace(scatter_trace)
+
+    # Configurar el diseño del gráfico con el ancho de pantalla ajustado
+    fig.update_layout(
+        title='Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel',
+        xaxis_title='Dimensión 1',
+        yaxis_title='Dimensión 2',
+        showlegend=True,
+        legend_title='Clusters',
+        width=1084  # Ajustar el ancho del gráfico
+    )
+    # Mostrar el gráfico
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    ###
+
+    # Obtener las columnas numéricas del DataFrame
+    numeric_columns = [col for col in df_cmd.columns if pd.api.types.is_numeric_dtype(df_cmd[col])]
+
+    if len(numeric_columns) < 2:
+        st.warning("Deben seleccionarse al menos dos columnas.")
+    else:
+        st.write("Selecciona las columnas para el gráfico:")
+
+        # Menús desplegables para seleccionar columnas
+        column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
+        column2 = st.selectbox("Select the verical axis:", numeric_columns)
+
+        # Botón para generar el gráfico
+        if st.button("Plot by group"):
+            # Crear gráfico bidimensional en Plotly
+            fig = px.scatter(
+                df_cmd,
+                x=column1,
+                y=column2,
+                color="gc",  # Colorear por la columna "gc"
+                title=f"Plot {column1} vs. {column2}",
+                labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
+            )
+
+            # Verificar si se debe invertir el eje vertical
+            if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
+                fig.update_yaxes(autorange="reversed")
+
+            st.plotly_chart(fig)
 
 
 
