@@ -207,7 +207,7 @@ st.markdown(
 )
 
 # Obtener los nombres de las columnas numéricas
-columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
 # Calcular el número de filas y columnas del panel
 num_rows = len(columnas_numericas)
@@ -241,3 +241,179 @@ fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
 st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("""La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**).""")
+
+################### tsne ##############################
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_digits
+from sklearn.manifold import TSNE
+
+st.markdown("""Los clusters representan datos que, de acuerdo con los valores que tienen en cada variable, pueden considerarse como mas **similares entre sí que con el resto**. Sin embargo, en muchos casos es dificil graficar los clusters, debido a que el número de variables que pueden estar involucradas puede ser muy alto. Las técnicas tsne y PCA pueden usarse en conjunto para crear una gráfica de todos los puntos en un plano. La Gráfica muestra los puntos agrupados en cada clusters, una vez que se han aplicado las técnicas de **análisis de componentes principales (PCA) y t-distributed neighbor embeding (tsne)**. Los contornos al rededor de cada cluster responden a la densidad de puntos (**donde las líneas están mas concentradas, significa una mayor densidad de puntos). Los pacientes con diagnóstico confirmado de sarcopenia, se muestran encerrados en círculos rojos.**""")
+
+
+numeric_data=df_cmd.select_dtypes(include='number')
+m = TSNE(learning_rate=100)
+# Ajustar y transformar el modelo de t-SNE en el conjunto de datos numéricos
+tsne_features = m.fit_transform(numeric_data.drop(['Cluster'],axis=1))
+
+
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# Normalizar los datos
+scaler = StandardScaler()
+normalized_data = scaler.fit_transform(numeric_data)
+# Crear una instancia de PCA
+pca = PCA()
+# Aplicar PCA a los datos normalizados
+pca_data = pca.fit_transform(normalized_data)
+# Crear un nuevo DataFrame con las componentes principales
+pca_df = pd.DataFrame(data=pca_data, columns=[f'PC{i}' for i in range(1, pca.n_components_+1)])
+
+data = data.reset_index(drop=True)
+# Reset the indices of the DataFrames
+pca_df.reset_index(drop=True, inplace=True)
+data.reset_index(drop=True, inplace=True)
+# Concatenate the "Nombre" column from data_2021_fem to pca_df
+pca_df = pd.concat([pca_df, data["source_id"]], axis=1)
+
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.manifold import TSNE
+from scipy.stats import gaussian_kde
+
+labels = data['gc']
+# Crear una instancia de t-SNE con los hiperparámetros deseados
+tsne = TSNE(n_components=2, perplexity=40, early_exaggeration=10, learning_rate=5)
+
+# Ajustar t-SNE a los datos de PCA
+tsne_data = tsne.fit_transform(pca_data)
+
+# Crear una figura y un eje
+fig, ax = plt.subplots()
+
+# Colorear los puntos según las agrupaciones originales
+for cluster in np.unique(labels):
+    indices = np.where(labels == gc)
+    ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Cluster {gc}')
+
+    # Estimar la densidad de los puntos en el cluster actual
+    kde = gaussian_kde(tsne_data[indices].T)
+    x_range = np.linspace(np.min(tsne_data[:, 0]-1), np.max(tsne_data[:, 0]+1), 100)
+    y_range = np.linspace(np.min(tsne_data[:, 1]-1), np.max(tsne_data[:, 1]+1), 100)
+    xx, yy = np.meshgrid(x_range, y_range)
+    positions = np.vstack([xx.ravel(), yy.ravel()])
+    zz = np.reshape(kde(positions).T, xx.shape)
+
+    # Agregar las curvas de densidad de kernel al gráfico
+    ax.contour(xx, yy, zz, colors='k', alpha=0.5)
+
+# Agregar leyenda y título al gráfico
+ax.legend()
+ax.set_title('Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel')
+
+# Mostrar el gráfico
+plt.show()
+
+import numpy as np
+import plotly.graph_objects as go
+from sklearn.manifold import TSNE
+from scipy.stats import gaussian_kde
+
+# Crear una instancia de t-SNE con los hiperparámetros deseados
+
+#filtered_df = df2021_pred[df2021_pred['SARCOPENIA'] == 1.0]
+
+
+# Crear una figura
+fig = go.Figure()
+cluster_colors = ['blue', 'cyan', 'red', 'pink', 'green']
+# Estimar la densidad de los puntos en cada cluster y agregar la superficie de contorno correspondiente
+for cluster in np.unique(labels):
+    indices = np.where(labels == gc)
+
+    kde = gaussian_kde(tsne_data[indices].T)
+    x_range = np.linspace(np.min(tsne_data[:, 0])-5, np.max(tsne_data[:, 0])+5, 100)
+    y_range = np.linspace(np.min(tsne_data[:, 1])-5, np.max(tsne_data[:, 1])+5, 100)
+    xx, yy = np.meshgrid(x_range, y_range)
+    positions = np.vstack([xx.ravel(), yy.ravel()])
+    zz = np.reshape(kde(positions).T, xx.shape)
+
+    #if cluster in [0]:
+    #    opacity = 0.9
+    #    levels = 10
+    #elif cluster ==1:
+    #    opacity = 0.5
+    #    levels = 7
+    #else:
+    opacity = 0.3
+    levels = 5
+    contour_trace = go.Contour(
+        x=x_range,
+        y=y_range,
+        z=zz,
+        colorscale='Blues',
+        opacity=opacity,
+        showscale=False,
+        name=f'Contorno Cluster {gc}'
+            )
+    fig.add_trace(contour_trace)
+
+# Colorear los puntos según las agrupaciones originales
+for gc in np.unique(labels):
+    indices = np.where(labels == gc)
+
+    scatter_trace = go.Scatter(
+        x=tsne_data[indices, 0].flatten(),
+        y=tsne_data[indices, 1].flatten(),
+        mode='markers',
+        text=data.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
+        hovertemplate="%{text}",
+        marker=dict(
+            color=cluster_colors[gc],
+            size=7,
+            line=dict(width=0.5, color='black')
+            ),
+        name=f'Cluster {gc}'
+            )
+    fig.add_trace(scatter_trace)
+
+# Agregar círculos rojos alrededor de los puntos cuyos nombres coincidan con la lista filtered_df['Nombre']
+#for name in filtered_df['folio']:
+#    indices = data_2021[data_2021['folio'] == name].index
+#    x_coords = tsne_data_2021[indices, 0].flatten()
+#    y_coords = tsne_data_2021[indices, 1].flatten()
+
+#    circle_trace = go.Scatter(
+#        x=x_coords,
+#        y=y_coords,
+#        mode='markers',
+#        marker=dict(
+#            color='black',
+#            size=10,
+#            symbol='circle-open'
+#        ),
+#        hoverinfo='none',  # Para que no aparezcan tooltips adicionales para los círculos
+#        showlegend=False  # Para que los círculos no aparezcan en la leyenda
+#    )
+#    fig.add_trace(circle_trace)
+
+
+
+# Configurar el diseño del gráfico con el ancho de pantalla ajustado
+fig.update_layout(
+    title='Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel',
+    xaxis_title='Dimensión 1',
+    yaxis_title='Dimensión 2',
+    showlegend=True,
+    legend_title='Clusters',
+    width=1084  # Ajustar el ancho del gráfico
+)
+# Mostrar el gráfico
+st.plotly_chart(fig, use_container_width=True)
+
+
+
+
