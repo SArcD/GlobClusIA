@@ -296,7 +296,7 @@ tsne_data = tsne.fit_transform(pca_data)
 fig, ax = plt.subplots()
 
 # Colorear los puntos según las agrupaciones originales
-for cluster in np.unique(labels):
+for gc in np.unique(labels):
     indices = np.where(labels == gc)
     ax.scatter(tsne_data[indices, 0], tsne_data[indices, 1], label=f'Cluster {gc}')
 
