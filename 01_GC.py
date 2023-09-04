@@ -168,7 +168,7 @@ columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 scaler = StandardScaler()
 columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 
-num_clusters = 5  # Número inicial de clusters
+num_clusters = 3  # Número inicial de clusters
 max_retries = 3  # Número máximo de repeticiones en caso de clusters con un solo miembro
 
 while max_retries > 0:
