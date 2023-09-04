@@ -157,12 +157,15 @@ from sklearn.preprocessing import StandardScaler
 # Cargar tu DataFrame df_cmd (asegúrate de tenerlo cargado previamente)
 # df_cmd = ...
 
+# Seleccionar solo las columnas numéricas
+columnas_numericas = df_cmd.select_dtypes(include=[np.number])
+
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
-df_cmd_scaled = scaler.fit_transform(df_cmd)
+columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 
 # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
-Z = linkage(df_cmd_scaled, method='complete', metric='euclidean')
+Z = linkage(columnas_numericas_scaled, method='complete', metric='euclidean')
 
 # Crear un dendrograma
 plt.figure(figsize=(12, 6))
@@ -175,13 +178,5 @@ st.pyplot()
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
 
-            #else:
-                # Botón para generar el gráfico sin inversión del eje vertical
-            #    if st.button("Color Magnitude diagram"):
-            #        # Crear gráfico bidimensional en Plotly
-            #        fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-            #        st.plotly_chart(fig)
-
-#resume=st.dataframe(df.describe())
 
 
