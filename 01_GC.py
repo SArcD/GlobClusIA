@@ -141,11 +141,39 @@ if "selected_file" in locals():
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
-st.markdown(df.columns)
+
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 df_cmd = df[columnas_seleccionadas]        
 st.dataframe(df_cmd)
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.preprocessing import StandardScaler
+
+# Cargar tu DataFrame df_cmd (asegúrate de tenerlo cargado previamente)
+# df_cmd = ...
+
+# Normalizar los datos (opcional, pero recomendado para clustering)
+scaler = StandardScaler()
+df_cmd_scaled = scaler.fit_transform(df_cmd)
+
+# Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
+Z = linkage(df_cmd_scaled, method='complete', metric='euclidean')
+
+# Crear un dendrograma
+plt.figure(figsize=(12, 6))
+dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
+plt.title("Dendrograma de Clustering Jerárquico")
+plt.xlabel("Índice de la Muestra")
+plt.ylabel("Distancia")
+st.pyplot()
+
+# Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
+# También puedes cortar el dendrograma para obtener grupos específicos
 
             #else:
                 # Botón para generar el gráfico sin inversión del eje vertical
