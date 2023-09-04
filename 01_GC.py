@@ -162,7 +162,7 @@ from sklearn.cluster import AgglomerativeClustering
 df_cmd = df_cmd.dropna()
 
 # Seleccionar solo las columnas numéricas
-columnas_numericas = df_cmd.select_dtypes(include=[np.number]).drop(columns=['gc'])
+columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
