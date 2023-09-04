@@ -402,23 +402,31 @@ if st.button("Realizar Clustering"):
 
     ###
 
-import pandas as pd
-import plotly.express as px
+    import pandas as pd
+    import plotly.express as px
 
-# Crear una figura para cada gráfica
-fig1 = px.scatter(df_cmd, x="phot_g_mean_mag", y="g_rp", color="gc",
-                  hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
+    # Gráfica 1: phot_g_mean_mag vs g_rp
+    fig1 = px.scatter(df_cmd, x="phot_g_mean_mag", y="g_rp", color="gc",
+                          hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
 
-fig2 = px.scatter(df_cmd, x="phot_bp_mean_mag", y="bp_rp", color="gc",
-                  hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
+    # Gráfica 2: phot_bp_mean_mag vs bp_rp
+    fig2 = px.scatter(df_cmd, x="phot_bp_mean_mag", y="bp_rp", color="gc",
+                      hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
 
-fig3 = px.scatter(df_cmd, x="phot_rp_mean_mag", y="bp_rp", color="gc",
-                  hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
+    # Gráfica 3: phot_rp_mean_mag vs bp_rp
+    fig3 = px.scatter(df_cmd, x="phot_rp_mean_mag", y="bp_rp", color="gc",
+                      hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
 
-# Mostrar las gráficas
-fig1.show()
-fig2.show()
-fig3.show()
+    # Mostrar las gráficas en Streamlit
+    st.plotly_chart(fig1)
+    st.plotly_chart(fig2)
+    st.plotly_chart(fig3)
+
+
+
+
+
+
 
 
 
