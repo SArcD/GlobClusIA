@@ -227,9 +227,9 @@ for i, column in enumerate(columnas_numericas):
 
     # Agregar el gráfico de caja al subplot correspondiente
     for j in range(10):
-        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'Cluster {j}')
+        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
         box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-        box.text = df_cmd[df_cmd['Cluster'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+        box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
         fig.add_trace(box, row=i+1, col=1)
 
 # Actualizar el diseño y mostrar el panel de gráficos
