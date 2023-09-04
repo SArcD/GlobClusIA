@@ -418,18 +418,18 @@ else:
     st.write("Selecciona las columnas para el gráfico:")
 
     # Menús desplegables para seleccionar columnas
-    column1 = st.selectbox("Selecciona el eje horizontal para el gráfico:", numeric_columns)
-    column2 = st.selectbox("Selecciona el eje vertical para el gráfico:", numeric_columns)
+    column1 = st.selectbox("Select the horizontal axis:", numeric_columns)
+    column2 = st.selectbox("Select the verical axis:", numeric_columns)
 
     # Botón para generar el gráfico
-    if st.button("Generar Gráfico"):
+    if st.button("Plot by group"):
         # Crear gráfico bidimensional en Plotly
         fig = px.scatter(
             df_cmd,
             x=column1,
             y=column2,
             color="gc",  # Colorear por la columna "gc"
-            title=f"Gráfico {column1} vs. {column2}",
+            title=f"Plot {column1} vs. {column2}",
             labels={"gc": "Etiqueta gc"}  # Cambiar el nombre de la leyenda
         )
 
