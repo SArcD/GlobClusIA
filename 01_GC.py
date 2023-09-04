@@ -151,7 +151,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram, linkage
+from scipy.spatial.distance import pdist
+from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.preprocessing import StandardScaler
 
 # Cargar tu DataFrame df_cmd (asegúrate de tenerlo cargado previamente)
@@ -164,8 +165,11 @@ columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 scaler = StandardScaler()
 columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 
+# Calcular la matriz de distancias
+dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
+
 # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
-Z = linkage(columnas_numericas_scaled, method='complete', metric='euclidean')
+Z = linkage(dist_matrix, method='complete')
 
 # Crear un dendrograma
 plt.figure(figsize=(12, 6))
@@ -177,6 +181,7 @@ st.pyplot()
 
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
 # También puedes cortar el dendrograma para obtener grupos específicos
+
 
 
 
