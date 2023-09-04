@@ -147,6 +147,8 @@ columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "p
 df_cmd = df[columnas_seleccionadas]        
 #st.dataframe(df_cmd)
 
+
+###
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -154,7 +156,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.cluster import KMeans
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
@@ -172,21 +174,51 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
 Z = linkage(dist_matrix, method='complete')
 
-# Realizar el clustering jerárquico y especificar el número de clusters deseado
-num_clusters = 4  # Cambia esto al número de clusters deseado
-cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
+# Calcular la inercia para diferentes números de clusters
+inertia_values = []
+for num_clusters in range(1, 11):  # Prueba con hasta 10 clusters
+    kmeans = KMeans(n_clusters=num_clusters, random_state=0)
+    kmeans.fit(columnas_numericas_scaled)
+    inertia_values.append(kmeans.inertia_)
 
-# Agregar la columna de clusters "gc" al DataFrame original
-df_cmd['gc'] = cluster_labels
-
-# Crear un dendrograma
-fig, ax = plt.subplots(figsize=(12, 6))
-dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
-plt.title("Dendrograma de Clustering Jerárquico")
-plt.xlabel("Índice de la Muestra")
-plt.ylabel("Distancia")
+# Crear un gráfico para visualizar la inercia
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(range(1, 11), inertia_values, marker='o', linestyle='-', color='b')
+ax.set_xlabel('Número de Clusters')
+ax.set_ylabel('Inercia')
+ax.set_title('Método del Codo para Determinar el Número Óptimo de Clusters')
 st.pyplot(fig)
-st.dataframe(df_cmd) 
+
+# Agregar una interfaz de usuario para ingresar el número deseado de clusters
+st.title("Clustering Jerárquico")
+st.write("Usa el gráfico anterior para ayudarte a seleccionar un número adecuado de clusters.")
+st.write("Después, ingresa el número deseado de clusters:")
+
+# Agregar un campo de entrada para el número de clusters
+num_clusters = st.number_input("Número de Clusters", min_value=1, value=4)
+
+# Verificar si el usuario ha ingresado un número de clusters válido
+if st.button("Realizar Clustering"):
+    # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
+    Z = linkage(dist_matrix, method='complete')
+
+    # Realizar el clustering jerárquico y especificar el número de clusters deseado
+    cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
+
+    # Agregar la columna de clusters "gc" al DataFrame original
+    df_cmd['gc'] = cluster_labels
+
+    # Crear un dendrograma
+    fig, ax = plt.subplots(figsize=(12, 6))
+    dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
+    plt.title("Dendrograma de Clustering Jerárquico")
+    plt.xlabel("Índice de la Muestra")
+    plt.ylabel("Distancia")
+    st.pyplot(fig)
+    st.write(f"Número de clusters seleccionado: {num_clusters}")
+    st.dataframe(df_cmd)
+
+##
 
 
 
