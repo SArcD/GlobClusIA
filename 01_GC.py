@@ -156,7 +156,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
@@ -171,39 +171,18 @@ columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 # Calcular la matriz de distancias
 dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
-# Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
-Z = linkage(dist_matrix, method='complete')
-
-# Calcular la inercia para diferentes números de clusters
-inertia_values = []
-for num_clusters in range(1, 11):  # Prueba con hasta 10 clusters
-    kmeans = KMeans(n_clusters=num_clusters, random_state=0)
-    kmeans.fit(columnas_numericas_scaled)
-    inertia_values.append(kmeans.inertia_)
-
-# Crear un gráfico para visualizar la inercia
-fig, ax = plt.subplots(figsize=(8, 4))
-ax.plot(range(1, 11), inertia_values, marker='o', linestyle='-', color='b')
-ax.set_xlabel('Número de Clusters')
-ax.set_ylabel('Inercia')
-ax.set_title('Método del Codo para Determinar el Número Óptimo de Clusters')
-st.pyplot(fig)
-
 # Agregar una interfaz de usuario para ingresar el número deseado de clusters
 st.title("Clustering Jerárquico")
-st.write("Usa el gráfico anterior para ayudarte a seleccionar un número adecuado de clusters.")
-st.write("Después, ingresa el número deseado de clusters:")
+st.write("Ingresa el número deseado de clusters:")
 
 # Agregar un campo de entrada para el número de clusters
 num_clusters = st.number_input("Número de Clusters", min_value=1, value=4)
 
 # Verificar si el usuario ha ingresado un número de clusters válido
 if st.button("Realizar Clustering"):
-    # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
-    Z = linkage(dist_matrix, method='complete')
-
-    # Realizar el clustering jerárquico y especificar el número de clusters deseado
-    cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
+    # Realizar el clustering jerárquico aglomerativo
+    clustering = AgglomerativeClustering(n_clusters=num_clusters, affinity='euclidean', linkage='ward')
+    cluster_labels = clustering.fit_predict(columnas_numericas_scaled)
 
     # Agregar la columna de clusters "gc" al DataFrame original
     df_cmd['gc'] = cluster_labels
