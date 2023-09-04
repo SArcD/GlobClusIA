@@ -179,16 +179,16 @@ num_clusters = 5  # Cambia esto al número de clusters deseado
 cluster_labels = fcluster(Z, num_clusters, criterion='maxclust')
 
 # Agregar la columna de clusters "gc" al DataFrame original
-df_cmd_cleaned['gc'] = cluster_labels
+df_cmd['gc'] = cluster_labels
 
 # Crear un dendrograma
 fig, ax = plt.subplots(figsize=(12, 6))
-dendrogram(Z, labels=df_cmd_cleaned.index, leaf_rotation=90)
+dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
 plt.title("Dendrograma de Clustering Jerárquico")
 plt.xlabel("Índice de la Muestra")
 plt.ylabel("Distancia")
 st.pyplot(fig)
-st.dataframe(df_cmd_cleaned)
+st.dataframe(df_cmd)
 
 
 # Puedes ajustar los parámetros del dendrograma para obtener una visualización más adecuada
