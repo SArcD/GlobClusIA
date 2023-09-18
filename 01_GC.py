@@ -56,7 +56,8 @@ def load_and_merge_dataframes(selected_files):
             dfs.append(df)
 
         # Realizar la fusión (merge) por la columna "source_id"
-        merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner")
+        #merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner")
+        merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner", suffixes=("", "_right"))
 
         return merged_df
     except Exception as e:
