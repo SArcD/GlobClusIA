@@ -1,15 +1,16 @@
+#
 import streamlit as st
 import pandas as pd
 import requests
-import plotly.express as px
 
 # Título de la aplicación
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
 st.subheader("Individual analysis")
+
 # URL del repositorio de GitHub
-#repo_url = st.text_input("Introduce the repository's URL:", "")
 repo_url = "https://github.com/SArcD/GlobClusIA"
+
 # Función para obtener la lista de archivos CSV en el repositorio utilizando la GitHub API
 def get_csv_files(repo_url):
     try:
@@ -17,15 +18,15 @@ def get_csv_files(repo_url):
         parts = repo_url.split("/")
         username = parts[-2]
         repository = parts[-1]
-        
+
         # Hacer una solicitud a la GitHub API para obtener la lista de archivos
         api_url = f"https://api.github.com/repos/{username}/{repository}/contents"
         response = requests.get(api_url)
         data = response.json()
-        
+
         # Filtrar los archivos CSV y obtener sus nombres y URL de descarga
         csv_files = [(item["name"], item["download_url"]) for item in data if item["name"].endswith(".csv")]
-        
+
         return csv_files
     except Exception as e:
         st.error(f"There was an error obtaining the list of CSV files: {str(e)}")
@@ -36,32 +37,43 @@ csv_files = get_csv_files(repo_url)
 
 # Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
-    selected_file_tuple = st.selectbox("Select a CSV file:", csv_files)
-    selected_file = selected_file_tuple[1]  # Obtén la URL de descarga del archivo seleccionado
+    selected_files_tuple = st.multiselect("Select CSV files to merge:", [item[0] for item in csv_files])
 else:
     st.warning("No CSV files were found within the repository.")
 
-# Función para cargar y mostrar el DataFrame seleccionado
-def load_and_display_dataframe(selected_file):
+# Función para cargar y unir los DataFrames seleccionados por "source_id"
+def load_and_merge_dataframes(selected_files):
     try:
-        # selected_file debe ser una cadena que representa la URL de descarga
-        csv_url = selected_file
-        df = pd.read_csv(csv_url)
-        return df
+        if len(selected_files) != 2:
+            st.warning("Please select exactly two CSV files for merging.")
+            return None
+
+        # Cargar los DataFrames seleccionados
+        dfs = []
+        for selected_file in selected_files:
+            csv_url = next(item[1] for item in csv_files if item[0] == selected_file)
+            df = pd.read_csv(csv_url)
+            dfs.append(df)
+
+        # Realizar la fusión (merge) por la columna "source_id"
+        merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner")
+
+        return merged_df
     except Exception as e:
-        st.error(f"There was an error loading the CSV file:  {str(e)}")
+        st.error(f"There was an error loading and merging the selected CSV files: {str(e)}")
         return None
 
-# Muestra el DataFrame seleccionado si se ha elegido un archivo
-if "selected_file" in locals():
-    df = load_and_display_dataframe(selected_file)
-    if df is not None:
-        #Supongamos que tienes un DataFrame llamado df
-        df['source_id'] = df['source_id'].astype(str)
-        st.write("DataFrame:")
-        st.dataframe(df)
-#
+# Muestra el DataFrame fusionado si se han seleccionado dos archivos
+if "selected_files_tuple" in locals() and len(selected_files_tuple) == 2:
+    merged_df = load_and_merge_dataframes(selected_files_tuple)
+    if merged_df is not None:
+        # Supongamos que tienes un DataFrame llamado merged_df
+        st.write("Merged DataFrame:")
+        st.dataframe(merged_df)
 
+
+#
+        
         import streamlit as st
         from tabulate import tabulate
         # Crea un expansor con un título
