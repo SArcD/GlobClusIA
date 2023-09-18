@@ -110,6 +110,11 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
             st.markdown(tabulate(table_data, tablefmt="pipe", headers="firstrow"))
 
 
+        import streamlit as st
+        import pandas as pd
+        import requests
+        import plotly.express as px  
+        
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
 
