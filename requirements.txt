@@ -23,6 +23,7 @@ skope-rules
 #export_graphviz
 pyrs
 plotly
+plotly.express 
 pillow
 requests
 beautifulsoup4
