@@ -65,11 +65,11 @@ def load_and_merge_dataframes(selected_files):
 
 # Muestra el DataFrame fusionado si se han seleccionado dos archivos
 if "selected_files_tuple" in locals() and len(selected_files_tuple) == 2:
-    merged_df = load_and_merge_dataframes(selected_files_tuple)
-    if merged_df is not None:
+    df = load_and_merge_dataframes(selected_files_tuple)
+    if df is not None:
         # Supongamos que tienes un DataFrame llamado merged_df
         st.write("Merged DataFrame:")
-        st.dataframe(merged_df)
+        st.dataframe(df)
 
 
 #
