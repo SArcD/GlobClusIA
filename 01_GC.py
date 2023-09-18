@@ -69,7 +69,8 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
     if concatenated_df is not None:
         # Supongamos que tienes un DataFrame llamado concatenated_df
         st.write("Concatenated DataFrame:")
-        st.dataframe(concatenated_df)
+        df = concatenated_df
+        st.dataframe(df)
 
 
 #
