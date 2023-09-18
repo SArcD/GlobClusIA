@@ -166,6 +166,7 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import AgglomerativeClustering
+import plotly.express as px
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
