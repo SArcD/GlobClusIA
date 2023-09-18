@@ -41,36 +41,34 @@ if csv_files:
 else:
     st.warning("No CSV files were found within the repository.")
 
-# Función para cargar y unir los DataFrames seleccionados por "source_id"
-def load_and_merge_dataframes(selected_files):
+# Función para cargar y concatenar los DataFrames seleccionados por "source_id"
+def load_and_concat_dataframes(selected_files):
     try:
-        if len(selected_files) != 2:
-            st.warning("Please select exactly two CSV files for merging.")
+        if len(selected_files) < 2:
+            st.warning("Please select at least two CSV files for concatenation.")
             return None
 
-        # Cargar los DataFrames seleccionados
+        # Cargar y concatenar los DataFrames seleccionados
         dfs = []
         for selected_file in selected_files:
             csv_url = next(item[1] for item in csv_files if item[0] == selected_file)
             df = pd.read_csv(csv_url)
             dfs.append(df)
 
-        # Realizar la fusión (merge) por la columna "source_id"
-        #merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner")
-        #merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner", suffixes=("", "_right"))
-        merged_df = pd.concat(dfs, ignore_index=True)
-        return merged_df
+        concatenated_df = pd.concat(dfs, ignore_index=True, sort=False)  # Concatenar sin reiniciar los índices
+
+        return concatenated_df
     except Exception as e:
-        st.error(f"There was an error loading and merging the selected CSV files: {str(e)}")
+        st.error(f"There was an error loading and concatenating the selected CSV files: {str(e)}")
         return None
 
-# Muestra el DataFrame fusionado si se han seleccionado dos archivos
-if "selected_files_tuple" in locals() and len(selected_files_tuple) == 2:
-    df = load_and_merge_dataframes(selected_files_tuple)
-    if df is not None:
-        # Supongamos que tienes un DataFrame llamado merged_df
-        st.write("Merged DataFrame:")
-        st.dataframe(df)
+# Muestra el DataFrame concatenado si se han seleccionado al menos dos archivos
+if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
+    concatenated_df = load_and_concat_dataframes(selected_files_tuple)
+    if concatenated_df is not None:
+        # Supongamos que tienes un DataFrame llamado concatenated_df
+        st.write("Concatenated DataFrame:")
+        st.dataframe(concatenated_df)
 
 
 #
