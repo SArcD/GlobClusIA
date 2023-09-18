@@ -57,8 +57,8 @@ def load_and_merge_dataframes(selected_files):
 
         # Realizar la fusión (merge) por la columna "source_id"
         #merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner")
-        merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner", suffixes=("", "_right"))
-
+        #merged_df = pd.merge(dfs[0], dfs[1], on="source_id", how="inner", suffixes=("", "_right"))
+        merged_df = pd.concat(dfs, ignore_index=True)
         return merged_df
     except Exception as e:
         st.error(f"There was an error loading and merging the selected CSV files: {str(e)}")
