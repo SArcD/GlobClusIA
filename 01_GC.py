@@ -65,6 +65,7 @@ def load_and_concat_dataframes(selected_files):
 # Muestra el DataFrame concatenado si se han seleccionado al menos dos archivos
 if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
     concatenated_df = load_and_concat_dataframes(selected_files_tuple)
+    df=concatenated_df
     if concatenated_df is not None:
         # Supongamos que tienes un DataFrame llamado concatenated_df
         st.write("Concatenated DataFrame:")
