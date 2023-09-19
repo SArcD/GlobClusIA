@@ -128,17 +128,6 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
             column1 = st.selectbox("Select the horizontal axis for the plot:", numeric_columns)
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
             
-            # Verifica si el parámetro seleccionado para el eje vertical es "phot_g_mean_mag" o "phot_rp_mean_mag"
-            #if column2 in [["phot_g_mean_mag", "phot_rp_mean_mag, phot_bp_mean_mag"]]:
-                # Botón para generar el gráfico con eje vertical invertido
-             #   if st.button("Generar Gráfico"):
-                    # Crear gráfico bidimensional en Plotly
-             #       fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-                    
-                    # Invertir el eje vertical
-             #       fig.update_yaxes(autorange="reversed")
-                    
-             #       st.plotly_chart(fig)
 
             if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                 # Botón para generar el gráfico con eje vertical invertido
@@ -179,7 +168,8 @@ import plotly.express as px
 #df_cmd
 # Seleccionar solo las columnas numéricas
 #columnas_numericas = df_cmd.select_dtypes(include=[np.number])
-columnas_numericas = df.select_dtypes(include=[np.number])
+#columnas_numericas = df.select_dtypes(include=[np.number])
+columnanas_numericas = ["phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
 columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
