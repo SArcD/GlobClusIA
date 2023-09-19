@@ -165,7 +165,7 @@ import plotly.express as px
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
-#df_cmd
+st.dataframe(df_cmd)
 # Seleccionar solo las columnas numéricas
 #columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 #columnas_numericas = df.select_dtypes(include=[np.number])
