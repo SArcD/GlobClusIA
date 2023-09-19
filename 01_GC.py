@@ -149,7 +149,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 df_cmd = df[columnas_seleccionadas]        
-#st.dataframe(df_cmd)
+st.dataframe(df_cmd)
 
 
 ###
