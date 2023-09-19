@@ -41,36 +41,41 @@ if csv_files:
 else:
     st.warning("No CSV files were found within the repository.")
 
-# Función para cargar y concatenar los DataFrames seleccionados por "source_id"
-def load_and_concat_dataframes(selected_files):
+# Función para cargar y fusionar los DataFrames seleccionados por "source_id"
+def load_and_merge_dataframes(selected_files):
     try:
         if len(selected_files) < 2:
-            st.warning("Please select at least two CSV files for concatenation.")
+            st.warning("Please select at least two CSV files for merging.")
             return None
 
-        # Cargar y concatenar los DataFrames seleccionados
+        # Cargar y fusionar los DataFrames seleccionados
         dfs = []
         for selected_file in selected_files:
             csv_url = next(item[1] for item in csv_files if item[0] == selected_file)
             df = pd.read_csv(csv_url)
             dfs.append(df)
 
-        concatenated_df = pd.concat(dfs, ignore_index=True, sort=False)  # Concatenar sin reiniciar los índices
+        merged_df = dfs[0]  # Tomar el primer DataFrame como base
 
-        return concatenated_df
+        # Fusionar los DataFrames restantes en función de la columna "source_id"
+        for df_to_merge in dfs[1:]:
+            merged_df = pd.merge(merged_df, df_to_merge, on="source_id", how="outer")
+
+        return merged_df
     except Exception as e:
-        st.error(f"There was an error loading and concatenating the selected CSV files: {str(e)}")
+        st.error(f"There was an error loading and merging the selected CSV files: {str(e)}")
         return None
 
-# Muestra el DataFrame concatenado si se han seleccionado al menos dos archivos
+# Muestra el DataFrame fusionado si se han seleccionado al menos dos archivos
 if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
-    concatenated_df = load_and_concat_dataframes(selected_files_tuple)
-    if concatenated_df is not None:
-        # Supongamos que tienes un DataFrame llamado concatenated_df
-        st.write("Concatenated DataFrame:")
-        df = concatenated_df
+    merged_df = load_and_merge_dataframes(selected_files_tuple)
+    if merged_df is not None:
+        # Supongamos que tienes un DataFrame llamado merged_df
+        st.write("Merged DataFrame:")
+        df = merged_df
         df['source_id'] = df['source_id'].astype(str)
         st.dataframe(df)
+
 
 
 #
