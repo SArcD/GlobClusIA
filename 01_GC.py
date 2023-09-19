@@ -158,8 +158,8 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
                     st.plotly_chart(fig)
 
 # Seleccionar las columnas deseadas del DataFrame original
-columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
-df_cmd = df[columnas_seleccionadas]        
+#columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
+#df_cmd = df[columnas_seleccionadas]        
 #st.dataframe(df_cmd)
 
 
@@ -175,7 +175,7 @@ from sklearn.cluster import AgglomerativeClustering
 import plotly.express as px
 
 # Eliminar filas con valores NaN
-df_cmd = df_cmd.dropna()
+df_cmd = df.dropna()
 
 # Seleccionar solo las columnas numéricas
 columnas_numericas = df_cmd.select_dtypes(include=[np.number])
