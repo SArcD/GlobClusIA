@@ -175,11 +175,11 @@ from sklearn.cluster import AgglomerativeClustering
 import plotly.express as px
 
 # Eliminar filas con valores NaN
-df_cmd = df.dropna()
-df_cmd
+#df_cmd = df.dropna()
+#df_cmd
 # Seleccionar solo las columnas numéricas
-columnas_numericas = df_cmd.select_dtypes(include=[np.number])
-
+#columnas_numericas = df_cmd.select_dtypes(include=[np.number])
+columnas_numericas = df.select_dtypes(include=[np.number])
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
 columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
