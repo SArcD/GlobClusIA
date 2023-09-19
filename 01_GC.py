@@ -65,11 +65,11 @@ def load_and_concat_dataframes(selected_files):
 # Muestra el DataFrame concatenado si se han seleccionado al menos dos archivos
 if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
     concatenated_df = load_and_concat_dataframes(selected_files_tuple)
-    df=concatenated_df
     if concatenated_df is not None:
         # Supongamos que tienes un DataFrame llamado concatenated_df
         st.write("Concatenated DataFrame:")
         df = concatenated_df
+        df['source_id'] = df['source_id'].astype(str)
         st.dataframe(df)
 
 
@@ -147,8 +147,8 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
                     st.plotly_chart(fig)
 
 # Seleccionar las columnas deseadas del DataFrame original
-#columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
-#df_cmd = df[columnas_seleccionadas]        
+columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
+df_cmd = df[columnas_seleccionadas]        
 #st.dataframe(df_cmd)
 
 
@@ -164,13 +164,13 @@ from sklearn.cluster import AgglomerativeClustering
 import plotly.express as px
 
 # Eliminar filas con valores NaN
-#df_cmd = df.dropna()
+df_cmd = df_cmd.dropna()
 #df_cmd
 # Seleccionar solo las columnas numéricas
 #columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 #columnas_numericas = df.select_dtypes(include=[np.number])
-df['source_id'] = df['source_id'].astype(str)
-columnas_numericas = df.select_dtypes(include=['number'])
+#df['source_id'] = df['source_id'].astype(str)
+columnas_numericas = df_cmd.select_dtypes(include=['number'])
 #columnas_numericas = ["phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 # Normalizar los datos (opcional, pero recomendado para clustering)
 scaler = StandardScaler()
