@@ -186,6 +186,23 @@ df_cmd = df[columnas_seleccionadas]
 #st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 #
 
+import matplotlib.pyplot as plt
+# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
+magnitudes = df_cmd["phot_g_mean_mag"]
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma
+plt.hist(magnitudes, bins=num_bins, edgecolor='k')
+
+# Personalizar el gráfico
+plt.title("Histograma de Magnitudes Aparentes (G-band)")
+plt.xlabel("Magnitud Aparente (G-band)")
+plt.ylabel("Frecuencia")
+
+# Mostrar el histograma
+plt.show()
 
 ###
 import streamlit as st
@@ -223,6 +240,9 @@ columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
 # Agregar una interfaz de usuario para ingresar el número deseado de clusters
+
+
+
 
 st.title("Hierarchical Clustering")
 st.write("Enter the desired number of clusters:")
