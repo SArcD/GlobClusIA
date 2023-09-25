@@ -89,11 +89,11 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         
         # Mostrar el número de filas con datos faltantes
         st.write(f"**Number of rows with missing data:** {num_rows_with_missing_data}")
-#       # Identificar filas con datos faltantes (NaN o None)
+        # Identificar filas con datos faltantes (NaN o None)
         filas_con_faltantes = df.isna().any(axis=1)
 
-# Mostrar las filas con datos faltantes
-print(df[filas_con_faltantes])
+        # Mostrar las filas con datos faltantes
+        st.write(df[filas_con_faltantes])
         
         import streamlit as st
         from tabulate import tabulate
