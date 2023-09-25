@@ -150,7 +150,9 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
             # Menús desplegables para seleccionar columnas
             column1 = st.selectbox("Select the horizontal axis for the plot:", numeric_columns)
             column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
-            
+            # Contenedores vacíos para las gráficas
+            plot_container1 = st.empty()
+            plot_container2 = st.empty()
 
             if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                 # Botón para generar el gráfico con eje vertical invertido
