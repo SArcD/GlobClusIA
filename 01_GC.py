@@ -254,11 +254,19 @@ if st.button("Make Clustering"):
     #plot_container2.plotly_chart(fig)
     st.write(f"Número de clusters seleccionado: {num_clusters}")
     st.dataframe(df_cmd)
-    #st.dataframe(df_cmd)
     # Mostrar información adicional
-    st.write(f"Número de filas: {num_rows}")
-    st.write(f"Número de columnas: {num_columns}")
-    filas_con_faltantes = (df.isna().any(axis=1)).sum()
+    # Obtener información sobre el DataFrame
+    num_rows, num_columns = df_cmd.shape
+    num_missing = df_cmd.isnull().sum().sum()    
+    st.write(f"**Number of rows:** {num_rows}")
+    st.write(f"**Number of columns:** {num_columns}")
+    # Obtener el número de filas con datos faltantes
+    #num_rows_with_missing_data = df.isnull().any(axis=1).sum()
+        
+    # Mostrar el número de filas con datos faltantes
+    #st.write(f"**Number of rows with missing data:** {num_rows_with_missing_data}")
+    # Identificar filas con datos faltantes (NaN o None)
+    filas_con_faltantes = (df_cmd.isna().any(axis=1)).sum()
     # Mostrar las filas con datos faltantes
     st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
 
