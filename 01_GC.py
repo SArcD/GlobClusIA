@@ -190,15 +190,15 @@ import plotly.express as px
 
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
-st.dataframe(df_cmd)
+#st.dataframe(df_cmd)
 # Mostrar información adicional
-st.write(f"Número de filas: {num_rows}")
-st.write(f"Número de columnas: {num_columns}")
+#st.write(f"Número de filas: {num_rows}")
+#st.write(f"Número de columnas: {num_columns}")
 # Obtener el número de filas con datos faltantes
-num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
+#num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
         
 # Mostrar el número de filas con datos faltantes
-st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
+#st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 # Seleccionar solo las columnas numéricas
 #columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 #columnas_numericas = df.select_dtypes(include=[np.number])
@@ -240,6 +240,10 @@ if st.button("Realizar Clustering"):
     st.pyplot(fig)
     st.write(f"Número de clusters seleccionado: {num_clusters}")
     st.dataframe(df_cmd)
+    #st.dataframe(df_cmd)
+    # Mostrar información adicional
+    st.write(f"Número de filas: {num_rows}")
+    st.write(f"Número de columnas: {num_columns}")
 
 
 ##
