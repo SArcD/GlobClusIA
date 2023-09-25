@@ -186,7 +186,10 @@ df_cmd = df[columnas_seleccionadas]
 #st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 #
 
+import streamlit as st
 import matplotlib.pyplot as plt
+import pandas as pd
+
 # Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
 magnitudes = df_cmd["phot_g_mean_mag"]
 
@@ -194,12 +197,16 @@ magnitudes = df_cmd["phot_g_mean_mag"]
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
 # Crear el histograma
-plt.hist(magnitudes, bins=num_bins, edgecolor='k')
+fig, ax = plt.subplots()
+ax.hist(magnitudes, bins=num_bins, edgecolor='k')
 
 # Personalizar el gráfico
-plt.title("Histograma de Magnitudes Aparentes (G-band)")
-plt.xlabel("Magnitud Aparente (G-band)")
-plt.ylabel("Frecuencia")
+ax.set_title("Histograma de Magnitudes Aparentes (G-band)")
+ax.set_xlabel("Magnitud Aparente (G-band)")
+ax.set_ylabel("Frecuencia")
+
+# Mostrar el histograma en Streamlit
+st.pyplot(fig)
 
 # Mostrar el histograma
 plt.show()
