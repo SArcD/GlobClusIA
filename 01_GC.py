@@ -169,8 +169,8 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
                 if st.button("Generar Gráfico"):
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-                    #st.plotly_chart(fig)
-                    plot_container1.plotly_chart(fig)
+                    st.plotly_chart(fig)
+                    #plot_container1.plotly_chart(fig)
 
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
@@ -250,14 +250,17 @@ if st.button("Make Clustering"):
     plt.title("Dendrograma de Clustering Jerárquico")
     plt.xlabel("Índice de la Muestra")
     plt.ylabel("Distancia")
-    #st.pyplot(fig)
-    plot_container2.plotly_chart(fig)
+    st.pyplot(fig)
+    #plot_container2.plotly_chart(fig)
     st.write(f"Número de clusters seleccionado: {num_clusters}")
     st.dataframe(df_cmd)
     #st.dataframe(df_cmd)
     # Mostrar información adicional
     st.write(f"Número de filas: {num_rows}")
     st.write(f"Número de columnas: {num_columns}")
+    filas_con_faltantes = (df.isna().any(axis=1)).sum()
+    # Mostrar las filas con datos faltantes
+    st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
 
 
 ##
