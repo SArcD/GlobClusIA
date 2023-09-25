@@ -95,34 +95,34 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         from tabulate import tabulate
         # Crea un expansor con un título
         with st.expander("Parameters taken from Gaia DR3"):
-            # Tabla con los nombres de los parámetros y sus significados en inglés
+            # Table with parameter names and their meanings in English
             table_data = [
                 ["Parameter", "Meaning"],
-                ["**source_id**", "Identificador único de la fuente"],
-                ["**ra**", "Ascensión recta en el sistema de referencia ICRS"],
-                ["**ra_error**", "Error estándar de la ascensión recta"],
-                ["**dec**", "Declinación en el sistema de referencia ICRS"],
-                ["**dec_error**", "Error estándar de la declinación"],
-                ["**parallax**", "Paralaje en el sistema de referencia ICRS"],
-                ["**pmra**", "Movimiento propio en ascensión recta en el sistema de referencia ICRS"],
-                ["**pmdec**", "Movimiento propio en declinación en el sistema de referencia ICRS"],
-                ["**phot_g_mean_mag**", "Magnitud media integrada en la banda G"],
-                ["**phot_bp_mean_mag**", "Magnitud media integrada en la banda BP"],
-                ["**phot_rp_mean_mag**", "Magnitud media integrada en la banda RP"],
-                ["**bp_rp**", "Índice de color BP-RP"],
-                ["**bp_g**", "Índice de color BP-G"],
-                ["**g_rp**", "Índice de color G-RP"],
-                ["**radial_velocity**", "Velocidad radial combinada"],
-                ["**grvs_mag**", "Magnitud media integrada en la banda RVS"],
-                ["**grvs_error**", "Error estándar de la magnitud media integrada en la banda RVS"],
-                ["**non_single_star**", "Indicador de estrella no simple (binaria, variable, etc.)"],
-                ["**teff_gspphot**", "Temperatura efectiva estimada a partir del fotometría GSP-Phot"],
-                ["**logg_gspphot**", "Gravedad superficial estimada a partir del fotometría GSP-Phot"],
-                ["**mh_gspphot**", "Metalicidad estimada a partir del fotometría GSP-Phot"],
-                ["**azero_gspphot**", "Extinción estimada a partir del fotometría GSP-Phot"],
-                ["**ebpminrp_gspphot**", "Índice de color E(BP-RP) estimado a partir del fotometría GSP-Phot"]
+                ["**source_id**", "Unique identifier of the source"],
+                ["**ra**, "Right Ascension in the ICRS reference system"],
+                ["**ra_error**", "Standard error of Right Ascension"],
+                ["**dec**", "Declination in the ICRS reference system"],
+                ["**dec_error**", "Standard error of Declination"],
+                ["**parallax**", "Parallax in the ICRS reference system"],
+                ["**pmra**", "Proper motion in Right Ascension in the ICRS reference system"],
+                ["**pmdec**", "Proper motion in Declination in the ICRS reference system"],
+                ["**phot_g_mean_mag**", "Mean integrated magnitude in the G band"],
+                ["**phot_bp_mean_mag**", "Mean integrated magnitude in the BP band"],
+                ["**phot_rp_mean_mag**", "Mean integrated magnitude in the RP band"],
+                ["**bp_rp**", "BP-RP color index"],
+                ["**bp_g**", "BP-G color index"],
+                ["**g_rp**", "G-RP color index"],
+                ["**radial_velocity**", "Combined radial velocity"],
+                ["**grvs_mag**", "Mean integrated magnitude in the RVS band"],
+                ["**grvs_error**", "Standard error of mean integrated magnitude in the RVS band"],
+                ["**non_single_star**", "Indicator of non-single star (binary, variable, etc.)"],
+                ["**teff_gspphot**", "Effective temperature estimated from GSP-Phot photometry"],
+                ["**logg_gspphot**", "Surface gravity estimated from GSP-Phot photometry"],
+                ["**mh_gspphot**", "Metallicity estimated from GSP-Phot photometry"],
+                ["**azero_gspphot**", "Extinction estimated from GSP-Phot photometry"],
+                ["**ebpminrp_gspphot**", "E(BP-RP) color index estimated from GSP-Phot photometry"]
             ]
-    
+
             # Renderiza la tabla con formato Markdown
             st.markdown(tabulate(table_data, tablefmt="pipe", headers="firstrow"))
 
