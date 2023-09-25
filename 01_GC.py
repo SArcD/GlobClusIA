@@ -264,25 +264,67 @@ if st.button("Make Clustering"):
 
     st.markdown(
         """
-        La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**."""
+        The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate with respect to that variable."
+
+
+
+
+
+ """
     )
 
     # Obtener los nombres de las columnas numéricas
-    columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+    #columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
     # Calcular el número de filas y columnas del panel
-    num_rows = len(columnas_numericas)
-    num_cols = 1  # Una columna para cada parámetro
+    #num_rows = len(columnas_numericas)
+    #num_cols = 1  # Una columna para cada parámetro
 
     # Ajustar el espacio vertical y la altura de los subplots
-    subplot_height = 400  # Ajusta la altura según tu preferencia    
+    #subplot_height = 400  # Ajusta la altura según tu preferencia    
+    #vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
+
+    # Crear subplots para cada parámetro
+    #fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
+
+    # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
+    #for i, column in enumerate(columnas_numericas):
+    #    # Obtener los datos de cada cluster para el parámetro actual
+    #    cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
+
+        # Agregar el gráfico de caja al subplot correspondiente
+    #    for j in range(10):
+    #        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
+    #        box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
+    #        box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+    #        fig.add_trace(box, row=i+1, col=1)
+
+    # Actualizar el diseño y mostrar el panel de gráficos
+    #fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
+    #                  title_text='Comparación de Clusters - Gráfico de Caja',
+    #                  margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
+
+    # Mostrar la gráfica de caja en Streamlit
+    #st.plotly_chart(fig, use_container_width=True)
+
+
+
+    # Obtener los nombres de las columnas numéricas
+    columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+
+    # Calcular el número de filas y columnas del panel (2 columnas)
+    num_rows = len(columnas_numericas)
+    num_cols = 2  # Dos columnas para cada parámetro
+
+    # Ajustar el espacio vertical y la altura de los subplots
+    subplot_height = 400  # Ajusta la altura según tu preferencia
     vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
 
     # Crear subplots para cada parámetro
     fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
 
     # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
-    for i, column in enumerate(columnas_numericas):
+        for i, column in enumerate(columnas_numericas):
         # Obtener los datos de cada cluster para el parámetro actual
         cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
 
@@ -291,15 +333,19 @@ if st.button("Make Clustering"):
             box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
             box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
             box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
-            fig.add_trace(box, row=i+1, col=1)
+            # Calcular la posición del subplot en la fila y la columna
+            row_pos = i + 1
+            col_pos = j % num_cols + 1
+            fig.add_trace(box, row=row_pos, col=col_pos)
 
     # Actualizar el diseño y mostrar el panel de gráficos
-    fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
+    fig.update_layout(showlegend=False, height=subplot_height * num_rows, width=1000,  # Ajusta el ancho según tu preferencia
                       title_text='Comparación de Clusters - Gráfico de Caja',
                       margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
 
     # Mostrar la gráfica de caja en Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
 
     st.markdown("""La Figura muestra los **diagramas de caja** en los que se comparan cada uno de los **clusters** formados por la técnica de clustering jerárquico. Cada caja corresponde a un cluster en particular (donde a la izquierda de cada una pueden verse los puntos que corresponden a los pacientes contenidos). **Las cinturas de cada caja son una ayuda visual para determinar si hay evidencia suficiente sobre la diferencia entre los clusters** (si las cinturas coinciden en altura, entonces no hay evidencia de que los clusters puedan diferenciarse de acuerdo a sus valores en esa variable. **Si no coinciden en altura, entonces puede concluirse que los clusters pueden diferenciarse respecto a esa variable**).""")
 
