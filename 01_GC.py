@@ -324,7 +324,7 @@ if st.button("Make Clustering"):
     fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
 
     # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
-        for i, column in enumerate(columnas_numericas):
+    for i, column in enumerate(columnas_numericas):
         # Obtener los datos de cada cluster para el parámetro actual
         cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
 
