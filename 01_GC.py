@@ -82,13 +82,13 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         num_missing = df.isnull().sum().sum()
         
         # Mostrar información adicional
-        st.write(f"Number of rows: {num_rows}")
-        st.write(f"Number of columns: {num_columns}")
+        st.write(f"**Number of rows:** {num_rows}")
+        st.write(f"**Number of columns:** {num_columns}")
         # Obtener el número de filas con datos faltantes
         num_rows_with_missing_data = df.isnull().any(axis=1).sum()
         
         # Mostrar el número de filas con datos faltantes
-        st.write(f"Number of rows with missing data: {num_rows_with_missing_data}")
+        st.write(f"Number of rows with missing data:** {num_rows_with_missing_data}")
 #
         
         import streamlit as st
