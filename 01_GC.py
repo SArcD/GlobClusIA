@@ -356,11 +356,8 @@ if st.button("Make Clustering"):
     from sklearn.datasets import load_digits
     from sklearn.manifold import TSNE
 
-    st.markdown(
-        """
-        The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).
-    """"
-    )
+    st.markdown("""
+        The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).""")
 
 
     numeric_data=df_cmd.select_dtypes(include='number')
