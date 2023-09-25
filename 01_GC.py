@@ -149,7 +149,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
 
             if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                 # Botón para generar el gráfico con eje vertical invertido
-                if st.button("Generar Gráfico"):
+                if st.button("Make Plot"):
                     # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
         
