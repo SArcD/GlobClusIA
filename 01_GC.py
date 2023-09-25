@@ -309,7 +309,7 @@ if st.button("Make Clustering"):
 
 
 
-
+    import math
     # Obtener los nombres de las columnas numéricas
     columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
