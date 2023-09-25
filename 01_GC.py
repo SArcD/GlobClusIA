@@ -77,7 +77,14 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         df['source_id'] = df['source_id'].astype(str)
         st.dataframe(df)
 
-
+        # Obtener información sobre el DataFrame
+        num_rows, num_columns = df.shape
+        num_missing = df.isnull().sum().sum()
+        
+        # Mostrar información adicional
+        st.write(f"Número de filas: {num_rows}")
+        st.write(f"Número de columnas: {num_columns}")
+        st.write(f"Número total de datos faltantes: {num_missing}")
 
 #
         
