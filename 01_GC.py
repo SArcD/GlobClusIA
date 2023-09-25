@@ -165,15 +165,15 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 df_cmd = df[columnas_seleccionadas]        
-st.dataframe(df_cmd)
+#st.dataframe(df_cmd)
 # Mostrar información adicional
-st.write(f"Número de filas: {num_rows}")
-st.write(f"Número de columnas: {num_columns}")
+#st.write(f"Número de filas: {num_rows}")
+#st.write(f"Número de columnas: {num_columns}")
 # Obtener el número de filas con datos faltantes
-num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
+#num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
         
 # Mostrar el número de filas con datos faltantes
-st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
+#st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 #
 
 
@@ -191,6 +191,14 @@ import plotly.express as px
 # Eliminar filas con valores NaN
 df_cmd = df_cmd.dropna()
 st.dataframe(df_cmd)
+# Mostrar información adicional
+st.write(f"Número de filas: {num_rows}")
+st.write(f"Número de columnas: {num_columns}")
+# Obtener el número de filas con datos faltantes
+num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
+        
+# Mostrar el número de filas con datos faltantes
+st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 # Seleccionar solo las columnas numéricas
 #columnas_numericas = df_cmd.select_dtypes(include=[np.number])
 #columnas_numericas = df.select_dtypes(include=[np.number])
