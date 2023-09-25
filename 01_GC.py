@@ -215,14 +215,17 @@ columnas_numericas_scaled = scaler.fit_transform(columnas_numericas)
 dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
 # Agregar una interfaz de usuario para ingresar el número deseado de clusters
-st.title("Clustering Jerárquico")
-st.write("Ingresa el número deseado de clusters:")
+
+st.title("Hierarchical Clustering")
+st.write("Enter the desired number of clusters:")
+
+
 
 # Agregar un campo de entrada para el número de clusters
-num_clusters = st.number_input("Número de Clusters", min_value=1, value=4)
+num_clusters = st.number_input("Number of clusters", min_value=1, value=4)
 
 # Verificar si el usuario ha ingresado un número de clusters válido
-if st.button("Realizar Clustering"):
+if st.button("Make Clustering"):
     # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
     Z = linkage(dist_matrix, method='ward')
 
