@@ -138,7 +138,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         import plotly.express as px  
 
         st.subheader("Two dimensional plots of cluster parameters ")
-        st.markdown("**Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the camera's icon in that menu.")
+        st.markdown("**Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.")
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
 
