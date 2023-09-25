@@ -274,82 +274,82 @@ if st.button("Make Clustering"):
     )
 
     # Obtener los nombres de las columnas numéricas
-    #columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+    columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
 
     # Calcular el número de filas y columnas del panel
-    #num_rows = len(columnas_numericas)
-    #num_cols = 1  # Una columna para cada parámetro
-
-    # Ajustar el espacio vertical y la altura de los subplots
-    #subplot_height = 400  # Ajusta la altura según tu preferencia    
-    #vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
-
-    # Crear subplots para cada parámetro
-    #fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
-
-    # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
-    #for i, column in enumerate(columnas_numericas):
-    #    # Obtener los datos de cada cluster para el parámetro actual
-    #    cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
-
-        # Agregar el gráfico de caja al subplot correspondiente
-    #    for j in range(10):
-    #        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
-    #        box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-    #        box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
-    #        fig.add_trace(box, row=i+1, col=1)
-
-    # Actualizar el diseño y mostrar el panel de gráficos
-    #fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
-    #                  title_text='Comparación de Clusters - Gráfico de Caja',
-    #                  margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
-
-    # Mostrar la gráfica de caja en Streamlit
-    #st.plotly_chart(fig, use_container_width=True)
-
-
-
-    import math
-    # Obtener los nombres de las columnas numéricas
-    columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
-
-    # Calcular el número de filas y columnas del panel (2 columnas)
     num_rows = len(columnas_numericas)
-    num_cols = 2  # Dos columnas para cada parámetro
-
-    # Calcular el número de subplots necesarios para mostrar todos los diagramas de caja
-    num_subplots = math.ceil(len(columnas_numericas) / num_cols)
+    num_cols = 1  # Una columna para cada parámetro
 
     # Ajustar el espacio vertical y la altura de los subplots
-    subplot_height = 400  # Ajusta la altura según tu preferencia
+    subplot_height = 400  # Ajusta la altura según tu preferencia    
     vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
 
     # Crear subplots para cada parámetro
-    fig = make_subplots(rows=num_subplots, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
+    fig = make_subplots(rows=num_rows, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
 
     # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
     for i, column in enumerate(columnas_numericas):
         # Obtener los datos de cada cluster para el parámetro actual
         cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
 
-        # Calcular la posición del subplot en la fila y la columna
-        row_pos = i // num_cols + 1
-        col_pos = i % num_cols + 1
-
-        # Agregar el gráfico de caja al subplot correspondiente
+        #Agregar el gráfico de caja al subplot correspondiente
         for j in range(10):
             box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
             box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
             box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
-            fig.add_trace(box, row=row_pos, col=col_pos)
+            fig.add_trace(box, row=i+1, col=1)
 
-    # Actualizar el diseño y mostrar el panel de gráficos
-    fig.update_layout(showlegend=False, height=subplot_height * num_subplots, width=800,  # Ajusta el ancho según tu preferencia
+    #Actualizar el diseño y mostrar el panel de gráficos
+    fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
                       title_text='Comparación de Clusters - Gráfico de Caja',
                       margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
 
-    # Mostrar la gráfica de caja en Streamlit
+    #Mostrar la gráfica de caja en Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
+
+
+    import math
+    # Obtener los nombres de las columnas numéricas
+    #columnas_numericas = df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+
+    # Calcular el número de filas y columnas del panel (2 columnas)
+    #num_rows = len(columnas_numericas)
+    #num_cols = 2  # Dos columnas para cada parámetro
+
+    # Calcular el número de subplots necesarios para mostrar todos los diagramas de caja
+    #num_subplots = math.ceil(len(columnas_numericas) / num_cols)
+
+    # Ajustar el espacio vertical y la altura de los subplots
+    #subplot_height = 400  # Ajusta la altura según tu preferencia
+    #vertical_spacing = 0.004  # Ajusta el espacio vertical según tu preferencia
+
+    # Crear subplots para cada parámetro
+    #fig = make_subplots(rows=num_subplots, cols=num_cols, subplot_titles=columnas_numericas, vertical_spacing=vertical_spacing)
+
+    # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
+    #for i, column in enumerate(columnas_numericas):
+    #    # Obtener los datos de cada cluster para el parámetro actual
+    #    cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
+
+    #    # Calcular la posición del subplot en la fila y la columna
+    #    row_pos = i // num_cols + 1
+    #    col_pos = i % num_cols + 1
+
+    #    # Agregar el gráfico de caja al subplot correspondiente
+    #    for j in range(10):
+    #        box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
+    #        box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
+    #        box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+    #        fig.add_trace(box, row=row_pos, col=col_pos)
+
+    ## Actualizar el diseño y mostrar el panel de gráficos
+    #fig.update_layout(showlegend=False, height=subplot_height * num_subplots, width=800,  # Ajusta el ancho según tu preferencia
+    #                  title_text='Comparación de Clusters - Gráfico de Caja',
+    #                  margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
+
+    ## Mostrar la gráfica de caja en Streamlit
+    #st.plotly_chart(fig, use_container_width=True)
 
 
 
