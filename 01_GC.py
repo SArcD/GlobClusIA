@@ -97,10 +97,9 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         with st.expander("Parameters taken from Gaia DR3"):
             # Table with parameter names and their meanings in English
             table_data = [
-                ["Parameter", "Meaning"],
-                ["**source_id**", "Unique identifier of the source"],
-                ["**ra**, "Right Ascension in the ICRS reference system"],
-                ["**ra_error**", "Standard error of Right Ascension"],
+                ["Parameter", "Meaning"], 
+                ["**source_id**", "Unique identifier of the source"], 
+                ["**ra**", "Right Ascension in the ICRS reference system"], ["**ra_error**", "Standard error of Right Ascension"],
                 ["**dec**", "Declination in the ICRS reference system"],
                 ["**dec_error**", "Standard error of Declination"],
                 ["**parallax**", "Parallax in the ICRS reference system"],
