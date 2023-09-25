@@ -339,7 +339,7 @@ if st.button("Make Clustering"):
             fig.add_trace(box, row=row_pos, col=col_pos)
 
     # Actualizar el diseño y mostrar el panel de gráficos
-    fig.update_layout(showlegend=False, height=subplot_height * num_rows, width=1000,  # Ajusta el ancho según tu preferencia
+    fig.update_layout(showlegend=False, height=subplot_height * num_rows, width=600,  # Ajusta el ancho según tu preferencia
                       title_text='Comparación de Clusters - Gráfico de Caja',
                       margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
 
