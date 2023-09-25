@@ -7,7 +7,7 @@ import requests
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
 st.subheader("Individual analysis")
-st.markdown("**Instructions:** Please select **two files**, the photometry files (Name_photo.csv) and surface parameters files (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).")
+st.markdown("**Instructions:** Please select **the photometry** file (Name_photo.csv) and **surface parameters** file (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).")
 
 # URL del repositorio de GitHub
 repo_url = "https://github.com/SArcD/GlobClusIA"
@@ -85,11 +85,15 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         st.write(f"**Number of rows:** {num_rows}")
         st.write(f"**Number of columns:** {num_columns}")
         # Obtener el número de filas con datos faltantes
-        num_rows_with_missing_data = df.isnull().any(axis=1).sum()
+        #num_rows_with_missing_data = df.isnull().any(axis=1).sum()
         
         # Mostrar el número de filas con datos faltantes
         st.write(f"**Number of rows with missing data:** {num_rows_with_missing_data}")
-#
+#       # Identificar filas con datos faltantes (NaN o None)
+        filas_con_faltantes = df.isna().any(axis=1)
+
+# Mostrar las filas con datos faltantes
+print(df[filas_con_faltantes])
         
         import streamlit as st
         from tabulate import tabulate
