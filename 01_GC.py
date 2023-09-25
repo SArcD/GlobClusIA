@@ -88,7 +88,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         #num_rows_with_missing_data = df.isnull().any(axis=1).sum()
         
         # Mostrar el número de filas con datos faltantes
-        st.write(f"**Number of rows with missing data:** {num_rows_with_missing_data}")
+        #st.write(f"**Number of rows with missing data:** {num_rows_with_missing_data}")
         # Identificar filas con datos faltantes (NaN o None)
         filas_con_faltantes = df.isna().any(axis=1)
 
