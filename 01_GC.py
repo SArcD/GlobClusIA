@@ -75,7 +75,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         st.write("Merged DataFrame:")
         df = merged_df
         df['source_id'] = df['source_id'].astype(str)
-        #st.dataframe(df)
+        jhust.dataframe(df)
 
 
 
