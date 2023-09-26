@@ -557,6 +557,7 @@ if st.button("Make Clustering"):
 ################################3
 
 import pandas as pd
+import streamlit as st
 
 # Supongamos que tienes K clusters en tu DataFrame original
 K = df_cmd['gc'].nunique()
@@ -572,9 +573,18 @@ for cluster_num in range(K):
     # Almacenar el DataFrame en el diccionario con la clave como el número de cluster
     dataframes_por_cluster[cluster_num] = cluster_df
 
-# Ahora, dataframes_por_cluster contiene DataFrames separados para cada cluster
-# Puedes acceder a cada DataFrame individualmente usando la clave correspondiente.
-st.dataframe(dataframes_por_cluster[0])
+# Crear un widget de selección para que el usuario elija un cluster
+cluster_elegido = st.selectbox("Selecciona un cluster:", list(dataframes_por_cluster.keys()))
+
+# Mostrar las primeras filas del DataFrame del cluster seleccionado
+if cluster_elegido in dataframes_por_cluster:
+    st.write(f"Cluster seleccionado: {cluster_elegido}")
+    selected_df = dataframes_por_cluster[cluster_elegido]
+    st.write(selected_df)
+else:
+    st.write("Selecciona un cluster para ver sus filas.")
+
+# Ahora, el usuario puede elegir un cluster y ver sus filas correspondientes.
 
 
 
