@@ -347,7 +347,8 @@ magnitudes = df_cmd["phot_g_mean_mag"]
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
 # Crear el histograma
-hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
+#hist, bins, _ = phist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
+hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
 # Crear un array de características con los valores medios de los bins
 features = (bins[:-1] + bins[1:]) / 2
