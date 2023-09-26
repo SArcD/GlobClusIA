@@ -574,7 +574,7 @@ for cluster_num in range(K):
 
 # Ahora, dataframes_por_cluster contiene DataFrames separados para cada cluster
 # Puedes acceder a cada DataFrame individualmente usando la clave correspondiente.
-st.dtaframe(dataframes_por_cluster[0])
+st.dataframe(dataframes_por_cluster[0])
 
 
 
