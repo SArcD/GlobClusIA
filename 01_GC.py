@@ -187,7 +187,6 @@ df_cmd = df[columnas_seleccionadas]
 #
 ################################################
 
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -201,7 +200,7 @@ import plotly.express as px
 magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 
 # Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
+num_bins = 31  # Ajustado para que coincida con la longitud de pdf_ajuste
 
 # Crear el histograma de los datos originales
 hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
@@ -235,11 +234,10 @@ fig.add_scatter(x=(bins[:-1] + bins[1:]) / 2, y=pdf_ajuste, mode='lines', name='
 st.plotly_chart(fig)
 
 # Calcular el error cuadrático medio del ajuste seleccionado
-mse_ajuste = mean_squared_error(hist, pdf_ajuste)
+mse_ajuste = mean_squared_error(df_plotly['Densidad de Estrellas'], pdf_ajuste)
 
 # Mostrar el error cuadrático medio
 st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste}")
-
 
 ################################################
 import streamlit as st
