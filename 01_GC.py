@@ -190,11 +190,11 @@ df_cmd = df[columnas_seleccionadas]
 
 import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.stats import norm, expon
 from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
+import plotly.express as px
 
 # Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
@@ -204,48 +204,41 @@ magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
 # Crear el histograma de los datos originales
-hist, bins, _ = plt.hist(magnitudes, bins=num_bins, density=True, color='b', edgecolor='black', alpha=0.7)
+hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
-# Crear una figura para mostrar el histograma original y las gráficas ajustadas
-fig, ax = plt.subplots(figsize=(10, 6))
+# Crear un widget de selección para el método de ajuste
+metodo_ajuste = st.radio("Selecciona un método de ajuste:", ('Función Gaussiana', 'Función Exponencial', 'K-Means'))
 
-# Ajustar los datos con una función gaussiana
-mu, std = norm.fit(magnitudes)
-pdf_gaussiana = norm.pdf(bins, mu, std)
-ax.plot(bins, pdf_gaussiana, 'r--', label='Función Gaussiana')
+# Ajustar los datos según el método seleccionado
+if metodo_ajuste == 'Función Gaussiana':
+    mu, std = norm.fit(magnitudes)
+    pdf_ajuste = norm.pdf(bins, mu, std)
+    metodo_texto = 'Función Gaussiana'
+elif metodo_ajuste == 'Función Exponencial':
+    loc, scale = expon.fit(magnitudes)
+    pdf_ajuste = expon.pdf(bins, loc, scale)
+    metodo_texto = 'Función Exponencial'
+else:  # K-Means
+    magnitudes = magnitudes.values.reshape(-1, 1)  # Reshape para que sea compatible con K-Means
+    kmeans = KMeans(n_clusters=1).fit(magnitudes)
+    pdf_ajuste = np.full_like(hist, kmeans.cluster_centers_[0])
+    metodo_texto = 'K-Means'
 
-# Ajustar los datos con una función exponencial
-loc, scale = expon.fit(magnitudes)
-pdf_exponencial = expon.pdf(bins, loc, scale)
-ax.plot(bins, pdf_exponencial, 'g--', label='Función Exponencial')
+# Configurar la figura con Plotly
+df_plotly = pd.DataFrame({'Magnitud Aparente': (bins[:-1] + bins[1:]) / 2, 'Densidad de Estrellas': hist})
+fig = px.bar(df_plotly, x='Magnitud Aparente', y='Densidad de Estrellas', title=f'Gráfica del Ajuste con {metodo_texto}')
 
-# Ajustar los datos con K-Means
-magnitudes = magnitudes.values.reshape(-1, 1)  # Reshape para que sea compatible con K-Means
-kmeans = KMeans(n_clusters=1).fit(magnitudes)
-pdf_kmeans = kmeans.cluster_centers_
-ax.plot(bins, pdf_kmeans, 'b--', label='K-Means')
-
-# Configurar la figura
-ax.set_xlabel('Magnitud Aparente')
-ax.set_ylabel('Densidad de Estrellas')
-ax.legend()
+# Agregar la línea del ajuste
+fig.add_scatter(x=(bins[:-1] + bins[1:]) / 2, y=pdf_ajuste, mode='lines', name='Ajuste')
 
 # Mostrar la figura en Streamlit
-st.pyplot(fig)
+st.plotly_chart(fig)
 
-# Calcular los errores cuadráticos medios de los ajustes
-mse_gaussiana = mean_squared_error(hist, pdf_gaussiana)
-mse_exponencial = mean_squared_error(hist, pdf_exponencial)
-mse_kmeans = mean_squared_error(hist, pdf_kmeans)
+# Calcular el error cuadrático medio del ajuste seleccionado
+mse_ajuste = mean_squared_error(hist, pdf_ajuste)
 
-# Crear una tabla para mostrar los errores cuadráticos medios
-st.write("Errores Cuadráticos Medios:")
-st.write(pd.DataFrame({
-    'Método': ['Función Gaussiana', 'Función Exponencial', 'K-Means'],
-    'Error Cuadrático Medio': [mse_gaussiana, mse_exponencial, mse_kmeans]
-}))
-
-
+# Mostrar el error cuadrático medio
+st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste}")
 
 
 ################################################
