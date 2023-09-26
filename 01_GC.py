@@ -340,6 +340,15 @@ from sklearn.cluster import KMeans
 
 # Supongamos que tienes un histograma de magnitudes en la variable "hist" y los correspondientes bins en "bins"
 
+# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
+magnitudes = df_cmd["phot_g_mean_mag"]
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma
+hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
+
 # Crear un array de características con los valores medios de los bins
 features = (bins[:-1] + bins[1:]) / 2
 
