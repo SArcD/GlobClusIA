@@ -350,6 +350,7 @@ ax[1].set_ylabel('Función de Luminosidad Diferencial')
 
 # Mostrar la figura en Streamlit
 st.pyplot(fig)
+st.write("ss")
 
 
 
