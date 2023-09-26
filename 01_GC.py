@@ -573,18 +573,11 @@ for cluster_num in range(K):
     # Almacenar el DataFrame en el diccionario con la clave como el número de cluster
     dataframes_por_cluster[cluster_num] = cluster_df
 
-# Crear un widget de selección para que el usuario elija un cluster
-cluster_elegido = st.selectbox("Selecciona un cluster:", list(dataframes_por_cluster.keys()))
+# Mostrar todos los DataFrames uno por uno
+for cluster_num, cluster_df in dataframes_por_cluster.items():
+    st.write(f"Cluster {cluster_num}:")
+    st.write(cluster_df)
 
-# Mostrar las primeras filas del DataFrame del cluster seleccionado
-if cluster_elegido in dataframes_por_cluster:
-    st.write(f"Cluster seleccionado: {cluster_elegido}")
-    selected_df = dataframes_por_cluster[cluster_elegido]
-    st.write(selected_df)
-else:
-    st.write("Selecciona un cluster para ver sus filas.")
-
-# Ahora, el usuario puede elegir un cluster y ver sus filas correspondientes.
 
 
 
