@@ -267,6 +267,56 @@ mse_ajuste = mean_squared_error(hist, y_fit[:len(hist)])  # Recortar y_fit para 
 # Mostrar el error cuadrático medio
 st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste:.6f}")
 
+###############################################
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma de los datos originales
+hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
+
+# Definir una función exponencial para el ajuste
+def exponencial(x, a, b):
+    return a * np.exp(b * x)
+
+# Ajustar la función exponencial a los datos
+parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
+
+# Generar datos para la curva ajustada
+x_fit = np.linspace(min(magnitudes), max(magnitudes), len(hist))
+y_fit = exponencial(x_fit, *parametros_optimizados)
+
+# Configurar la figura
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar((bins[:-1] + bins[1:]) / 2, hist, width=(bins[1] - bins[0]), alpha=0.7, label='Datos')
+ax.plot(x_fit, y_fit, 'r--', label='Ajuste')
+
+# Configurar etiquetas y leyenda
+ax.set_xlabel('Magnitud Aparente')
+ax.set_ylabel('Densidad de Estrellas')
+ax.set_title('Ajuste con Función Exponencial')
+ax.legend()
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
+
+# Calcular el error cuadrático medio del ajuste seleccionado
+error_cuadratico_medio = np.mean((y_fit - hist)**2)
+
+# Mostrar el error cuadrático medio
+st.write(f"Error Cuadrático Medio del Ajuste Exponencial: {error_cuadratico_medio:.6f}")
+
+
+
 ################################################
 import streamlit as st
 import pandas as pd
