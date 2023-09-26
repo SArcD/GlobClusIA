@@ -349,10 +349,14 @@ num_bins = 30  # Puedes ajustar este valor según tus preferencias
 # Crear el histograma
 hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
-# Crear un array de características con los valores medios de los bins
-features = (bins[:-1] + bins[1:]) / 2
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
 # Redimensionar el array de características
+features = (bins[:-1] + bins[1:]) / 2
+
+# Crear un array 2D de características con los valores medios de los bins
 X = features.reshape(-1, 1)
 
 # Definir el número de clusters (puedes ajustarlo según tus necesidades)
