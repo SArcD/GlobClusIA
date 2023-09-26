@@ -393,7 +393,7 @@ features = (bins[:-1] + bins[1:]) / 2
 X = features.reshape(-1, 1)
 
 # Definir el número de clusters como 2
-n_clusters = 4
+n_clusters = 10
 
 # Crear el modelo de K-Means
 kmeans = KMeans(n_clusters=n_clusters, random_state=0)
