@@ -554,6 +554,27 @@ if st.button("Make Clustering"):
     st.plotly_chart(fig2)
     st.plotly_chart(fig3)
 
+################################3
+
+import pandas as pd
+
+# Supongamos que tienes K clusters en tu DataFrame original
+K = df_cmd['gc'].nunique()
+
+# Crear un diccionario de DataFrames donde cada clave es el número de cluster
+dataframes_por_cluster = {}
+
+# Iterar sobre cada cluster y crear un DataFrame para cada uno
+for cluster_num in range(K):
+    # Filtrar las filas que pertenecen al cluster actual
+    cluster_df = df_cmd[df_cmd['gc'] == cluster_num]
+    
+    # Almacenar el DataFrame en el diccionario con la clave como el número de cluster
+    dataframes_por_cluster[cluster_num] = cluster_df
+
+# Ahora, dataframes_por_cluster contiene DataFrames separados para cada cluster
+# Puedes acceder a cada DataFrame individualmente usando la clave correspondiente.
+st.dtaframe(dataframes_por_cluster[0])
 
 
 
