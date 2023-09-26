@@ -278,7 +278,7 @@ def exponencial(x, a, b):
 parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
 
 # Generar datos para la curva ajustada
-x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
+x_fit = np.linspace(min(magnitudes), max(magnitudes), len(hist))  # Ajustar la longitud de x_fit
 y_fit = exponencial(x_fit, *parametros_optimizados)
 
 # Crear el gráfico en Streamlit
@@ -293,7 +293,6 @@ st.line_chart(hist, use_container_width=True)
 # Calcular el error cuadrático medio del ajuste
 error_cuadratico_medio = np.mean((y_fit - hist)**2)
 st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
-
 
 
 
