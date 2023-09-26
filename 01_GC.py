@@ -284,16 +284,17 @@ num_bins = 30  # Puedes ajustar este valor según tus preferencias
 # Crear el histograma de los datos originales
 hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
 
-# Definir una función exponencial para el ajuste
-def exponencial(x, a, b):
-    return a * np.exp(b * x)
+# Definir una función exponencial negativa para el ajuste
+def exponencial_negativa(x, a, b, c):
+    return a * np.exp(b * x) + c
 
-# Ajustar la función exponencial a los datos
-parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
+# Ajustar la función exponencial negativa a los datos
+parametros_iniciales = [1.0, -0.1, 1.0]  # Parámetros iniciales para el ajuste
+parametros_optimizados, cov_matrix = curve_fit(exponencial_negativa, bins[:-1], hist, p0=parametros_iniciales)
 
 # Generar datos para la curva ajustada
 x_fit = np.linspace(min(magnitudes), max(magnitudes), len(hist))
-y_fit = exponencial(x_fit, *parametros_optimizados)
+y_fit = exponencial_negativa(x_fit, *parametros_optimizados)
 
 # Configurar la figura
 fig, ax = plt.subplots(figsize=(10, 6))
