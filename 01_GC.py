@@ -256,6 +256,45 @@ y_pred = gaussiana(bins[:-1], *parametros_optimizados)  # Evaluar la Gaussiana e
 error_cuadratico_medio = np.mean((y_pred - hist)**2)
 st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
 
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+
+# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
+magnitudes = df_cmd["phot_g_mean_mag"]
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma
+hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
+
+# Definir una función exponencial para el ajuste
+def exponencial(x, a, b):
+    return a * np.exp(b * x)
+
+# Ajustar la función exponencial a los datos
+parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
+
+# Generar datos para la curva ajustada
+x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
+y_fit = exponencial(x_fit, *parametros_optimizados)
+
+# Crear el gráfico en Streamlit
+st.title("Ajuste de una Función Exponencial al Histograma")
+st.write("Histograma de Magnitudes Aparentes (G-band)")
+st.pyplot(plt)
+
+# Mostrar el histograma y la curva ajustada
+st.write("Histograma y Curva Ajustada:")
+st.line_chart(hist, use_container_width=True)
+
+# Calcular el error cuadrático medio del ajuste
+error_cuadratico_medio = np.mean((y_fit - hist)**2)
+st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
+
+
 
 
 
