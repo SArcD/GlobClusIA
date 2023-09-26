@@ -408,7 +408,7 @@ cluster_centers = kmeans.cluster_centers_
 rgb_tip_brillo = np.max(cluster_centers)
 
 # Imprimir el resultado en Streamlit
-st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo[0]:.2f}")
+st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
 
 # Mostrar el histograma de los datos normalizado en Streamlit
 st.bar_chart(hist, use_container_width=True)
