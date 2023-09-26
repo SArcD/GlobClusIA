@@ -191,7 +191,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
-magnitudes = df_cmd["phot_rp_mean_mag"]
+magnitudes = df_cmd["phot_g_mean_mag"]
 
 # Definir el número de bins (intervalos) para el histograma
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
