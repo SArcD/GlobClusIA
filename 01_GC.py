@@ -334,8 +334,8 @@ st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
 
 ####
 
+import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
@@ -368,15 +368,15 @@ cluster_centers = kmeans.cluster_centers_
 # El centroide más pequeño corresponde al RGB Bump
 rgb_bump_brillo = np.min(cluster_centers)
 
-# Imprimir el resultado
-print(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo}")
+# Imprimir el resultado en Streamlit
+st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo}")
 
-# Mostrar el histograma
-plt.bar(features, hist, width=np.diff(bins)[0], edgecolor='k')
-plt.title("Histograma con Detección del RGB Bump")
-plt.xlabel("Magnitud Aparente")
-plt.ylabel("Frecuencia")
-plt.show()
+# Mostrar el histograma en Streamlit
+st.bar_chart(hist, use_container_width=True)
+st.title("Histograma con Detección del RGB Bump")
+st.xlabel("Magnitud Aparente")
+st.ylabel("Frecuencia")
+
 
 
 ####
