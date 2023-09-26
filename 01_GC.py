@@ -394,6 +394,39 @@ ax[1].set_ylabel('Función de Luminosidad Diferencial')
 # Mostrar la figura en Streamlit
 st.pyplot(fig)
 
+###
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from scipy.stats import gaussian_kde
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de puntos para la representación de la función de luminosidad diferencial
+num_points = 1000  # Puedes ajustar este valor según tus preferencias
+
+# Calcular la función de luminosidad diferencial utilizando el suavizado de kernel
+kde = gaussian_kde(magnitudes)
+magnitudes_grid = np.linspace(min(magnitudes), max(magnitudes), num_points)
+luminosidad_diferencial = kde.evaluate(magnitudes_grid)
+
+# Crear una figura para mostrar la función de luminosidad diferencial
+fig, ax = plt.subplots(figsize=(8, 4))
+
+# Graficar la función de luminosidad diferencial
+ax.plot(magnitudes_grid, luminosidad_diferencial, color='r')
+ax.set_xlabel('Magnitud Aparente')
+ax.set_ylabel('Función de Luminosidad Diferencial')
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
+
+
 
 ####
 import streamlit as st
