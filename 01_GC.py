@@ -248,7 +248,12 @@ st.write("Histograma y Curva Ajustada:")
 st.line_chart(hist, use_container_width=True)
 
 # Calcular el error cuadrático medio del ajuste
-error_cuadratico_medio = np.mean((y_fit - hist)**2)
+#error_cuadratico_medio = np.mean((y_fit - hist)**2)
+#st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
+
+# Calcular el error cuadrático medio del ajuste
+y_pred = gaussiana(bins[:-1], *parametros_optimizados)  # Evaluar la Gaussiana en los mismos puntos que el histograma
+error_cuadratico_medio = np.mean((y_pred - hist)**2)
 st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
 
 
