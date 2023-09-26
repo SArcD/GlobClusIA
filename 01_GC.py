@@ -391,8 +391,8 @@ features = (bins[:-1] + bins[1:]) / 2
 # Redimensionar el array de características
 X = features.reshape(-1, 1)
 
-# Definir el número de clusters como 2 para detectar inicialmente el "RGB Bump"
-n_clusters = 2
+# Definir el número de clusters como 4 para detectar varios grupos
+n_clusters = 4
 
 # Crear el modelo de K-Means
 kmeans = KMeans(n_clusters=n_clusters, random_state=0)
@@ -403,34 +403,32 @@ kmeans.fit(X)
 # Obtener los centroides de los clusters
 cluster_centers = kmeans.cluster_centers_
 
+# Ordenar los centroides de menor a mayor brillo
+sorted_centers = np.sort(cluster_centers.flatten())
+
 # El centroide más pequeño corresponde al RGB Bump
-rgb_bump_brillo = np.min(cluster_centers)
+rgb_bump_brillo = sorted_centers[0]
 
 # Excluir estrellas más brillantes que el RGB Bump para estimar el RGB-tip
 magnitudes_rgb_tip = magnitudes[magnitudes < rgb_bump_brillo]
 
-# Crear un nuevo modelo de K-Means para estimar el RGB-tip
+# Crear un nuevo modelo de K-Means con 1 cluster para estimar el RGB-tip
 kmeans_rgb_tip = KMeans(n_clusters=1, random_state=0)
 
 # Ajustar el nuevo modelo al subconjunto de datos
 kmeans_rgb_tip.fit(magnitudes_rgb_tip.values.reshape(-1, 1))
 
-# Obtener el brillo estimado del RGB-tip (acceder al valor escalar)
+# Obtener el brillo estimado del RGB-tip
 rgb_tip_brillo = kmeans_rgb_tip.cluster_centers_[0][0]
 
 # Imprimir el resultado en Streamlit
 st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo:.2f}")
 st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
 
-
 # Mostrar el histograma de los datos normalizado en Streamlit
 st.bar_chart(hist, use_container_width=True)
 st.title("Histograma Normalizado de los Datos")
 st.text("Magnitud Aparente Normalizada vs. Frecuencia")
-
-# Obtener el brillo estimado del RGB-tip (acceder al valor escalar)
-rgb_tip_brillo = kmeans_rgb_tip.cluster_centers_[0][0]
-
 
 
 ################################################
