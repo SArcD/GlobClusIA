@@ -371,6 +371,9 @@ st.pyplot()
 
 ################################################
 
+
+
+##############################################
 import streamlit as st
 import numpy as np
 from sklearn.cluster import KMeans
@@ -429,6 +432,39 @@ st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
 st.bar_chart(hist, use_container_width=True)
 st.title("Histograma Normalizado de los Datos")
 st.text("Magnitud Aparente Normalizada vs. Frecuencia")
+
+###############################################
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma de los datos
+hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
+
+# Encontrar los picos en el histograma
+peaks, _ = find_peaks(hist, height=0.1)  # Ajusta el umbral de altura según sea necesario
+
+# Anotar las posiciones de los picos
+peak_positions = (bins[peaks[:-1]] + bins[peaks[1:]]) / 2
+
+# Mostrar el histograma con los picos detectados en Streamlit
+st.bar_chart(hist, use_container_width=True)
+st.title("Histograma con Detección de Picos")
+st.text("Magnitud Aparente Normalizada vs. Frecuencia")
+
+# Mostrar las posiciones de los picos
+st.write("Ubicaciones de los Picos Detectados:")
+st.write(peak_positions)
+
 
 
 ################################################
