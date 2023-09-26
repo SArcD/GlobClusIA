@@ -332,6 +332,51 @@ st.line_chart(hist, use_container_width=True)
 error_cuadratico_medio = np.mean((y_fit - hist)**2)
 st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
 
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+
+# Supongamos que tienes un DataFrame llamado "df" con tus datos, y las columnas son "brillo", "RGB_bump" y "RGB_tip"
+# Asegúrate de que tus datos estén cargados adecuadamente en el DataFrame
+
+# Paso 1: Preparación de los datos
+X = df_cmd["phot_g_mean_mag"].values.reshape(-1, 1)  # Entrada: Brillo
+y = df_cmd["RGB_bump"].values  # Salida deseada: RGB bump (puedes cambiarlo a "RGB_tip" si lo prefieres)
+
+# Paso 2: División de datos
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Paso 3: Entrenamiento del Árbol de Regresión
+regressor = DecisionTreeRegressor(random_state=42)
+regressor.fit(X_train, y_train)
+
+# Paso 4: Predicciones
+y_pred = regressor.predict(X_test)
+
+# Paso 5: Evaluación del Modelo
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Error Cuadrático Medio (MSE): {mse}")
+print(f"Coeficiente de Determinación (R-squared): {r2}")
+
+# Paso 6: Visualización del Modelo (Ajuste)
+plt.scatter(X_test, y_test, color='gray', label='Datos reales')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Ajuste del Árbol de Regresión')
+plt.xlabel("Brillo")
+plt.ylabel("RGB Bump")
+plt.legend()
+plt.title("Ajuste del Árbol de Regresión para RGB Bump")
+plt.show()
+
+# Paso 7: Utilización del Modelo (Puedes utilizarlo para hacer predicciones en nuevos datos)
+nuevo_brillo = np.array([[nuevo_valor_de_brillo]])  # Sustituye "nuevo_valor_de_brillo" con el valor de brillo que desees predecir
+nuevo_rgb_bump = regressor.predict(nuevo_brillo)
+print(f"Predicción de RGB Bump para brillo={nuevo_valor_de_brillo}: {nuevo_rgb_bump[0]}")
+
 
 
 
