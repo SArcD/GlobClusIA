@@ -338,8 +338,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
-# Supongamos que tienes un histograma de magnitudes en la variable "hist" y los correspondientes bins en "bins"
-
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
 magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 
@@ -349,14 +347,10 @@ num_bins = 30  # Puedes ajustar este valor según tus preferencias
 # Crear el histograma
 hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-
-# Redimensionar el array de características
+# Crear un array de características con los valores medios de los bins
 features = (bins[:-1] + bins[1:]) / 2
 
-# Crear un array 2D de características con los valores medios de los bins
+# Redimensionar el array de características
 X = features.reshape(-1, 1)
 
 # Definir el número de clusters (puedes ajustarlo según tus necesidades)
@@ -378,12 +372,11 @@ rgb_bump_brillo = np.min(cluster_centers)
 print(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo}")
 
 # Mostrar el histograma
-plt.bar(bins, hist, width=np.diff(bins)[0], edgecolor='k')
+plt.bar(features, hist, width=np.diff(bins)[0], edgecolor='k')
 plt.title("Histograma con Detección del RGB Bump")
 plt.xlabel("Magnitud Aparente")
 plt.ylabel("Frecuencia")
 plt.show()
-
 
 
 ####
