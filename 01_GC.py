@@ -376,6 +376,9 @@ delta_m = bins[1] - bins[0]
 # Calcular la función de luminosidad diferencial
 luminosidad_diferencial = hist / (len(magnitudes) * delta_m)
 
+# Calcular los puntos medios de los intervalos para la representación gráfica
+puntos_medios = (bins[:-1] + bins[1:]) / 2
+
 # Crear una figura para mostrar el histograma y la función de luminosidad diferencial
 fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
@@ -384,7 +387,7 @@ ax[0].hist(magnitudes, bins=num_bins, alpha=0.75, color='b', edgecolor='black')
 ax[0].set_ylabel('Frecuencia')
 
 # Graficar la función de luminosidad diferencial
-ax[1].step(bins[:-1], luminosidad_diferencial, where='mid', color='r')
+ax[1].step(puntos_medios, luminosidad_diferencial, color='r')
 ax[1].set_xlabel('Magnitud Aparente')
 ax[1].set_ylabel('Función de Luminosidad Diferencial')
 
