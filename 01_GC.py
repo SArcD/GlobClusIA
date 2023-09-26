@@ -190,54 +190,72 @@ df_cmd = df[columnas_seleccionadas]
 import streamlit as st
 import numpy as np
 import pandas as pd
-from scipy.stats import norm, expon
-from sklearn.cluster import KMeans
-from sklearn.metrics import mean_squared_error
-import plotly.express as px
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 
 # Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
 magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 
 # Definir el número de bins (intervalos) para el histograma
-num_bins = 31  # Ajustado para que coincida con la longitud de pdf_ajuste
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
 # Crear el histograma de los datos originales
 hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
 # Crear un widget de selección para el método de ajuste
-metodo_ajuste = st.radio("Selecciona un método de ajuste:", ('Función Gaussiana', 'Función Exponencial', 'K-Means'))
+metodo_ajuste = st.radio("Selecciona un método de ajuste:", ('Función Gaussiana', 'Función Exponencial'))
 
 # Ajustar los datos según el método seleccionado
 if metodo_ajuste == 'Función Gaussiana':
-    mu, std = norm.fit(magnitudes)
-    pdf_ajuste = norm.pdf(bins, mu, std)
+    # Definir la función Gaussiana para el ajuste
+    def gaussiana(x, mu, sigma):
+        return (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((x - mu)**2) / (2 * sigma**2))
+
+    # Ajustar la función Gaussiana a los datos
+    parametros_iniciales = [np.mean(magnitudes), np.std(magnitudes)]
+    parametros_optimizados, cov_matrix = curve_fit(gaussiana, bins[:-1], hist, p0=parametros_iniciales)
+
+    # Generar datos para la curva ajustada
+    x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
+    y_fit = gaussiana(x_fit, *parametros_optimizados)
+
     metodo_texto = 'Función Gaussiana'
-elif metodo_ajuste == 'Función Exponencial':
-    loc, scale = expon.fit(magnitudes)
-    pdf_ajuste = expon.pdf(bins, loc, scale)
+else:  # Función Exponencial
+    # Definir una función exponencial para el ajuste
+    def exponencial(x, a, b):
+        return a * np.exp(b * x)
+
+    # Ajustar la función exponencial a los datos
+    parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
+
+    # Generar datos para la curva ajustada
+    x_fit = np.linspace(min(magnitudes), max(magnitudes), len(hist))
+    y_fit = exponencial(x_fit, *parametros_optimizados)
+
     metodo_texto = 'Función Exponencial'
-else:  # K-Means
-    magnitudes = magnitudes.values.reshape(-1, 1)  # Reshape para que sea compatible con K-Means
-    kmeans = KMeans(n_clusters=1).fit(magnitudes)
-    pdf_ajuste = np.full_like(hist, kmeans.cluster_centers_[0])
-    metodo_texto = 'K-Means'
 
-# Configurar la figura con Plotly
-df_plotly = pd.DataFrame({'Magnitud Aparente': (bins[:-1] + bins[1:]) / 2, 'Densidad de Estrellas': hist})
-fig = px.bar(df_plotly, x='Magnitud Aparente', y='Densidad de Estrellas', title=f'Gráfica del Ajuste con {metodo_texto}')
+# Configurar la figura
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar((bins[:-1] + bins[1:]) / 2, hist, width=(bins[1] - bins[0]), alpha=0.7, label='Datos')
+ax.plot(x_fit, y_fit, 'r--', label='Ajuste')
 
-# Agregar la línea del ajuste
-fig.add_scatter(x=(bins[:-1] + bins[1:]) / 2, y=pdf_ajuste, mode='lines', name='Ajuste')
+# Configurar etiquetas y leyenda
+ax.set_xlabel('Magnitud Aparente')
+ax.set_ylabel('Densidad de Estrellas')
+ax.set_title(f'Ajuste con {metodo_texto}')
+ax.legend()
 
 # Mostrar la figura en Streamlit
-st.plotly_chart(fig)
+st.pyplot(fig)
 
 # Calcular el error cuadrático medio del ajuste seleccionado
-mse_ajuste = mean_squared_error(df_plotly['Densidad de Estrellas'], pdf_ajuste)
+mse_ajuste = mean_squared_error(hist, y_fit)
 
 # Mostrar el error cuadrático medio
-st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste}")
+st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste:.6f}")
+
+
 
 ################################################
 import streamlit as st
