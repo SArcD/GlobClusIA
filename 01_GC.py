@@ -255,12 +255,17 @@ ax.legend()
 st.pyplot(fig)
 
 # Calcular el error cuadrático medio del ajuste seleccionado
-mse_ajuste = mean_squared_error(hist, y_fit)
+#mse_ajuste = mean_squared_error(hist, y_fit)
+
+# Mostrar el error cuadrático medio
+#st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste:.6f}")
+
+
+# Calcular el error cuadrático medio del ajuste seleccionado
+mse_ajuste = mean_squared_error(hist, y_fit[:len(hist)])  # Recortar y_fit para que tenga la misma longitud que hist
 
 # Mostrar el error cuadrático medio
 st.write(f"Error Cuadrático Medio del {metodo_texto}: {mse_ajuste:.6f}")
-
-
 
 ################################################
 import streamlit as st
