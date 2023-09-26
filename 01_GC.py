@@ -420,9 +420,12 @@ rgb_tip_brillo = kmeans_rgb_tip.cluster_centers_[0]
 
 # Imprimir el resultado en Streamlit
 st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo:.2f}")
-st.write(f"El brillo estimado del RGB-tip es: {rgb
+st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
 
-
+# Mostrar el histograma de los datos normalizado en Streamlit
+st.bar_chart(hist, use_container_width=True)
+st.title("Histograma Normalizado de los Datos")
+st.text("Magnitud Aparente Normalizada vs. Frecuencia")
 
 ################################################
 import streamlit as st
