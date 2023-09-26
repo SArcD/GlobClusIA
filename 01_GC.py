@@ -370,6 +370,8 @@ st.pyplot()
 
 
 ################################################
+
+
 import streamlit as st
 import numpy as np
 from sklearn.cluster import KMeans
@@ -390,8 +392,8 @@ features = (bins[:-1] + bins[1:]) / 2
 # Redimensionar el array de características
 X = features.reshape(-1, 1)
 
-# Definir el número de clusters (puedes ajustarlo según tus necesidades)
-n_clusters = 2  # Puedes cambiar esto según sea necesario
+# Definir el número de clusters como 2
+n_clusters = 2
 
 # Crear el modelo de K-Means
 kmeans = KMeans(n_clusters=n_clusters, random_state=0)
@@ -402,17 +404,16 @@ kmeans.fit(X)
 # Obtener los centroides de los clusters
 cluster_centers = kmeans.cluster_centers_
 
-# El centroide más grande corresponde al RGB-tip
+# Encontrar el centroide más brillante, que corresponde al RGB-tip
 rgb_tip_brillo = np.max(cluster_centers)
 
 # Imprimir el resultado en Streamlit
-st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
+st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo[0]:.2f}")
 
 # Mostrar el histograma de los datos normalizado en Streamlit
 st.bar_chart(hist, use_container_width=True)
 st.title("Histograma Normalizado de los Datos")
 st.text("Magnitud Aparente Normalizada vs. Frecuencia")
-
 
 
 
