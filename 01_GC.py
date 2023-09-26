@@ -352,6 +352,44 @@ ax[1].set_ylabel('Función de Luminosidad Diferencial')
 st.pyplot(fig)
 st.write("ss")
 
+####
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma de los datos
+hist, bins = np.histogram(magnitudes, bins=num_bins)
+
+# Calcular la anchura de los intervalos
+delta_m = bins[1] - bins[0]
+
+# Calcular la función de luminosidad diferencial
+luminosidad_diferencial = hist / (len(magnitudes) * delta_m)
+
+# Crear una figura para mostrar el histograma y la función de luminosidad diferencial
+fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
+
+# Graficar el histograma de magnitudes
+ax[0].hist(magnitudes, bins=num_bins, alpha=0.75, color='b', edgecolor='black')
+ax[0].set_ylabel('Frecuencia')
+
+# Graficar la función de luminosidad diferencial
+ax[1].step(bins[:-1], luminosidad_diferencial, where='mid', color='r')
+ax[1].set_xlabel('Magnitud Aparente')
+ax[1].set_ylabel('Función de Luminosidad Diferencial')
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
 
 
 ####
