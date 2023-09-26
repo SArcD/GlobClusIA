@@ -187,11 +187,16 @@ df_cmd = df[columnas_seleccionadas]
 #
 ################################################
 
+
 import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+from sklearn.metrics import mean_squared_error  # Importar mean_squared_error desde sklearn.metrics
+
+
+
 
 # Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
