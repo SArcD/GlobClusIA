@@ -185,36 +185,11 @@ df_cmd = df[columnas_seleccionadas]
 # Mostrar el número de filas con datos faltantes
 #st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 #
+################################################333
 
 import streamlit as st
 import matplotlib.pyplot as plt
-import pandas as pd
-
-# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
-magnitudes = df_cmd["phot_g_mean_mag"]
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma
-fig, ax = plt.subplots()
-ax.hist(magnitudes, bins=num_bins, edgecolor='k')
-
-# Personalizar el gráfico
-ax.set_title("Histograma de Magnitudes Aparentes (G-band)")
-ax.set_xlabel("Magnitud Aparente (G-band)")
-ax.set_ylabel("Frecuencia")
-
-# Mostrar el histograma en Streamlit
-st.pyplot(fig)
-
-# Mostrar el histograma
-plt.show()
-
-import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
 from scipy.optimize import curve_fit
 
 # Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
@@ -238,23 +213,16 @@ parametros_optimizados, cov_matrix = curve_fit(gaussiana, bins[:-1], hist, p0=pa
 x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
 y_fit = gaussiana(x_fit, *parametros_optimizados)
 
-# Crear el gráfico en Streamlit
-st.title("Ajuste de una Función Gaussiana al Histograma")
-st.write("Histograma de Magnitudes Aparentes (G-band)")
-st.pyplot(plt)
+# Mostrar el histograma normalizado y la curva ajustada en Streamlit
+st.title("Histograma de Magnitudes Aparentes (G-band)")
+st.bar_chart(hist, use_container_width=True)
 
 # Mostrar el histograma y la curva ajustada
 st.write("Histograma y Curva Ajustada:")
 st.line_chart(hist, use_container_width=True)
 
-# Calcular el error cuadrático medio del ajuste
-#error_cuadratico_medio = np.mean((y_fit - hist)**2)
-#st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
 
-# Calcular el error cuadrático medio del ajuste
-y_pred = gaussiana(bins[:-1], *parametros_optimizados)  # Evaluar la Gaussiana en los mismos puntos que el histograma
-error_cuadratico_medio = np.mean((y_pred - hist)**2)
-st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
+##############################
 
 import streamlit as st
 import numpy as np
