@@ -369,14 +369,12 @@ cluster_centers = kmeans.cluster_centers_
 rgb_bump_brillo = np.min(cluster_centers)
 
 # Imprimir el resultado en Streamlit
-st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo}")
+st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo:.2f}")
 
 # Mostrar el histograma en Streamlit
 st.bar_chart(hist, use_container_width=True)
 st.title("Histograma con Detección del RGB Bump")
-st.xlabel("Magnitud Aparente")
-st.ylabel("Frecuencia")
-
+st.text("Magnitud Aparente vs. Frecuencia")
 
 
 ####
