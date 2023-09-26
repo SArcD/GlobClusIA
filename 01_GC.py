@@ -427,6 +427,36 @@ ax.set_ylabel('Función de Luminosidad Diferencial')
 st.pyplot(fig)
 
 
+###
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma de los datos
+hist, bins, _ = plt.hist(magnitudes, bins=num_bins, density=True, color='b', edgecolor='black', alpha=0.7)
+
+# Crear una figura para mostrar el histograma
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Graficar la densidad de estrellas vs. el brillo
+ax.plot((bins[:-1] + bins[1:]) / 2, hist, color='r')
+ax.set_xlabel('Magnitud Aparente')
+ax.set_ylabel('Densidad de Estrellas')
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
+
+
+st.write("dd")
+
 
 ####
 import streamlit as st
