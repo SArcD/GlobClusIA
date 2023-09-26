@@ -185,253 +185,16 @@ df_cmd = df[columnas_seleccionadas]
 # Mostrar el número de filas con datos faltantes
 #st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 #
-################################################333
+################################################
 
-import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.optimize import curve_fit
-
-# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
-magnitudes = df_cmd["phot_g_mean_mag"]
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma
-hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
-
-# Definir la función Gaussiana para el ajuste
-def gaussiana(x, mu, sigma):
-    return (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((x - mu)**2) / (2 * sigma**2))
-
-# Ajustar la función Gaussiana a los datos
-parametros_iniciales = [np.mean(magnitudes), np.std(magnitudes)]
-parametros_optimizados, cov_matrix = curve_fit(gaussiana, bins[:-1], hist, p0=parametros_iniciales)
-
-# Generar datos para la curva ajustada
-x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
-y_fit = gaussiana(x_fit, *parametros_optimizados)
-
-# Mostrar el histograma normalizado y la curva ajustada en Streamlit
-st.title("Histograma de Magnitudes Aparentes (G-band)")
-st.bar_chart(hist, use_container_width=True)
-
-# Mostrar el histograma y la curva ajustada
-st.write("Histograma y Curva Ajustada:")
-st.line_chart(hist, use_container_width=True)
-
-
-##############################
 
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
-
-# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
-magnitudes = df_cmd["phot_g_mean_mag"]
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma
-hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
-
-# Definir una función exponencial para el ajuste
-def exponencial(x, a, b):
-    return a * np.exp(b * x)
-
-# Ajustar la función exponencial a los datos
-parametros_optimizados, cov_matrix = curve_fit(exponencial, bins[:-1], hist)
-
-# Generar datos para la curva ajustada
-x_fit = np.linspace(min(magnitudes), max(magnitudes), len(hist))
-y_fit = exponencial(x_fit, *parametros_optimizados)
-
-# Mostrar el histograma normalizado y la curva ajustada en Streamlit
-st.title("Histograma de Magnitudes Aparentes (G-band)")
-st.bar_chart(hist, use_container_width=True)
-
-# Mostrar el histograma y la curva ajustada
-st.write("Histograma y Curva Ajustada:")
-st.line_chart(hist, use_container_width=True)
-
-# Calcular el error cuadrático medio del ajuste
-error_cuadratico_medio = np.mean((y_fit - hist)**2)
-st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio:.6f}')
-
-
-####
-
-import streamlit as st
-import numpy as np
+import pandas as pd
+from scipy.stats import norm, expon
 from sklearn.cluster import KMeans
-
-# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
-magnitudes = df_cmd["phot_g_mean_mag"].dropna()
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma de los datos
-hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
-
-# Crear un array de características con los valores medios de los bins
-features = (bins[:-1] + bins[1:]) / 2
-
-# Redimensionar el array de características
-X = features.reshape(-1, 1)
-
-# Definir el número de clusters (puedes ajustarlo según tus necesidades)
-n_clusters = 2  # Puedes cambiar esto según sea necesario
-
-# Crear el modelo de K-Means
-kmeans = KMeans(n_clusters=n_clusters, random_state=0)
-
-# Ajustar el modelo a los datos
-kmeans.fit(X)
-
-# Obtener los centroides de los clusters
-cluster_centers = kmeans.cluster_centers_
-
-# El centroide más pequeño corresponde al RGB Bump
-rgb_bump_brillo = np.min(cluster_centers)
-
-# Imprimir el resultado en Streamlit
-st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo:.2f}")
-
-# Mostrar el histograma de los datos normalizado en Streamlit
-st.bar_chart(hist, use_container_width=True)
-st.title("Histograma Normalizado de los Datos")
-st.text("Magnitud Aparente Normalizada vs. Frecuencia")
-
-# Mostrar el histograma del ajuste (sin normalizar) en Streamlit
-plt.bar(features, hist, width=np.diff(bins)[0], edgecolor='k')
-plt.title("Histograma con Detección del RGB Bump")
-plt.xlabel("Magnitud Aparente")
-plt.ylabel("Frecuencia")
-st.pyplot()
-
-###
-import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
-
-# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
-magnitudes = df_cmd["phot_g_mean_mag"].dropna()
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma de los datos
-hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
-
-# Calcular la anchura de los intervalos
-delta_m = bins[1] - bins[0]
-
-# Calcular la función de luminosidad diferencial
-luminosidad_diferencial = hist / delta_m
-
-# Crear una figura para mostrar el histograma y la función de luminosidad diferencial
-fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
-
-# Graficar el histograma de magnitudes
-ax[0].hist(magnitudes, bins=num_bins, density=True, alpha=0.75, color='b', edgecolor='black')
-ax[0].set_ylabel('Densidad')
-
-# Graficar la función de luminosidad diferencial
-ax[1].step(bins[:-1], luminosidad_diferencial, where='mid', color='r')
-ax[1].set_xlabel('Magnitud Aparente')
-ax[1].set_ylabel('Función de Luminosidad Diferencial')
-
-# Mostrar la figura en Streamlit
-st.pyplot(fig)
-st.write("ss")
-
-####
-
-import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
-
-# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
-magnitudes = df_cmd["phot_g_mean_mag"].dropna()
-
-# Definir el número de bins (intervalos) para el histograma
-num_bins = 30  # Puedes ajustar este valor según tus preferencias
-
-# Crear el histograma de los datos
-hist, bins = np.histogram(magnitudes, bins=num_bins)
-
-# Calcular la anchura de los intervalos
-delta_m = bins[1] - bins[0]
-
-# Calcular la función de luminosidad diferencial
-luminosidad_diferencial = hist / (len(magnitudes) * delta_m)
-
-# Calcular los puntos medios de los intervalos para la representación gráfica
-puntos_medios = (bins[:-1] + bins[1:]) / 2
-
-# Crear una figura para mostrar el histograma y la función de luminosidad diferencial
-fig, ax = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
-
-# Graficar el histograma de magnitudes
-ax[0].hist(magnitudes, bins=num_bins, alpha=0.75, color='b', edgecolor='black')
-ax[0].set_ylabel('Frecuencia')
-
-# Graficar la función de luminosidad diferencial
-ax[1].step(puntos_medios, luminosidad_diferencial, color='r')
-ax[1].set_xlabel('Magnitud Aparente')
-ax[1].set_ylabel('Función de Luminosidad Diferencial')
-
-# Mostrar la figura en Streamlit
-st.pyplot(fig)
-
-###
-
-import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from scipy.stats import gaussian_kde
-
-# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
-
-# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
-magnitudes = df_cmd["phot_g_mean_mag"].dropna()
-
-# Definir el número de puntos para la representación de la función de luminosidad diferencial
-num_points = 1000  # Puedes ajustar este valor según tus preferencias
-
-# Calcular la función de luminosidad diferencial utilizando el suavizado de kernel
-kde = gaussian_kde(magnitudes)
-magnitudes_grid = np.linspace(min(magnitudes), max(magnitudes), num_points)
-luminosidad_diferencial = kde.evaluate(magnitudes_grid)
-
-# Crear una figura para mostrar la función de luminosidad diferencial
-fig, ax = plt.subplots(figsize=(8, 4))
-
-# Graficar la función de luminosidad diferencial
-ax.plot(magnitudes_grid, luminosidad_diferencial, color='r')
-ax.set_xlabel('Magnitud Aparente')
-ax.set_ylabel('Función de Luminosidad Diferencial')
-
-# Mostrar la figura en Streamlit
-st.pyplot(fig)
-
-
-###
-import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
+from sklearn.metrics import mean_squared_error
 
 # Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
 # Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
@@ -440,25 +203,52 @@ magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 # Definir el número de bins (intervalos) para el histograma
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
-# Crear el histograma de los datos
+# Crear el histograma de los datos originales
 hist, bins, _ = plt.hist(magnitudes, bins=num_bins, density=True, color='b', edgecolor='black', alpha=0.7)
 
-# Crear una figura para mostrar el histograma
-fig, ax = plt.subplots(figsize=(8, 6))
+# Crear una figura para mostrar el histograma original y las gráficas ajustadas
+fig, ax = plt.subplots(figsize=(10, 6))
 
-# Graficar la densidad de estrellas vs. el brillo
-ax.plot((bins[:-1] + bins[1:]) / 2, hist, color='r')
+# Ajustar los datos con una función gaussiana
+mu, std = norm.fit(magnitudes)
+pdf_gaussiana = norm.pdf(bins, mu, std)
+ax.plot(bins, pdf_gaussiana, 'r--', label='Función Gaussiana')
+
+# Ajustar los datos con una función exponencial
+loc, scale = expon.fit(magnitudes)
+pdf_exponencial = expon.pdf(bins, loc, scale)
+ax.plot(bins, pdf_exponencial, 'g--', label='Función Exponencial')
+
+# Ajustar los datos con K-Means
+magnitudes = magnitudes.values.reshape(-1, 1)  # Reshape para que sea compatible con K-Means
+kmeans = KMeans(n_clusters=1).fit(magnitudes)
+pdf_kmeans = kmeans.cluster_centers_
+ax.plot(bins, pdf_kmeans, 'b--', label='K-Means')
+
+# Configurar la figura
 ax.set_xlabel('Magnitud Aparente')
 ax.set_ylabel('Densidad de Estrellas')
+ax.legend()
 
 # Mostrar la figura en Streamlit
 st.pyplot(fig)
 
+# Calcular los errores cuadráticos medios de los ajustes
+mse_gaussiana = mean_squared_error(hist, pdf_gaussiana)
+mse_exponencial = mean_squared_error(hist, pdf_exponencial)
+mse_kmeans = mean_squared_error(hist, pdf_kmeans)
 
-st.write("dd")
+# Crear una tabla para mostrar los errores cuadráticos medios
+st.write("Errores Cuadráticos Medios:")
+st.write(pd.DataFrame({
+    'Método': ['Función Gaussiana', 'Función Exponencial', 'K-Means'],
+    'Error Cuadrático Medio': [mse_gaussiana, mse_exponencial, mse_kmeans]
+}))
 
 
-####
+
+
+################################################
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -500,8 +290,6 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
 st.title("Hierarchical Clustering")
 st.write("Enter the desired number of clusters:")
-
-
 
 # Agregar un campo de entrada para el número de clusters
 num_clusters = st.number_input("Number of clusters", min_value=1, value=4)
