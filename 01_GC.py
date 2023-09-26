@@ -344,7 +344,7 @@ magnitudes = df_cmd["phot_g_mean_mag"].dropna()
 # Definir el número de bins (intervalos) para el histograma
 num_bins = 30  # Puedes ajustar este valor según tus preferencias
 
-# Crear el histograma
+# Crear el histograma de los datos
 hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
 
 # Crear un array de características con los valores medios de los bins
@@ -371,11 +371,17 @@ rgb_bump_brillo = np.min(cluster_centers)
 # Imprimir el resultado en Streamlit
 st.write(f"El brillo estimado del RGB Bump es: {rgb_bump_brillo:.2f}")
 
-# Mostrar el histograma normalizado en Streamlit
+# Mostrar el histograma de los datos normalizado en Streamlit
 st.bar_chart(hist, use_container_width=True)
-st.title("Histograma Normalizado con Detección del RGB Bump")
+st.title("Histograma Normalizado de los Datos")
 st.text("Magnitud Aparente Normalizada vs. Frecuencia")
 
+# Mostrar el histograma del ajuste (sin normalizar) en Streamlit
+plt.bar(features, hist, width=np.diff(bins)[0], edgecolor='k')
+plt.title("Histograma con Detección del RGB Bump")
+plt.xlabel("Magnitud Aparente")
+plt.ylabel("Frecuencia")
+st.pyplot()
 
 ####
 import streamlit as st
