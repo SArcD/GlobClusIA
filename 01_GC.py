@@ -211,6 +211,49 @@ st.pyplot(fig)
 # Mostrar el histograma
 plt.show()
 
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+from scipy.optimize import curve_fit
+
+# Seleccionar la columna de magnitudes aparentes, por ejemplo, "phot_g_mean_mag"
+magnitudes = df_cmd["phot_g_mean_mag"]
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma
+hist, bins, _ = plt.hist(magnitudes, bins=num_bins, edgecolor='k', density=True)
+
+# Definir la función Gaussiana para el ajuste
+def gaussiana(x, mu, sigma):
+    return (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((x - mu)**2) / (2 * sigma**2))
+
+# Ajustar la función Gaussiana a los datos
+parametros_iniciales = [np.mean(magnitudes), np.std(magnitudes)]
+parametros_optimizados, cov_matrix = curve_fit(gaussiana, bins[:-1], hist, p0=parametros_iniciales)
+
+# Generar datos para la curva ajustada
+x_fit = np.linspace(min(magnitudes), max(magnitudes), 100)
+y_fit = gaussiana(x_fit, *parametros_optimizados)
+
+# Crear el gráfico en Streamlit
+st.title("Ajuste de una Función Gaussiana al Histograma")
+st.write("Histograma de Magnitudes Aparentes (G-band)")
+st.pyplot(plt)
+
+# Mostrar el histograma y la curva ajustada
+st.write("Histograma y Curva Ajustada:")
+st.line_chart(hist, use_container_width=True)
+
+# Calcular el error cuadrático medio del ajuste
+error_cuadratico_medio = np.mean((y_fit - hist)**2)
+st.write(f'Error Cuadrático Medio del Ajuste: {error_cuadratico_medio}')
+
+
+
+
 ###
 import streamlit as st
 import pandas as pd
