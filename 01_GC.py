@@ -369,6 +369,51 @@ plt.ylabel("Frecuencia")
 st.pyplot()
 
 
+################################################
+import streamlit as st
+import numpy as np
+from sklearn.cluster import KMeans
+
+# Supongamos que ya tienes cargados los datos en el DataFrame df_cmd
+# Seleccionar la columna de magnitudes aparentes y eliminar filas con valores NaN
+magnitudes = df_cmd["phot_g_mean_mag"].dropna()
+
+# Definir el número de bins (intervalos) para el histograma
+num_bins = 30  # Puedes ajustar este valor según tus preferencias
+
+# Crear el histograma de los datos
+hist, bins = np.histogram(magnitudes, bins=num_bins, density=True)
+
+# Crear un array de características con los valores medios de los bins
+features = (bins[:-1] + bins[1:]) / 2
+
+# Redimensionar el array de características
+X = features.reshape(-1, 1)
+
+# Definir el número de clusters (puedes ajustarlo según tus necesidades)
+n_clusters = 2  # Puedes cambiar esto según sea necesario
+
+# Crear el modelo de K-Means
+kmeans = KMeans(n_clusters=n_clusters, random_state=0)
+
+# Ajustar el modelo a los datos
+kmeans.fit(X)
+
+# Obtener los centroides de los clusters
+cluster_centers = kmeans.cluster_centers_
+
+# El centroide más grande corresponde al RGB-tip
+rgb_tip_brillo = np.max(cluster_centers)
+
+# Imprimir el resultado en Streamlit
+st.write(f"El brillo estimado del RGB-tip es: {rgb_tip_brillo:.2f}")
+
+# Mostrar el histograma de los datos normalizado en Streamlit
+st.bar_chart(hist, use_container_width=True)
+st.title("Histograma Normalizado de los Datos")
+st.text("Magnitud Aparente Normalizada vs. Frecuencia")
+
+
 
 
 
