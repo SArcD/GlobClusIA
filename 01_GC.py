@@ -696,7 +696,122 @@ ax.grid(True)
 st.pyplot(fig)
 
 
+################################
 
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
+cluster_1_data=dataframes_por_cluster[1]
+magnitudes = cluster_1_data["phot_bp_mean_mag"]
+
+# Calcular el KDE de los datos de magnitudes
+kde = gaussian_kde(magnitudes)
+
+# Crear un rango de valores de brillo para la estimación
+brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
+
+# Calcular la PDF suavizada (KDE) en el rango de brillo
+pdf_suavizada = kde(brillo_range)
+
+# Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
+posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+
+# Mostrar la posición estimada del RGB-tip en Streamlit
+st.title("Estimación del RGB-tip mediante KDE")
+st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+
+# Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(brillo_range, pdf_suavizada, label="KDE")
+ax.axvline(x=posicion_rgb_tip, color='red', linestyle='--', label="Posición estimada del RGB-tip")
+ax.set_xlabel("Magnitud Aparente")
+ax.set_ylabel("Densidad de Probabilidad")
+ax.set_title("Estimación del RGB-tip mediante KDE")
+ax.legend()
+ax.grid(True)
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
+
+
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
+cluster_1_data=dataframes_por_cluster[1]
+magnitudes = cluster_1_data["phot_g_mean_mag"]
+
+# Calcular el KDE de los datos de magnitudes
+kde = gaussian_kde(magnitudes)
+
+# Crear un rango de valores de brillo para la estimación
+brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
+
+# Calcular la PDF suavizada (KDE) en el rango de brillo
+pdf_suavizada = kde(brillo_range)
+
+# Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
+posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+
+# Mostrar la posición estimada del RGB-tip en Streamlit
+st.title("Estimación del RGB-tip mediante KDE")
+st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+
+# Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(brillo_range, pdf_suavizada, label="KDE")
+ax.axvline(x=posicion_rgb_tip, color='red', linestyle='--', label="Posición estimada del RGB-tip")
+ax.set_xlabel("Magnitud Aparente")
+ax.set_ylabel("Densidad de Probabilidad")
+ax.set_title("Estimación del RGB-tip mediante KDE")
+ax.legend()
+ax.grid(True)
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
+
+
+
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
+cluster_1_data=dataframes_por_cluster[1]
+magnitudes = cluster_1_data["phot_rp_mean_mag"]
+
+# Calcular el KDE de los datos de magnitudes
+kde = gaussian_kde(magnitudes)
+
+# Crear un rango de valores de brillo para la estimación
+brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
+
+# Calcular la PDF suavizada (KDE) en el rango de brillo
+pdf_suavizada = kde(brillo_range)
+
+# Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
+posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+
+# Mostrar la posición estimada del RGB-tip en Streamlit
+st.title("Estimación del RGB-tip mediante KDE")
+st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+
+# Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(brillo_range, pdf_suavizada, label="KDE")
+ax.axvline(x=posicion_rgb_tip, color='red', linestyle='--', label="Posición estimada del RGB-tip")
+ax.set_xlabel("Magnitud Aparente")
+ax.set_ylabel("Densidad de Probabilidad")
+ax.set_title("Estimación del RGB-tip mediante KDE")
+ax.legend()
+ax.grid(True)
+
+# Mostrar la figura en Streamlit
+st.pyplot(fig)
 
 
 
