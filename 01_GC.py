@@ -792,6 +792,13 @@ for subcluster_num in range(U):
 for subcluster_num, subcluster_df in dataframes_por_subcluster.items():
     st.write(f"Cluster {subcluster_num}:")
     st.write(subcluster_df)
+    # Crear un botón de descarga para el DataFrame actual
+    csv_data = subcluster_df.to_csv(index=False)
+    button_label = f"Descargar Cluster {subcluster_num} (CSV)"
+    st.download_button(label=button_label, data=csv_data, key=f"download_button_{subcluster_num}")
+
+
+
 
 
 import streamlit as st
