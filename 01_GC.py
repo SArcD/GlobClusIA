@@ -1115,6 +1115,27 @@ st.plotly_chart(fig1)
 st.plotly_chart(fig2)
 st.plotly_chart(fig3)
 
+import pandas as pd
+import streamlit as st
+
+# Supongamos que tienes K clusters en tu DataFrame original
+K = cluster_1_data['gc'].nunique()
+
+# Crear un diccionario de DataFrames donde cada clave es el número de cluster
+dataframes_por_cluster = {}
+
+# Iterar sobre cada cluster y crear un DataFrame para cada uno
+for cluster_num in range(K):
+    # Filtrar las filas que pertenecen al cluster actual
+    cluster_df = cluster_1_data[cluster_1_data['gc'] == cluster_num]
+    
+    # Almacenar el DataFrame en el diccionario con la clave como el número de cluster
+    dataframes_por_cluster[cluster_num] = cluster_df
+
+# Mostrar todos los DataFrames uno por uno
+for cluster_num, cluster_df in dataframes_por_cluster.items():
+    st.write(f"Cluster {cluster_num}:")
+    st.write(cluster_df)
 
 
 
