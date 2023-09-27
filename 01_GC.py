@@ -1042,11 +1042,11 @@ brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
 pdf_suavizada = kde(brillo_range)
 
 # Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
-posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+posicion_rgb_tip = brillo_range[np.argmin(pdf_suavizada)]
 
 # Mostrar la posición estimada del RGB-tip en Streamlit
 st.title("Estimación del RGB-tip mediante KDE")
-st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+st.write(f"La posición estimada del RGB-tip en el sub-cluster 2 es: {posicion_rgb_tip:.2f}")
 
 # Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -1081,11 +1081,11 @@ brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
 pdf_suavizada = kde(brillo_range)
 
 # Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
-posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+posicion_rgb_tip = brillo_range[np.argmin(pdf_suavizada)]
 
 # Mostrar la posición estimada del RGB-tip en Streamlit
 st.title("Estimación del RGB-tip mediante KDE")
-st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+st.write(f"La posición estimada del RGB-tip en el sub-cluster 2 es: {posicion_rgb_tip:.2f}")
 
 # Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -1120,11 +1120,11 @@ brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
 pdf_suavizada = kde(brillo_range)
 
 # Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB-tip
-posicion_rgb_tip = brillo_range[np.argmax(pdf_suavizada)]
+posicion_rgb_tip = brillo_range[np.argmin(pdf_suavizada)]
 
 # Mostrar la posición estimada del RGB-tip en Streamlit
 st.title("Estimación del RGB-tip mediante KDE")
-st.write(f"La posición estimada del RGB-tip en el Cluster 1 es: {posicion_rgb_tip:.2f}")
+st.write(f"La posición estimada del RGB-tip en el subcluster 2 es: {posicion_rgb_tip:.2f}")
 
 # Visualizar el KDE y la posición estimada del RGB-tip en Streamlit
 fig, ax = plt.subplots(figsize=(10, 6))
