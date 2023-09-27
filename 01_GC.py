@@ -814,6 +814,53 @@ ax.grid(True)
 st.pyplot(fig)
 
 
+########################################
+
+import streamlit as st
+import numpy as np
+from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
+import matplotlib.pyplot as plt
+
+# Supongamos que tienes un DataFrame llamado cluster_1_data con la columna "brillo"
+#magnitudes = cluster_1_data["brillo"]
+
+cluster_1_data=dataframes_por_cluster[1]
+magnitudes = cluster_1_data["phot_rp_mean_mag"]
+
+
+# Calcular la matriz de enlace usando el método de enlace completo (complete linkage)
+enlace = linkage(magnitudes, method='complete')
+
+# Crear un dendrograma para visualizar la jerarquía de clusters
+plt.figure(figsize=(10, 6))
+dendrogram(enlace, p=5, truncate_mode='level', show_leaf_counts=True)
+plt.title("Dendrograma del Cluster")
+plt.xlabel("Índice de Muestra")
+plt.ylabel("Distancia")
+st.pyplot()
+
+# Elegir un umbral apropiado para subdividir el cluster
+umbral = 10  # Puedes ajustar este valor según sea necesario
+
+# Aplicar la subdivisión de clusters usando el umbral
+etiquetas_clusters = fcluster(enlace, t=umbral, criterion='distance')
+
+# Filtrar los datos del DataFrame original para obtener el subcluster correspondiente al RGB-tip
+subcluster_rgb_tip = cluster_1_data[etiquetas_clusters == tu_numero_de_subcluster_rgb_tip]
+
+# Calcular la posición estimada del RGB-tip en base a los datos del subcluster_rgb_tip
+posicion_rgb_tip = subcluster_rgb_tip["phot_rp_mean_mag"].mean()
+
+# Filtrar los datos del DataFrame original para obtener el subcluster correspondiente al RGB Bump
+subcluster_rgb_bump = cluster_1_data[etiquetas_clusters == tu_numero_de_subcluster_rgb_bump]
+
+# Calcular la posición estimada del RGB Bump en base a los datos del subcluster_rgb_bump
+posicion_rgb_bump = subcluster_rgb_bump["phot_rp_mean_mag"].mean()
+
+# Mostrar las posiciones estimadas en Streamlit
+st.title("Estimación del RGB-tip y RGB Bump mediante Clustering Jerárquico")
+st.write(f"La posición estimada del RGB-tip es: {posicion_rgb_tip:.2f}")
+st.write(f"La posición estimada del RGB Bump es: {posicion_rgb_bump:.2f}")
 
 
 
