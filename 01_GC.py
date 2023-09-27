@@ -899,7 +899,7 @@ for subcluster_num in range(U):
     dataframes_por_subcluster[subcluster_num] = subcluster_df
 
 # Mostrar todos los DataFrames uno por uno
-for cluster_num, subcluster_df in dataframes_por_subcluster.items():
+for subcluster_num, subcluster_df in dataframes_por_subcluster.items():
     st.write(f"Cluster {subcluster_num}:")
     st.write(subcluster_df)
 
