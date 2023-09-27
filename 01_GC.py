@@ -853,13 +853,13 @@ umbral = 10  # Puedes ajustar este valor según sea necesario
 etiquetas_clusters = fcluster(enlace, t=umbral, criterion='distance')
 
 # Filtrar los datos del DataFrame original para obtener el subcluster correspondiente al RGB-tip
-subcluster_rgb_tip = cluster_1_data[etiquetas_clusters == tu_numero_de_subcluster_rgb_tip]
+subcluster_rgb_tip = cluster_1_data[etiquetas_clusters == 3]
 
 # Calcular la posición estimada del RGB-tip en base a los datos del subcluster_rgb_tip
 posicion_rgb_tip = subcluster_rgb_tip["phot_rp_mean_mag"].mean()
 
 # Filtrar los datos del DataFrame original para obtener el subcluster correspondiente al RGB Bump
-subcluster_rgb_bump = cluster_1_data[etiquetas_clusters == tu_numero_de_subcluster_rgb_bump]
+subcluster_rgb_bump = cluster_1_data[etiquetas_clusters == 3]
 
 # Calcular la posición estimada del RGB Bump en base a los datos del subcluster_rgb_bump
 posicion_rgb_bump = subcluster_rgb_bump["phot_rp_mean_mag"].mean()
