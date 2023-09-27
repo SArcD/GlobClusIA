@@ -828,8 +828,15 @@ cluster_1_data=dataframes_por_cluster[1]
 magnitudes = cluster_1_data["phot_rp_mean_mag"]
 
 
+
+# Calcular la matriz de distancias euclidianas
+dist_matrix = pdist(magnitudes.values.reshape(-1, 1), metric='euclidean')
+
+# Luego, puedes utilizar esta matriz de distancias en la función linkage
+enlace = linkage(dist_matrix, method='complete')
+
 # Calcular la matriz de enlace usando el método de enlace completo (complete linkage)
-enlace = linkage(magnitudes, method='complete')
+#enlace = linkage(magnitudes, method='complete')
 
 # Crear un dendrograma para visualizar la jerarquía de clusters
 plt.figure(figsize=(10, 6))
