@@ -578,6 +578,40 @@ for cluster_num, cluster_df in dataframes_por_cluster.items():
     st.write(f"Cluster {cluster_num}:")
     st.write(cluster_df)
 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
+# Supongamos que tienes un DataFrame llamado cluster_1_data con la columna "brillo"
+cluster_1_data=dataframes_por_cluster[1]
+
+magnitudes = cluster_1_data["phot_rp_mean_mag"]
+
+# Calcular el KDE de los datos de magnitudes
+kde = gaussian_kde(magnitudes)
+
+# Crear un rango de valores de brillo para la estimación
+brillo_range = np.linspace(magnitudes.min(), magnitudes.max(), 1000)
+
+# Calcular la PDF suavizada (KDE) en el rango de brillo
+pdf_suavizada = kde(brillo_range)
+
+# Encontrar la posición del máximo en la PDF suavizada, que podría corresponder al RGB Bump
+posicion_rgb_bump = brillo_range[np.argmax(pdf_suavizada)]
+
+# Visualizar el KDE y la posición estimada del RGB Bump
+plt.figure(figsize=(10, 6))
+plt.plot(brillo_range, pdf_suavizada, label="KDE")
+plt.axvline(x=posicion_rgb_bump, color='red', linestyle='--', label="Posición estimada del RGB Bump")
+plt.xlabel("Magnitud Aparente")
+plt.ylabel("Densidad de Probabilidad")
+plt.title("Estimación del RGB Bump mediante KDE")
+plt.legend()
+plt.grid(True)
+
+# Mostrar la posición estimada del RGB Bump
+print(f"La posición estimada del RGB Bump en el Cluster 1 es: {posicion_rgb_bump:.2f}")
+
 
 
 
