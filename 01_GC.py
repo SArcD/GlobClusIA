@@ -885,22 +885,22 @@ import pandas as pd
 import streamlit as st
 
 # Supongamos que tienes K clusters en tu DataFrame original
-K = cluster_1_data['gc'].nunique()
+U = cluster_1_data['gc'].nunique()
 
 # Crear un diccionario de DataFrames donde cada clave es el número de cluster
 dataframes_por_subcluster = {}
 
 # Iterar sobre cada cluster y crear un DataFrame para cada uno
-for subcluster_num in range(K):
+for subcluster_num in range(U):
     # Filtrar las filas que pertenecen al cluster actual
-    subcluster_df = cluster_1_data[cluster_1_data['gc'] == cluster_num]
+    subcluster_df = cluster_1_data[cluster_1_data['gc'] == subcluster_num]
     
     # Almacenar el DataFrame en el diccionario con la clave como el número de cluster
-    dataframes_por_subcluster[cluster_num] = subcluster_df
+    dataframes_por_subcluster[subcluster_num] = subcluster_df
 
 # Mostrar todos los DataFrames uno por uno
 for cluster_num, subcluster_df in dataframes_por_subcluster.items():
-    st.write(f"Cluster {cluster_num}:")
+    st.write(f"Cluster {subcluster_num}:")
     st.write(subcluster_df)
 
 
