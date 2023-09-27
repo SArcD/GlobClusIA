@@ -600,7 +600,7 @@ import plotly.express as px
 #st.write(f"Número de columnas: {num_columns}")
 # Obtener el número de filas con datos faltantes
 #num_rows_with_missing_data = df_cmd.isnull().any(axis=1).sum()
-        
+cluster_1_data=dataframes_por_cluster[1]       
 # Mostrar el número de filas con datos faltantes
 #st.write(f"Número de filas con datos faltantes: {num_rows_with_missing_data}")
 # Seleccionar solo las columnas numéricas
