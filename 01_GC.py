@@ -477,9 +477,25 @@ for cluster_num in range(K):
     dataframes_por_cluster[cluster_num] = cluster_df
 
 # Mostrar todos los DataFrames uno por uno
-for cluster_num, cluster_df in dataframes_por_cluster.items():
+#for cluster_num, cluster_df in dataframes_por_cluster.items():
+#    st.write(f"Cluster {cluster_num}:")
+#    st.write(cluster_df)
+
+
+# Crear una función para mostrar y descargar DataFrames
+@st.cache
+def mostrar_y_descargar_dataframe(cluster_num, cluster_df):
     st.write(f"Cluster {cluster_num}:")
     st.write(cluster_df)
+
+    # Crear un botón de descarga para el DataFrame actual
+    csv_data = cluster_df.to_csv(index=False)
+    button_label = f"Descargar Cluster {cluster_num} (CSV)"
+    st.download_button(label=button_label, data=csv_data, key=f"download_button_{cluster_num}")
+
+# Mostrar y descargar todos los DataFrames
+for cluster_num, cluster_df in dataframes_por_cluster.items():
+    mostrar_y_descargar_dataframe(cluster_num, cluster_df)
 
 
 
