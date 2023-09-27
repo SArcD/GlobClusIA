@@ -584,7 +584,9 @@ import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 
 # Supongamos que tienes un DataFrame llamado cluster_1_data con la columna "brillo"
-magnitudes = cluster_1_data["brillo"]
+
+cluster_1_data=dataframes_por_cluster[1]
+magnitudes = cluster_1_data["phot_rp_mean_mag"]
 
 # Calcular el KDE de los datos de magnitudes
 kde = gaussian_kde(magnitudes)
