@@ -506,7 +506,7 @@ X = numeric_data.drop('gc', axis=1)
 y = df_cmd['gc']
 
 # Crear y entrenar el Random Forest
-random_forest = RandomForestClassifier(random_state=4, min_samples_split=10, ccp_alpha=0.001)
+random_forest = RandomForestClassifier(random_state=4, min_samples_split=15, ccp_alpha=0.001)
 random_forest.fit(X, y)
 
 # Obtener los nombres de las columnas originales y convertirlos en cadenas de texto
