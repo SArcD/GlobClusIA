@@ -482,8 +482,51 @@ for cluster_num, cluster_df in dataframes_por_cluster.items():
     st.write(cluster_df)
 
 
+######################################
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import export_text, export_graphviz
+import pydotplus
+from IPython.display import Image, display
+from sklearn.tree import plot_tree
+
+st.write("**Gráfica del árbol de decisión**")
+st.markdown("En la siguiente Figura se muestra el **diagrama de árbol de desición**, creada a partir de un algoritmo de random forest que explica que **condiciones deben cumplirse** en las variables de interés **(ASMI, FA y Marcha)** para que un paciente se clasificado como miembro de un cluster. **El recorrido de clasificación se lee desde la parte superior**. Dependiendo de si el paciente en cuestión cumple o no con la condición que se lee dentro de cada recuadro, el recorrido se mueve a la **izquierda (si cumple la condición) o a la derecha (si no cumple)**. La clasificación está completa cuando se llega a recuadros que ya no tienen ninguna flecha que los conecte con uno que esté por debajo. Dentro de cada recuadro, la información que se muestra de arriba a abajo es: la condición sobre el parámetro de interés, el índice de ganancia de información *gini*, el número de árboles de desición, de un total de 100, en el que se cumplió la misma condición, la distribución de pacientes de cada cluster que cumple la condición del recuadro y la clasificación")
 
 
+        
+# Convertir las etiquetas de cluster a valores numéricos
+label_encoder = LabelEncoder()
+df_cmd.loc[:, 'gc'] = label_encoder.fit_transform(df_cmd['gc'])
+
+# Definir las variables de entrada y salida para el Random Forest
+numeric_data=df_cmd.select_dtypes(include='number')
+X = numeric_data.drop('gc', axis=1)
+y = df_cmd['gc']
+
+# Crear y entrenar el Random Forest
+random_forest = RandomForestClassifier(random_state=4, min_samples_split=10, ccp_alpha=0.001)
+random_forest.fit(X, y)
+
+# Obtener los nombres de las columnas originales y convertirlos en cadenas de texto
+column_names = [str(column) for column in X.columns.tolist()]
+
+# Obtener el mejor árbol del Random Forest
+best_tree_index = random_forest.feature_importances_.argmax()
+best_tree = random_forest.estimators_[best_tree_index]
+
+# Visualizar las reglas del mejor árbol
+tree_rules = export_text(best_tree, feature_names=column_names)
+#st.write("Reglas del árbol de decisión:")
+#st.write(tree_rules)
+
+# Generar y mostrar la gráfica del árbol
+plt.figure(figsize=(20, 10), dpi=300)
+plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
+plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
+st.write("Gráfica del árbol de decisión:")
+st.image('tree_plot.png')
 
 ########################################
 
