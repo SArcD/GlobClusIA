@@ -522,7 +522,13 @@ tree_rules = export_text(best_tree, feature_names=column_names)
 #st.write(tree_rules)
 
 # Generar y mostrar la gráfica del árbol
-plt.figure(figsize=(20, 10))
+st.write("Gráfica del árbol de decisión:")
+st.pyplot(plt.figure(figsize=(30, 20), dpi=300))
+plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
+plt.savefig('tree_plot.png', dpi=300, bbox_inches='tight', format='png')
+st.image('tree_plot.png')
+
+
 #plt.savefig('tree_plot.png', bbox_inches='tight', format='png')
 plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
 plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
