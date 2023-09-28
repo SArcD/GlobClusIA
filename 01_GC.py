@@ -522,19 +522,16 @@ tree_rules = export_text(best_tree, feature_names=column_names)
 #st.write(tree_rules)
 
 # Generar y mostrar la gráfica del árbol
-plt.figure(figsize=(40, 20), dpi=300) 
+plt.figure(figsize=(40, 20), dpi=600) 
 plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
-plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
+plt.savefig('tree_plot.png', dpi=600, bbox_inches='tight', format='png')
+#plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
 st.write("**Gráfica del árbol de decisión**")
 #st.markdown("En la siguiente Figura se muestra el **diagrama de árbol de desición**, creada a partir de un algoritmo de random forest que explica que **condiciones deben cumplirse** en las variables de interés **(ASMI, FA y Marcha)** para que un paciente se clasificado como miembro de un cluster. **El recorrido de clasificación se lee desde la parte superior**. Dependiendo de si el paciente en cuestión cumple o no con la condición que se lee dentro de cada recuadro, el recorrido se mueve a la **izquierda (si cumple la condición) o a la derecha (si no cumple)**. La clasificación está completa cuando se llega a recuadros que ya no tienen ninguna flecha que los conecte con uno que esté por debajo. Dentro de cada recuadro, la información que se muestra de arriba a abajo es: la condición sobre el parámetro de interés, el índice de ganancia de información *gini*, el número de árboles de desición, de un total de 100, en el que se cumplió la misma condición, la distribución de pacientes de cada cluster que cumple la condición del recuadro y la clasificación")
 st.image('tree_plot.png')
 
 
-#plt.savefig('tree_plot.png', bbox_inches='tight', format='png')
-#plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
-#plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
-#st.write("Gráfica del árbol de decisión:")
-#st.image('tree_plot.png')
+
 
 ########################################
 
