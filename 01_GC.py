@@ -201,10 +201,13 @@ fig = px.line(x=bins[:-1], y=cumulative_hist_log, labels={'x': 'Apparent Magnitu
 fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
 
 # Realizar una regresión lineal en el rango de magnitudes deseado
-# Por ejemplo, para magnitudes entre 10 y 14 (ajusta el rango según tus datos)
-start_magnitude = min(magnitudes)
-end_magnitude = max(magnitudes)
+# Asegurarse de que el rango seleccionado coincida con los valores en bins[:-1]
+start_magnitude = min(bins[:-1])
+end_magnitude = max(bins[:-1])
+
+# Crear la máscara booleana
 mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
+
 X = bins[:-1][mask].reshape(-1, 1)
 y = cumulative_hist_log[mask]
 
