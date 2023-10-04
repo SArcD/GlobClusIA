@@ -535,7 +535,8 @@ tree_rules = export_text(best_tree, feature_names=column_names)
 
 
 # Generar y mostrar la gráfica del árbol
-plt.figure(figsize=(60, 30), dpi=300) 
+plt.figure(figsize=(40, 20), dpi=300) 
+plt.rcParams.update({'font.size': 16}) 
 plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
 plt.savefig('tree_plot.png', dpi=300, bbox_inches='tight', format='png')
 #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
