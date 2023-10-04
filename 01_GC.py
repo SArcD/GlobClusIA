@@ -534,9 +534,6 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 
         ######################## Diagramas de Caja ########################
 
-        # Obtener los nombres de las columnas numéricas
-        columnas_numericas = cluster_data.select_dtypes(include='number').drop(columns=['gc']).columns
-
         import plotly.graph_objects as go
         from plotly.subplots import make_subplots
         import streamlit as st
@@ -548,7 +545,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
             )
 
         # Obtener los nombres de las columnas numéricas
-        columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
+        columnas_numericas= cluster_data.select_dtypes(include='number').drop(columns=['gc']).columns
 
         # Calcular el número de filas y columnas del panel
         num_rows = len(columnas_numericas)
@@ -564,13 +561,13 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         # Crear un gráfico de caja para cada parámetro y comparar los 10 clusters
         for i, column in enumerate(columnas_numericas):
             # Obtener los datos de cada cluster para el parámetro actual
-            cluster_data = [df_cmd[df_cmd['gc'] == cluster][column] for cluster in range(10)]
+            clusters_data = [cluster_data[cluster_data['gc'] == cluster][column] for cluster in range(10)]
 
             #Agregar el gráfico de caja al subplot correspondiente
             for j in range(10):
                 box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
                 box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-                box.text = df_cmd[df_cmd['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+                box.text = cluster_data[cluster_data['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
                 fig.add_trace(box, row=i+1, col=1)
 
         #Actualizar el diseño y mostrar el panel de gráficos
@@ -581,4 +578,4 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         #Mostrar la gráfica de caja en Streamlit
         st.plotly_chart(fig, use_container_width=True)
 
-        st.markdown("""The Figure displays the box plots in which each of the clusters formed by the hierarchical clustering technique is compared. Each box corresponds to a particular cluster (where on the left side of each one, you can see the points corresponding to the contained patients). The waistlines of each box serve as a visual aid to determine if there is sufficient evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the clusters can differentiate with respect to that variable).""")
+
