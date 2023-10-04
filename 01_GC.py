@@ -538,7 +538,7 @@ tree_rules = export_text(best_tree, feature_names=column_names)
 plt.figure(figsize=(40, 30), dpi=400) 
 #plt.rcParams.update({'font.size': 20}) 
 #plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
-plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=18)
+plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=16)
 plt.savefig('tree_plot.png', dpi=400, bbox_inches='tight', format='png')
 #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
 st.write("**Decision tree chart**")
