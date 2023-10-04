@@ -208,7 +208,8 @@ end_magnitude = max(bins[:-1])
 # Crear la máscara booleana
 mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
 
-X = bins[:-1][mask].reshape(-1, 1)
+# Utilizar numpy.extract para aplicar la máscara a bins[:-1]
+X = np.extract(mask, bins[:-1]).reshape(-1, 1)
 y = cumulative_hist_log[mask]
 
 reg = LinearRegression().fit(X, y)
@@ -217,7 +218,7 @@ reg = LinearRegression().fit(X, y)
 y_pred = reg.predict(X)
 
 # Agregar la línea de regresión al gráfico
-fig.add_trace(px.line(x=bins[:-1][mask], y=y_pred, name='Regression Line'))
+fig.add_trace(px.line(x=X.flatten(), y=y_pred, name='Regression Line'))
 
 # Set plot title
 fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale) with Regression Line')
