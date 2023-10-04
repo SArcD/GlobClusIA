@@ -787,7 +787,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         tree_rules = export_text(best_tree, feature_names=column_names)
 
         # Generar y mostrar la gráfica del árbol
-        plt.figure(figsize=(40, 30), dpi=400) 
+        plt.figure(figsize=(25, 15), dpi=400) 
         #plt.rcParams.update({'font.size': 20}) 
         #plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
         plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=18)
