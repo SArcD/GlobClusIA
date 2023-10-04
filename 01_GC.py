@@ -480,6 +480,21 @@ for cluster_num in range(K):
 for cluster_num, cluster_df in dataframes_por_cluster.items():
     st.write(f"Cluster {cluster_num}:")
     st.write(cluster_df)
+    # Crear un botón de descarga para el DataFrame actual
+    csv_data = cluster_df.to_csv(index=False)
+    button_label = f"Download Group {cluster_num} (CSV)"
+    st.download_button(label=button_label, data=csv_data, key=f"download_button_{cluster_num}")
+
+
+
+
+
+
+
+
+
+
+
 
 
 ######################################
