@@ -203,7 +203,7 @@ fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
 # Realizar una regresión lineal en el rango de magnitudes deseado
 # Por ejemplo, para magnitudes entre 10 y 14 (ajusta el rango según tus datos)
 start_magnitude = 13
-end_magnitude = max(magnitudes)
+end_magnitude = 14
 mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
 X = bins[:-1][mask].reshape(-1, 1)
 y = cumulative_hist_log[mask]
