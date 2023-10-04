@@ -208,8 +208,11 @@ end_magnitude = max(bins[:-1])
 # Crear la máscara booleana
 mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
 
-# Utilizar numpy.extract para aplicar la máscara a bins[:-1]
-X = np.extract(mask, bins[:-1]).reshape(-1, 1)
+# Utilizar numpy.where para obtener los índices donde se cumple la condición
+indices = np.where(mask)
+
+# Seleccionar los valores correspondientes en bins[:-1]
+X = bins[:-1][indices].reshape(-1, 1)
 y = cumulative_hist_log[mask]
 
 reg = LinearRegression().fit(X, y)
@@ -225,8 +228,6 @@ fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale) 
 
 # Show the plot in Streamlit
 st.plotly_chart(fig)
-
-
 
 ################################################
 import streamlit as st
