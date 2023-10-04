@@ -521,7 +521,7 @@ X = numeric_data.drop('gc', axis=1)
 y = df_cmd['gc']
 
 # Crear y entrenar el Random Forest
-random_forest = RandomForestClassifier(random_state=1, min_samples_split=80, ccp_alpha=0.001)
+random_forest = RandomForestClassifier(random_state=1, min_samples_split=50, ccp_alpha=0.001)
 random_forest.fit(X, y)
 
 # Obtener los nombres de las columnas originales y convertirlos en cadenas de texto
@@ -538,7 +538,7 @@ tree_rules = export_text(best_tree, feature_names=column_names)
 plt.figure(figsize=(40, 30), dpi=400) 
 #plt.rcParams.update({'font.size': 20}) 
 #plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
-plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=20)
+plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=18)
 plt.savefig('tree_plot.png', dpi=400, bbox_inches='tight', format='png')
 #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
 st.write("**Decision tree chart**")
