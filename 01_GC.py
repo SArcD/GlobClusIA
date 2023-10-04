@@ -180,6 +180,7 @@ df_cmd = df[columnas_seleccionadas]
 import streamlit as st
 import numpy as np
 import plotly.express as px
+df_cmd = df_cmd.dropna()
 
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
