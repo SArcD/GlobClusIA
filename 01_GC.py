@@ -202,8 +202,8 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 # Agregar una interfaz de usuario para ingresar el número deseado de clusters
 
 st.title("Hierarchical Clustering")
-st.write("Enter the desired number of clusters:")
-
+#st.write("Enter the desired number of clusters:")
+st.write("The data will be analyzed under the hierarchical clustering algorithm (groups of objects that show high similarity in their astrophysical parameters). The predefined number of clusters is **five**.")
 # Agregar un campo de entrada para el número de clusters
 #num_clusters = st.number_input("Number of clusters", min_value=1, value=4)
 num_clusters=5
@@ -220,12 +220,12 @@ cluster_labels = clustering.fit_predict(columnas_numericas_scaled)
 df_cmd['gc'] = cluster_labels
 
 # Crear un dendrograma
-fig, ax = plt.subplots(figsize=(12, 6))
-dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
-plt.title("Dendrograma de Clustering Jerárquico")
-plt.xlabel("Índice de la Muestra")
-plt.ylabel("Distancia")
-st.pyplot(fig)
+#fig, ax = plt.subplots(figsize=(12, 6))
+#dendrogram(Z, labels=df_cmd.index, leaf_rotation=90)
+#plt.title("Dendrograma de Clustering Jerárquico")
+#plt.xlabel("Índice de la Muestra")
+#plt.ylabel("Distancia")
+#st.pyplot(fig)
 st.write(f"Número de clusters seleccionado: {num_clusters}")
 st.dataframe(df_cmd)
 # Mostrar información adicional
@@ -518,30 +518,31 @@ best_tree = random_forest.estimators_[best_tree_index]
 
 # Visualizar las reglas del mejor árbol
 tree_rules = export_text(best_tree, feature_names=column_names)
-#st.write("Reglas del árbol de decisión:")
-#st.write(tree_rules)
-
-
-# Generar y mostrar la gráfica interactiva del árbol con Plotly
-#st.write("Gráfica interactiva del árbol de decisión:")
-#fig = go.Figure()
-#fig.add_trace(go.Funnel(
-#    name="Tree",
-#    orientation="h",
-#    textinfo="label+percent entry",
-#    text=tree_rules.split("\n"),
-#))
-#st.plotly_chart(fig)
-
 
 # Generar y mostrar la gráfica del árbol
 plt.figure(figsize=(40, 20), dpi=300) 
-plt.rcParams.update({'font.size': 16}) 
+plt.rcParams.update({'font.size': 20}) 
 plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
 plt.savefig('tree_plot.png', dpi=300, bbox_inches='tight', format='png')
 #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
-st.write("**Gráfica del árbol de decisión**")
-st.markdown("En la siguiente Figura se muestra el **diagrama de árbol de desición**, creada a partir de un algoritmo de random forest que explica que **condiciones deben cumplirse** en las variables de interés **(ASMI, FA y Marcha)** para que un paciente se clasificado como miembro de un cluster. **El recorrido de clasificación se lee desde la parte superior**. Dependiendo de si el paciente en cuestión cumple o no con la condición que se lee dentro de cada recuadro, el recorrido se mueve a la **izquierda (si cumple la condición) o a la derecha (si no cumple)**. La clasificación está completa cuando se llega a recuadros que ya no tienen ninguna flecha que los conecte con uno que esté por debajo. Dentro de cada recuadro, la información que se muestra de arriba a abajo es: la condición sobre el parámetro de interés, el índice de ganancia de información *gini*, el número de árboles de desición, de un total de 100, en el que se cumplió la misma condición, la distribución de pacientes de cada cluster que cumple la condición del recuadro y la clasificación")
+st.write("**Decision tree chart**")
+
+with st.expander("Click to Expand"):
+    st.markdown("""
+    **In the following figure, a decision tree diagram is shown, which is used to classify stars based on their key astrophysical properties**. This decision tree has been constructed using a dataset of stars and has been trained to identify different types of stars based on their properties.
+
+    **The classification process starts from the top of the tree**, and it moves downward as it evaluates different conditions in the star's characteristics. Each node of the tree represents a question about a particular astrophysical feature, and the branches stemming from each node represent the two possible answers to that question: yes or no.
+
+    - If a star meets the condition specified at a node (answer "yes"), it follows the left branch of the tree.
+    - If the star does not meet the condition (answer "no"), it follows the right branch of the tree.
+
+    This decision-making process continues until we reach a terminal node, also known as a leaf of the tree. At the tree's leaves, a label or classification is assigned to the star based on the conditions it has met throughout its journey through the tree. This classification could be, for example, the spectral type of the star (as in the case of A-type, B-type, O-type, etc.) or some other relevant astrophysical category.
+
+    Within each tree node, additional information is provided, such as the Gini index, which measures the impurity of the classification at that point, and the number of stars in the training dataset that met or did not meet the condition at that node.
+
+    **The ultimate goal of the decision tree is to classify each star into one of the predefined categories based on its astrophysical properties**. The tree is constructed in a way that maximizes the purity of the classifications at the final leaves and, thus, becomes a powerful tool for understanding how astrophysical properties influence the classification of stars into different types.
+    """)
+
 st.image('tree_plot.png')
 
 
