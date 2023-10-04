@@ -795,21 +795,6 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
         st.write("**Decision tree chart**")
 
-        with st.expander("Click to Expand"):
-            st.markdown("""
-            **In the following figure, a decision tree diagram is shown, which is used to classify stars based on their key astrophysical properties**. This decision tree has been constructed using a dataset of stars and has been trained to identify different types of stars based on their properties.
-
-            **The classification process starts from the top of the tree**, and it moves downward as it evaluates different conditions in the star's characteristics. Each node of the tree represents a question about a particular astrophysical feature, and the branches stemming from each node represent the two possible answers to that question: yes or no.
-
-            - If a star meets the condition specified at a node (answer "yes"), it follows the left branch of the tree.
-            - If the star does not meet the condition (answer "no"), it follows the right branch of the tree.
-
-            This decision-making process continues until we reach a terminal node, also known as a leaf of the tree. At the tree's leaves, a label or classification is assigned to the star based on the conditions it has met throughout its journey through the tree. This classification could be, for example, the spectral type of the star (as in the case of A-type, B-type, O-type, etc.) or some other relevant astrophysical category.
-
-            Within each tree node, additional information is provided, such as the Gini index, which measures the impurity of the classification at that point, and the number of stars in the training dataset that met or did not meet the condition at that node.
-
-            **The ultimate goal of the decision tree is to classify each star into one of the predefined categories based on its astrophysical properties**. The tree is constructed in a way that maximizes the purity of the classifications at the final leaves and, thus, becomes a powerful tool for understanding how astrophysical properties influence the classification of stars into different types.
-            """)
 
         st.image('tree_plot.png')
 
