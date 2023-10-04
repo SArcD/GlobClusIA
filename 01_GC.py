@@ -180,6 +180,34 @@ import numpy as np
 import plotly.express as px
 
 df_cmd = df_cmd.dropna()
+
+# Create the histogram with a bin size of 0.15 magnitudes
+bin_size = 0.15
+magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
+
+# Calculate the histogram
+hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
+
+# Apply logarithm to the values on the vertical axis (y)
+hist_log = np.log(hist)
+
+# Create a Plotly figure
+fig = px.bar(x=bins[:-1], y=hist_log, labels={'x': 'Apparent Magnitude', 'y': 'Log(Number of Clusters)'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
+
+# Set plot title
+fig.update_layout(title='Differential Histogram of Apparent Magnitude (Log Scale)')
+
+# Show the plot in Streamlit
+st.plotly_chart(fig)
+
+
+#################################333
+import streamlit as st
+import numpy as np
+import plotly.express as px
+
+df_cmd = df_cmd.dropna()
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
 magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
