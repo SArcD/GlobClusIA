@@ -535,7 +535,7 @@ best_tree = random_forest.estimators_[best_tree_index]
 tree_rules = export_text(best_tree, feature_names=column_names)
 
 # Generar y mostrar la gráfica del árbol
-plt.figure(figsize=(20, 10), dpi=400) 
+plt.figure(figsize=(30, 20), dpi=400) 
 #plt.rcParams.update({'font.size': 20}) 
 #plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
 plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=20)
