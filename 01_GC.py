@@ -177,16 +177,18 @@ df_cmd = df[columnas_seleccionadas]
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-# Crear el histograma con un tamaño de bin de 0.15 magnitudes
+df_cmd = df_cmd.dropna()
+# Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
-magnitudes = df_cmd["phot_rp_mean_mag"]  # Asegúrate de usar el nombre real de la columna en tu DataFrame
+magnitudes = df_cmd["phot_rp_mean_mag"]  # Replace with the actual column name
 
-# Calcular el número de clústeres en cada bin
-hist, bins = np.histogram(magnitudes, bins=np.arange(min(magnitudes), max(magnitudes) + bin_size, bin_size))
+# Calculate the number of clusters in each bin
+hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
+
+# Cumulative sum of the histogram
 cumulative_hist = np.cumsum(hist)
 
-# Crear el gráfico de histograma cumulativo
+# Create the cumulative histogram plot
 plt.figure(figsize=(10, 6))
 plt.step(bins[:-1], cumulative_hist, where='mid', color='b')
 plt.xlabel('Apparent Magnitude')
