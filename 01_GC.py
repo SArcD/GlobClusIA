@@ -175,56 +175,24 @@ df_cmd = df[columnas_seleccionadas]
 
 ################################################
 
-
 import streamlit as st
 import numpy as np
 import plotly.express as px
-from sklearn.linear_model import LinearRegression
-
-df_cmd = df_cmd.dropna()
-
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
-magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
-
+magnitudes = df_cmd['magnitud_aparente']  # Reemplaza con el nombre real de la columna
 # Calculate the number of clusters in each bin
 hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
-
 # Cumulative sum of the histogram
 cumulative_hist = np.cumsum(hist)
-
-# Aplicar logaritmo a los valores en el eje vertical (y)
-cumulative_hist_log = np.log(cumulative_hist)
-
 # Create a Plotly figure
-fig = px.line(x=bins[:-1], y=cumulative_hist_log, labels={'x': 'Apparent Magnitude', 'y': 'Log(Number of Clusters)'})
-fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
-
-# Realizar una regresión lineal en el rango de magnitudes deseado
-# Asegurarse de que el rango seleccionado coincida con los valores en bins[:-1]
-start_magnitude = min(bins[:-1])
-end_magnitude = max(bins[:-1])
-
-# Crear la máscara booleana
-mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
-
-# Calcular los valores de X y y directamente desde los datos y la máscara
-X = np.column_stack((magnitudes[mask], np.ones_like(magnitudes[mask])))
-y = cumulative_hist_log[mask]
-
-reg = LinearRegression().fit(X, y)
-
-# Calcular los valores de la línea de regresión
-y_pred = reg.predict(X)
-
-# Agregar la línea de regresión al gráfico
-fig.add_trace(px.line(x=X[:, 0], y=y_pred, name='Regression Line'))
-
+fig = px.line(x=bins[:-1], y=cumulative_hist, labels={'x': 'Apparent Magnitude', 'y': 'Number of Clusters'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje vertical
 # Set plot title
-fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale) with Regression Line')
-
+fig.update_layout(title='Cumulative Histogram of Apparent Magnitude')
 # Show the plot in Streamlit
 st.plotly_chart(fig)
+
 
 ################################################
 import streamlit as st
