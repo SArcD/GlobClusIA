@@ -565,7 +565,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         # Agregar una interfaz de usuario para ingresar el número deseado de clusters
         st.title("Hierarchical Clustering")
         #num_clusters = st.slider("Enter the desired number of clusters:", min_value=2, max_value=10, value=3)
-        num_clusters = 3
+        num_clusters = 5
         # Calcular la matriz de enlace utilizando el método de enlace completo (complete linkage)
         Z = linkage(dist_matrix, method='ward')
 
