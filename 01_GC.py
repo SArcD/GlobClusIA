@@ -175,12 +175,15 @@ df_cmd = df[columnas_seleccionadas]
 
 ################################################
 
-import matplotlib.pyplot as plt
+
+
+import streamlit as st
 import numpy as np
-df_cmd = df_cmd.dropna()
+import plotly.express as px
+
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
-magnitudes = df_cmd["phot_rp_mean_mag"]  # Replace with the actual column name
+magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
 
 # Calculate the number of clusters in each bin
 hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
@@ -188,17 +191,15 @@ hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes
 # Cumulative sum of the histogram
 cumulative_hist = np.cumsum(hist)
 
-# Create the cumulative histogram plot
-plt.figure(figsize=(10, 6))
-plt.step(bins[:-1], cumulative_hist, where='mid', color='b')
-plt.xlabel('Apparent Magnitude')
-plt.ylabel('Number of Clusters')
-plt.title('Cumulative Histogram of Apparent Magnitude')
-plt.grid(True)
-plt.show()
-# Show the plot in Streamlit
-st.pyplot(plt)
+# Create a Plotly figure
+fig = px.line(x=bins[:-1], y=cumulative_hist, labels={'x': 'Apparent Magnitude', 'y': 'Number of Clusters'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje vertical
 
+# Set plot title
+fig.update_layout(title='Cumulative Histogram of Apparent Magnitude')
+
+# Show the plot in Streamlit
+st.plotly_chart(fig)
 
 
 
