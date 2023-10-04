@@ -765,7 +765,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         
         # Convertir las etiquetas de cluster a valores numéricos
         label_encoder = LabelEncoder()
-        cluster_data.loc[:, 'gc'] = label_encoder.fit_transform(df_cmd['gc'])
+        cluster_data.loc[:, 'gc'] = label_encoder.fit_transform(cluster_data['gc'])
 
         # Definir las variables de entrada y salida para el Random Forest
         numeric_data=cluster_data.select_dtypes(include='number')
