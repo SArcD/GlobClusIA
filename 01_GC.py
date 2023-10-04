@@ -733,17 +733,17 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         import plotly.express as px
 
         # Gráfica 1: phot_g_mean_mag vs g_rp
-        fig1 = px.scatter(df_cmd, x="g_rp", y="phot_g_mean_mag", color="gc",
+        fig1 = px.scatter(cluster_data, x="g_rp", y="phot_g_mean_mag", color="gc",
                             hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
         fig1.update_yaxes(autorange="reversed")
 
         # Gráfica 2: phot_bp_mean_mag vs bp_rp
-        fig2 = px.scatter(df_cmd, x="bp_rp", y="phot_bp_mean_mag", color="gc",
+        fig2 = px.scatter(cluster_data, x="bp_rp", y="phot_bp_mean_mag", color="gc",
                             hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
         fig2.update_yaxes(autorange="reversed")
 
         # Gráfica 3: phot_rp_mean_mag vs bp_rp
-        fig3 = px.scatter(df_cmd, x="bp_rp", y="phot_rp_mean_mag", color="gc",
+        fig3 = px.scatter(cluster_data, x="bp_rp", y="phot_rp_mean_mag", color="gc",
                             hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
         fig3.update_yaxes(autorange="reversed")
 
