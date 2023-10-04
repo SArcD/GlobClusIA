@@ -180,7 +180,7 @@ import numpy as np
 import plotly.express as px
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
-magnitudes = df_cmd['magnitud_aparente']  # Reemplaza con el nombre real de la columna
+magnitudes = df_cmd["phot_rp_mean_mag"]  # Reemplaza con el nombre real de la columna
 # Calculate the number of clusters in each bin
 hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
 # Cumulative sum of the histogram
