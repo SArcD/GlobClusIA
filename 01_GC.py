@@ -208,8 +208,8 @@ end_magnitude = max(bins[:-1])
 # Crear la máscara booleana
 mask = (magnitudes >= start_magnitude) & (magnitudes <= end_magnitude)
 
-# Utilizar numpy.where para obtener los índices donde se cumple la condición
-indices = np.where(mask)
+# Utilizar np.where para obtener los índices donde se cumple la condición
+indices = np.where(mask)[0]  # Obtener los índices como un arreglo 1D
 
 # Seleccionar los valores correspondientes en bins[:-1]
 X = bins[:-1][indices].reshape(-1, 1)
