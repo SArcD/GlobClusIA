@@ -178,6 +178,9 @@ df_cmd = df[columnas_seleccionadas]
 import streamlit as st
 import numpy as np
 import plotly.express as px
+
+# Eliminar filas con valores NaN
+df_cmd = df_cmd.dropna()
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
 magnitudes = df_cmd["phot_rp_mean_mag"]  # Reemplaza con el nombre real de la columna
