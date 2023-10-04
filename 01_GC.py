@@ -565,9 +565,9 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 
             #Agregar el gráfico de caja al subplot correspondiente
             for j in range(10):
-                box = go.Box(y=cluster_data[j], boxpoints='all', notched=True, name=f'group {j}')
+                box = go.Box(y=clusters_data[j], boxpoints='all', notched=True, name=f'group {j}')
                 box.hovertemplate = 'id: %{text}'  # Agregar el valor de la columna 'Nombre' al hovertemplate
-                box.text = cluster_data[cluster_data['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
+                box.text = cluster_datas[clusters_data['gc'] == j]['source_id']  # Asignar los valores de la columna 'Nombre' al texto
                 fig.add_trace(box, row=i+1, col=1)
 
         #Actualizar el diseño y mostrar el panel de gráficos
