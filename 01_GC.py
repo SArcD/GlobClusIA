@@ -535,10 +535,11 @@ best_tree = random_forest.estimators_[best_tree_index]
 tree_rules = export_text(best_tree, feature_names=column_names)
 
 # Generar y mostrar la gráfica del árbol
-plt.figure(figsize=(40, 20), dpi=300) 
-plt.rcParams.update({'font.size': 20}) 
-plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
-plt.savefig('tree_plot.png', dpi=300, bbox_inches='tight', format='png')
+plt.figure(figsize=(20, 10), dpi=400) 
+#plt.rcParams.update({'font.size': 20}) 
+#plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True)
+plot_tree(best_tree, feature_names=column_names, class_names=[str(cls) for cls in label_encoder.classes_], filled=True, rounded=True, fontsize=20)
+plt.savefig('tree_plot.png', dpi=400, bbox_inches='tight', format='png')
 #plt.savefig('tree_plot.png')  # Guardar la gráfica como imagen
 st.write("**Decision tree chart**")
 
