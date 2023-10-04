@@ -196,6 +196,8 @@ plt.ylabel('Number of Clusters')
 plt.title('Cumulative Histogram of Apparent Magnitude')
 plt.grid(True)
 plt.show()
+# Show the plot in Streamlit
+st.pyplot(plt)
 
 
 
