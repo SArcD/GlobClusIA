@@ -1,9 +1,9 @@
 seaborn
 streamlit
-pandas
-numpy
+pandas == 1.5.3
+numpy == 1.24.0
+matplotlib==3.4.0
 matplotlib_venn
-matplotlib
 altair
 altair_catplot
 xlsxwriter
@@ -27,6 +27,8 @@ plotly.express
 pillow
 requests
 beautifulsoup4
+pillow
+pydotplus
 pydotplus
 #export_text 
 #export_graphviz
