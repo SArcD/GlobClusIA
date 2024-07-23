@@ -63,7 +63,7 @@ if len(selected_files_tuple) >= 2:
         # Obtener información sobre el DataFrame
         num_rows, num_columns = df.shape
         num_missing = df.isnull().sum().sum()
-        with st.expander("Additional information:")
+        with st.expander("Additional information"):
         # Mostrar información adicional
             st.write(f"**Number of rows:** {num_rows}")
             st.write(f"**Number of columns:** {num_columns}")
