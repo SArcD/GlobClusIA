@@ -91,7 +91,11 @@ if len(selected_files_tuple) >= 2:
             st.markdown(tabulate(table_data, tablefmt="pipe", headers="firstrow"))
 
         st.subheader("Two dimensional plots of cluster parameters")
-        st.markdown("**Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.")
+        st.markdown("""
+        <div style="text-align:justify">
+        
+        **Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
+        """, unsafe_allow_html=True)
         
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
