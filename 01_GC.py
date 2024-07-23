@@ -6,13 +6,14 @@ import requests
 # Título de la aplicación
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
+
 st.subheader("Individual analysis")
 st.markdown("""
-<div style="text-align:justify">
+<div style="text-align: justify">
 
 **Instructions:** Please select **the photometry** file (Name_photo.csv) and **surface parameters** file (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).
 </div>
-""")
+""", unsafe_allow_html=True)
 
 # URL del repositorio de GitHub
 repo_url = "https://github.com/SArcD/GlobClusIA"
