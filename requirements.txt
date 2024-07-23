@@ -25,6 +25,7 @@ pillow
 requests
 beautifulsoup4
 pillow
+ipython
 #export_text 
 #export_graphviz
 #dtreeviz
