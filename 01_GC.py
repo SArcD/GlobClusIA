@@ -1,4 +1,3 @@
-#
 import streamlit as st
 import pandas as pd
 import requests
@@ -6,11 +5,9 @@ import requests
 # Título de la aplicación
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
-
 st.subheader("Individual analysis")
 st.markdown("""
 <div style="text-align: justify">
-
 **Instructions:** Please select **the photometry** file (Name_photo.csv) and **surface parameters** file (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).
 </div>
 """, unsafe_allow_html=True)
@@ -29,6 +26,7 @@ def get_csv_files(repo_url):
         # Hacer una solicitud a la GitHub API para obtener la lista de archivos
         api_url = f"https://api.github.com/repos/{username}/{repository}/contents"
         response = requests.get(api_url)
+        response.raise_for_status()
         data = response.json()
 
         # Filtrar los archivos CSV y obtener sus nombres y URL de descarga
@@ -77,7 +75,6 @@ def load_and_merge_dataframes(selected_files):
 if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
     merged_df = load_and_merge_dataframes(selected_files_tuple)
     if merged_df is not None:
-        # Supongamos que tienes un DataFrame llamado merged_df
         st.write("Merged DataFrame:")
         df = merged_df
         df['source_id'] = df['source_id'].astype(str)
@@ -92,92 +89,51 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
         st.write(f"**Number of columns:** {num_columns}")
 
         # Mostrar el número de filas con datos faltantes
-
         filas_con_faltantes = (df.isna().any(axis=1)).sum()
-        
-
-        # Mostrar las filas con datos faltantes
-        #st.write(df[filas_con_faltantes])
         st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
-        import streamlit as st
-        from tabulate import tabulate
-        # Crea un expansor con un título
+
+        # Expansor con parámetros tomados de Gaia DR3
         with st.expander("Parameters taken from Gaia DR3"):
-            # Table with parameter names and their meanings in English
             table_data = [
                 ["Parameter", "Meaning"], 
                 ["**source_id**", "Unique identifier of the source"], 
-                #["**ra**", "Right Ascension in the ICRS reference system"], 
-                #["**ra_error**", "Standard error of Right Ascension"],
-                #["**dec**", "Declination in the ICRS reference system"],
-                #["**dec_error**", "Standard error of Declination"],
-                #["**parallax**", "Parallax in the ICRS reference system"],
-                #["**pmra**", "Proper motion in Right Ascension in the ICRS reference system"],
-                #["**pmdec**", "Proper motion in Declination in the ICRS reference system"],
                 ["**phot_g_mean_mag**", "Mean integrated magnitude in the G band"],
                 ["**phot_bp_mean_mag**", "Mean integrated magnitude in the BP band"],
                 ["**phot_rp_mean_mag**", "Mean integrated magnitude in the RP band"],
                 ["**bp_rp**", "BP-RP color index"],
                 ["**bp_g**", "BP-G color index"],
                 ["**g_rp**", "G-RP color index"],
-                #["**radial_velocity**", "Combined radial velocity"],
-                #["**grvs_mag**", "Mean integrated magnitude in the RVS band"],
-                #["**grvs_error**", "Standard error of mean integrated magnitude in the RVS band"],
-                #["**non_single_star**", "Indicator of non-single star (binary, variable, etc.)"],
                 ["**teff_gspphot**", "Effective temperature estimated from GSP-Phot photometry"],
                 ["**logg_gspphot**", "Surface gravity estimated from GSP-Phot photometry"],
                 ["**mh_gspphot**", "Metallicity estimated from GSP-Phot photometry"],
-                #["**azero_gspphot**", "Extinction estimated from GSP-Phot photometry"],
-                #["**ebpminrp_gspphot**", "E(BP-RP) color index estimated from GSP-Phot photometry"]
             ]
-
-            # Renderiza la tabla con formato Markdown
             st.markdown(tabulate(table_data, tablefmt="pipe", headers="firstrow"))
 
-
-        import streamlit as st
-        import pandas as pd
-        import requests
-        import plotly.express as px  
-
-        st.subheader("Two dimensional plots of cluster parameters ")
+        st.subheader("Two dimensional plots of cluster parameters")
         st.markdown("**Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.")
+        
         # Obtener las columnas numéricas del DataFrame
         numeric_columns = [col for col in df.columns if pd.api.types.is_numeric_dtype(df[col])]
-
         if len(numeric_columns) < 2:
             st.warning("There must be two selected columns.")
         else:
             st.write("Plot:")
-
-            # Menús desplegables para seleccionar columnas
             column1 = st.selectbox("Select the horizontal axis for the plot:", numeric_columns)
-            column2 = st.selectbox("Select the vertical axis for the plot", numeric_columns)
-            # Contenedores vacíos para las gráficas
-            plot_container1 = st.empty()
-            plot_container2 = st.empty()
-
+            column2 = st.selectbox("Select the vertical axis for the plot:", numeric_columns)
             if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
-                # Botón para generar el gráfico con eje vertical invertido
                 if st.button("Make Plot"):
-                    # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
-        
-                    # Verificar si se debe invertir el eje vertical
                     if column2 in ["phot_g_mean_mag", "phot_rp_mean_mag", "phot_bp_mean_mag"]:
                         fig.update_yaxes(autorange="reversed")
                     st.plotly_chart(fig)
             else:
-                # Botón para generar el gráfico sin inversión del eje vertical
                 if st.button("Generar Gráfico"):
-                    # Crear gráfico bidimensional en Plotly
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
-                    #plot_container1.plotly_chart(fig)
 
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
-df_cmd = df[columnas_seleccionadas]        
+df_cmd = df[columnas_seleccionadas]
 
 ################################################
 
