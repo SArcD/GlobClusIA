@@ -252,9 +252,9 @@ import streamlit as st
 
 st.markdown("""
 
-<div_style="text-align:justify">
+<div style="text-align:justify">
 
-        The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate concerning that variable. </div>
+        The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate concerning that variable.
         </div>
         """,unsafe_allow_html=True)
 
