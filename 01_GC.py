@@ -205,6 +205,8 @@ st.markdown("""
 <div style="text align:justify">
 
 The data will be analyzed under the hierarchical clustering algorithm (groups of objects that show high similarity in their astrophysical parameters). The predefined number of clusters is **five**.
+</div>
+
 """, unsafe_allow_html=True)
 
 # Agregar un campo de entrada para el número de clusters
@@ -248,11 +250,13 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 
-st.markdown(
-        """
-        The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate concerning that variable."
- """
-    )
+st.markdown("""
+
+<div_style_"text-align:justify">
+
+        The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate concerning that variable. </div>
+        """,unsafe_allow_html=True)
+
 
 # Obtener los nombres de las columnas numéricas
 columnas_numericas= df_cmd.select_dtypes(include='number').drop(columns=['gc']).columns
@@ -288,7 +292,12 @@ fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
 #Mostrar la gráfica de caja en Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-st.markdown("""The Figure displays the box plots in which each of the clusters formed by the hierarchical clustering technique is compared. Each box corresponds to a particular cluster (where on the left side of each one, you can see the points corresponding to the contained patients). The waistlines of each box serve as a visual aid to determine if there is sufficient evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the clusters can differentiate with respect to that variable).""")
+st.markdown("""
+
+<div_style_"text-align:justify">
+
+The Figure displays the box plots in which each of the clusters formed by the hierarchical clustering technique is compared. Each box corresponds to a particular cluster (where on the left side of each one, you can see the points corresponding to the contained patients). The waistlines of each box serve as a visual aid to determine if there is sufficient evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the clusters can differentiate with respect to that variable). </div>
+        """,unsafe_allow_html=True)
 
     ################### tsne ##############################
 
@@ -298,7 +307,11 @@ from sklearn.datasets import load_digits
 from sklearn.manifold import TSNE
 
 st.markdown("""
-        The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).""")
+
+<div_style_"text-align:justify">
+        The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).
+        </div>
+        """,unsafe_allow_html=True)
 
 
 numeric_data=df_cmd.select_dtypes(include='number')
@@ -508,6 +521,8 @@ st.write("**Decision tree chart**")
 
 with st.expander("Click to Expand"):
     st.markdown("""
+    <div style=text-align:justify>
+    
     **In the following figure, a decision tree diagram is shown, which is used to classify stars based on their key astrophysical properties**. This decision tree has been constructed using a dataset of stars and has been trained to identify different types of stars based on their properties.
 
     **The classification process starts from the top of the tree**, and it moves downward as it evaluates different conditions in the star's characteristics. Each node of the tree represents a question about a particular astrophysical feature, and the branches stemming from each node represent the two possible answers to that question: yes or no.
@@ -520,7 +535,9 @@ with st.expander("Click to Expand"):
     Within each tree node, additional information is provided, such as the Gini index, which measures the impurity of the classification at that point, and the number of stars in the training dataset that met or did not meet the condition at that node.
 
     **The ultimate goal of the decision tree is to classify each star into one of the predefined categories based on its astrophysical properties**. The tree is constructed in a way that maximizes the purity of the classifications at the final leaves and, thus, becomes a powerful tool for understanding how astrophysical properties influence the classification of stars into different types.
-    """)
+    </div>
+    
+    """, unsafe_allow_html=True)
 
 st.image('tree_plot.png')
 
@@ -609,9 +626,14 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 
         st.markdown(
         """
+        <div style:text-align:justify>
+        
         The figure displays box plots that compare each of the sub-clusters formed by the hierarchical clustering technique. Each box corresponds to a group of stars (the points shown to the left of each box correspond to a specific star). The waistlines of each box are a visual aid to determine if there is enough evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the sub-clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the sub-clusters can differentiate concerning that variable."
-        """
-            )
+         </div>
+        
+        """, unsafe_allow_html=True
+        
+       )
 
         # Obtener los nombres de las columnas numéricas
         columnas_numericas= cluster_data.select_dtypes(include='number').drop(columns=['gc']).columns
@@ -658,8 +680,11 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         from sklearn.manifold import TSNE
 
         st.markdown("""
+        <div style="text-align:justify">
+        
         The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).
-        """)
+        </div>
+        """,unsafe_allow_html=True)
 
         numeric_data=cluster_data.select_dtypes(include='number')
         m = TSNE(learning_rate=100)
