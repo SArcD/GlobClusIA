@@ -63,14 +63,15 @@ if len(selected_files_tuple) >= 2:
         # Obtener información sobre el DataFrame
         num_rows, num_columns = df.shape
         num_missing = df.isnull().sum().sum()
-        
+        with st.expander("Additional information:")
         # Mostrar información adicional
-        st.write(f"**Number of rows:** {num_rows}")
-        st.write(f"**Number of columns:** {num_columns}")
+            st.write(f"**Number of rows:** {num_rows}")
+            st.write(f"**Number of columns:** {num_columns}")
 
-        # Mostrar el número de filas con datos faltantes
-        filas_con_faltantes = (df.isna().any(axis=1)).sum()
-        st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
+        
+            # Mostrar el número de filas con datos faltantes
+            filas_con_faltantes = (df.isna().any(axis=1)).sum()
+            st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
 
         # Expansor con parámetros tomados de Gaia DR3
         with st.expander("Parameters taken from Gaia DR3"):
