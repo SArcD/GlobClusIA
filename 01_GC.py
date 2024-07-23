@@ -92,7 +92,7 @@ if len(selected_files_tuple) >= 2:
 
         st.subheader("Two dimensional plots of cluster parameters")
         st.markdown("""
-        <div style="text-align:justify">
+       <div style="text-align: justify">
         
         **Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
         """, unsafe_allow_html=True)
