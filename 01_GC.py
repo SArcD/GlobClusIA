@@ -206,7 +206,7 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 st.title("Hierarchical Clustering")
 #st.write("Enter the desired number of clusters:")
 st.markdown("""
-<div style="text align:justify">
+<div style="text-align:justify">
 
 The data will be analyzed under the hierarchical clustering algorithm (groups of objects that show high similarity in their astrophysical parameters). The predefined number of clusters is **five**.
 </div>
@@ -298,8 +298,7 @@ fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
 st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("""
-
-<div_style="text-align:justify">
+<div style="text-align: justify">
 
 The Figure displays the box plots in which each of the clusters formed by the hierarchical clustering technique is compared. Each box corresponds to a particular cluster (where on the left side of each one, you can see the points corresponding to the contained patients). The waistlines of each box serve as a visual aid to determine if there is sufficient evidence of a difference between the clusters (if the waistlines are at the same height, there is no evidence that the clusters can differentiate based on their values in that variable. If they do not match in height, it can be concluded that the clusters can differentiate with respect to that variable). 
 </div>
@@ -313,8 +312,7 @@ from sklearn.datasets import load_digits
 from sklearn.manifold import TSNE
 
 st.markdown("""
-
-<div_style="text-align:justify">
+<div style="text-align: justify">
 
 The sub-clusters represent data that, based on their values in each variable, can be considered as more similar to each other than to the rest. However, in many cases, visualizing the sub-clusters can be challenging because the number of variables involved can be very high. The techniques t-SNE and PCA can be used together to create a plot of all the points on a plane. The plot shows the points grouped within each cluster, once the techniques of Principal Component Analysis (PCA) and t-Distributed Stochastic Neighbor Embedding (t-SNE) have been applied. The contours around each cluster correspond to the density of points (where the lines are more concentrated, it signifies a higher point density).
         </div>
