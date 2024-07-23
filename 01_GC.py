@@ -201,7 +201,12 @@ dist_matrix = pdist(columnas_numericas_scaled, metric='euclidean')
 
 st.title("Hierarchical Clustering")
 #st.write("Enter the desired number of clusters:")
-st.write("The data will be analyzed under the hierarchical clustering algorithm (groups of objects that show high similarity in their astrophysical parameters). The predefined number of clusters is **five**.")
+st.markdown("""
+<div style="text align:justify">
+
+The data will be analyzed under the hierarchical clustering algorithm (groups of objects that show high similarity in their astrophysical parameters). The predefined number of clusters is **five**.
+""", unsafe_allow_html=True)
+
 # Agregar un campo de entrada para el número de clusters
 #num_clusters = st.number_input("Number of clusters", min_value=1, value=4)
 num_clusters=5
