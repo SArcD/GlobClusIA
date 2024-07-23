@@ -14,9 +14,10 @@ st.markdown("""
 
 # URL del repositorio de GitHub
 repo_url = "https://github.com/SArcD/GlobClusIA"
+token = "your_personal_access_token"  # Reemplaza con tu token de acceso personal
 
 # Función para obtener la lista de archivos CSV en el repositorio utilizando la GitHub API
-def get_csv_files(repo_url):
+def get_csv_files(repo_url, token):
     try:
         # Obtener el nombre de usuario y el nombre del repositorio desde la URL
         parts = repo_url.split("/")
@@ -25,7 +26,8 @@ def get_csv_files(repo_url):
 
         # Hacer una solicitud a la GitHub API para obtener la lista de archivos
         api_url = f"https://api.github.com/repos/{username}/{repository}/contents"
-        response = requests.get(api_url)
+        headers = {'Authorization': f'token {token}'}
+        response = requests.get(api_url, headers=headers)
         response.raise_for_status()
         data = response.json()
 
@@ -38,13 +40,38 @@ def get_csv_files(repo_url):
         return []
 
 # Obtener la lista de archivos CSV en el repositorio
-csv_files = get_csv_files(repo_url)
+csv_files = get_csv_files(repo_url, token)
 
 # Muestra la lista de archivos CSV encontrados en un menú desplegable
 if csv_files:
     selected_files_tuple = st.multiselect("Select CSV files to merge:", [item[0] for item in csv_files])
-else:
-    st.warning("No CSV files were found within the repository.")
+Para evitar el límite de la API de GitHub, una solución es acceder directamente a los archivos CSV en el repositorio sin usar la API. Aquí te muestro cómo ajustar tu código para acceder directamente a los archivos CSV:
+
+```python
+import streamlit as st
+import pandas as pd
+
+# Título de la aplicación
+st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
+
+st.subheader("Individual analysis")
+st.markdown("""
+<div style="text-align: justify">
+**Instructions:** Please select **the photometry** file (Name_photo.csv) and **surface parameters** file (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).
+</div>
+""", unsafe_allow_html=True)
+
+# Lista de archivos CSV en el repositorio
+csv_files = [
+    "M13_metal.csv", "M13_photo.csv", "M92_metal.csv", "M92_photo.csv",
+    "OmegaCen_metal.csv", "OmegaCen_photo.csv", "Tuc47_metal.csv", "Tuc47_photo.csv"
+]
+
+# URL base del repositorio de GitHub
+base_url = "https://raw.githubusercontent.com/SArcD/GlobClusIA/main/"
+
+# Muestra la lista de archivos CSV encontrados en un menú desplegable
+selected_files_tuple = st.multiselect("Select CSV files to merge:", csv_files)
 
 # Función para cargar y fusionar los DataFrames seleccionados por "source_id"
 def load_and_merge_dataframes(selected_files):
@@ -56,7 +83,7 @@ def load_and_merge_dataframes(selected_files):
         # Cargar y fusionar los DataFrames seleccionados
         dfs = []
         for selected_file in selected_files:
-            csv_url = next(item[1] for item in csv_files if item[0] == selected_file)
+            csv_url = f"{base_url}{selected_file}"
             df = pd.read_csv(csv_url)
             dfs.append(df)
 
@@ -72,7 +99,7 @@ def load_and_merge_dataframes(selected_files):
         return None
 
 # Muestra el DataFrame fusionado si se han seleccionado al menos dos archivos
-if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
+if len(selected_files_tuple) >= 2:
     merged_df = load_and_merge_dataframes(selected_files_tuple)
     if merged_df is not None:
         st.write("Merged DataFrame:")
@@ -134,6 +161,7 @@ if "selected_files_tuple" in locals() and len(selected_files_tuple) >= 2:
 # Seleccionar las columnas deseadas del DataFrame original
 columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
 df_cmd = df[columnas_seleccionadas]
+
 
 ################################################
 
