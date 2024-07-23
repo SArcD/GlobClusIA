@@ -1,7 +1,8 @@
-
 import streamlit as st
 import pandas as pd
-
+import requests
+from tabulate import tabulate
+import plotly.express as px
 # Título de la aplicación
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
