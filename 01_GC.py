@@ -56,7 +56,7 @@ def load_and_merge_dataframes(selected_files):
 if len(selected_files_tuple) >= 2:
     merged_df = load_and_merge_dataframes(selected_files_tuple)
     if merged_df is not None:
-        st.write("Merged DataFrame:")
+        st.write("**Merged DataFrame:**")
         df = merged_df
         df['source_id'] = df['source_id'].astype(str)
         st.dataframe(df)
@@ -64,7 +64,7 @@ if len(selected_files_tuple) >= 2:
         # Obtener información sobre el DataFrame
         num_rows, num_columns = df.shape
         num_missing = df.isnull().sum().sum()
-        with st.expander("Additional information"):
+        with st.expander("**Additional information**"):
         # Mostrar información adicional
             st.write(f"**Number of rows:** {num_rows}")
             st.write(f"**Number of columns:** {num_columns}")
