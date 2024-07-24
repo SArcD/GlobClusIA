@@ -10,7 +10,8 @@ st.subheader("Individual analysis")
 st.markdown("""
 <div style="text-align: justify">
 
-**Instructions:** Please select **the photometry** file (Name_photo.csv) and **surface parameters** file (Name_metal.csv), **that correspond to the same cluster**. The data for each cluster were obtained from the **Gaia DR3 database** (https://gea.esac.esa.int/archive/).
+**Instructions:** Please select the **photometry** (Cluster-name_photo.csv) files and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
+
 </div>
 """, unsafe_allow_html=True)
 
