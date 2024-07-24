@@ -74,6 +74,43 @@ if len(selected_files_tuple) >= 2:
             filas_con_faltantes = (df.isna().any(axis=1)).sum()
             st.write(f"**Number of rows with missing data:** {filas_con_faltantes}")
 
+       # Crear un botón de descarga para el dataframe
+       def download_button(df, filename, button_text):
+           # Crear un objeto ExcelWriter
+           excel_writer = pd.ExcelWriter(filename, engine='xlsxwriter')
+           # Guardar el dataframe en el objeto ExcelWriter
+           df.to_excel(excel_writer, index=False)
+           # Cerrar el objeto ExcelWriter
+           excel_writer.save()
+           # Leer el archivo guardado como bytes
+           with open(filename, 'rb') as f:
+               file_bytes = f.read()
+               # Generar el enlace de descarga
+               href = f'<a href="data:application/octet-stream;base64,{base64.b64encode(file_bytes).decode()}" download="{filename}">{button_text}</a>'
+               st.markdown(href, unsafe_allow_html=True)
+
+       # Crear un botón de descarga para el dataframe
+       def download_button_CSV(df, filename, button_text):
+           csv = df.to_csv(index=False)
+           b64 = base64.b64encode(csv.encode()).decode()
+           href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{button_text}</a>'
+           st.markdown(href, unsafe_allow_html=True)
+
+
+       # Dividir la página en dos columnas
+       col1, col2 = st.columns(2)
+       # Agregar un botón de descarga para el dataframe en la primera columna
+       with col1:
+           download_button(df, 'Cluster_data_(GDR3).xlsx', 'Descargar como Excel')
+           st.write('')
+       # Agregar un botón de descarga para el dataframe en la segunda columna
+       with col2:
+           download_button_CSV(df, 'Cluster_data_(GDR3).csv', 'Descargar como CSV')
+           st.write('')
+    
+
+
+        
         # Expansor con parámetros tomados de Gaia DR3
         with st.expander("Parameters taken from Gaia DR3"):
             table_data = [
