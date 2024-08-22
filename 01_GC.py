@@ -7,7 +7,7 @@ import plotly.express as px
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
 # Cargar la imagen desde el repositorio local
-image_path = "ruta/a/tu/imagen.jpg"  # Cambia esta ruta por la ruta real de la imagen en tu repositorio
+image_path = "descargar - 2024-05-24T172020.397.png"  # Cambia esta ruta por la ruta real de la imagen en tu repositorio
 image = Image.open(image_path)
 
 # Mostrar la imagen
