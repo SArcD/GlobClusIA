@@ -6,6 +6,14 @@ import plotly.express as px
 # Título de la aplicación
 st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
 
+# Cargar la imagen desde el repositorio local
+image_path = "ruta/a/tu/imagen.jpg"  # Cambia esta ruta por la ruta real de la imagen en tu repositorio
+image = Image.open(image_path)
+
+# Mostrar la imagen
+st.image(image, caption="Imagen cargada automáticamente.", use_column_width=True)
+
+
 st.subheader("Individual analysis")
 st.markdown("""
 <div style="text-align: justify">
