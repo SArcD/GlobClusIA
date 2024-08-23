@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 # Título de la aplicación
 # Título de la aplicación
-st.title("Analysis of Color-Magnitude Diagrams of Galactic Globular Clusters")
+st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Globular Clusters")
 
 # URL de la imagen en GitHub
 image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
