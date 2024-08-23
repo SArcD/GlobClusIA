@@ -1019,22 +1019,29 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 ##########################
 
 
+        # Define una paleta de colores vibrantes
+        vibrant_colors = ["#FF6347", "#FFD700", "#8A2BE2", "#FF69B4", "#32CD32", "#00CED1", "#FF4500", "#DA70D6"]
+
+
         import pandas as pd
         import plotly.express as px
 
         # Gráfica 1: phot_g_mean_mag vs g_rp
         fig1 = px.scatter(cluster_data, x="g_rp", y="phot_g_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
+                            hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp",
+                  color_discrete_sequence=vibrant_colors)
         fig1.update_yaxes(autorange="reversed")
 
         # Gráfica 2: phot_bp_mean_mag vs bp_rp
         fig2 = px.scatter(cluster_data, x="bp_rp", y="phot_bp_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
+                            hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp",
+                  color_discrete_sequence=vibrant_colors )
         fig2.update_yaxes(autorange="reversed")
 
         # Gráfica 3: phot_rp_mean_mag vs bp_rp
         fig3 = px.scatter(cluster_data, x="bp_rp", y="phot_rp_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
+                            hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp",
+                  color_discrete_sequence=vibrant_colors)
         fig3.update_yaxes(autorange="reversed")
 
         # Mostrar las gráficas en Streamlit
