@@ -22,11 +22,7 @@ image = Image.open(BytesIO(response.content))
 # Mostrar la imagen
 st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_column_width=True)
 
-#st.subheader("Overview of the application")
-#st.markdown("""
-#This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.  
-#""")
-
+st.subheader("Overview of the application")
 st.markdown("""
 <div style="text-align: justify;">
 This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.
@@ -34,10 +30,9 @@ This application allows the analysis of the color-magnitude diagrams of globular
 """, unsafe_allow_html=True)
 
 
-st.subheader("Individual analysis")
+st.subheader("Color-Magnitude Diagram")
 st.markdown("""
 <div style="text-align: justify">
-
 **Instructions:** Please select the **photometry** files (Cluster-name_photo.csv) and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters displayed below to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
 
 </div>
@@ -159,8 +154,9 @@ if len(selected_files_tuple) >= 2:
         st.subheader("Two dimensional plots of cluster parameters")
         st.markdown("""
         <div style="text-align: justify">
-        
-        **Instructions:** Select at least two variables to generate a two dimensional plot. Some of the plot's settings can be manipulated on the menu in its             upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
+        In this section, you can visualize the color-magnitude diagrams of the selected globular cluster. Please select the variables to represent the horizontal and vertical axes of the bar. The variables "bp_rp", "bp_g" and "g_rp" correspond to the colors, while "phot_g_mean_mag", "phot_bp_mean_mag" and "phot_rp_mean_mag" correspond to the magnitudes integrated in the G, BP and RP bands. In addition to color-magnitude diagrams, you can create graphs from other variables, such as estimated effective temperature, metallicity, or surface gravity.
+
+        **Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its             upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
         </div>  
         """, unsafe_allow_html=True)
 
