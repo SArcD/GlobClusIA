@@ -4,11 +4,15 @@ import requests
 from tabulate import tabulate
 import plotly.express as px
 # Título de la aplicación
-st.title("Analysis of Color-Magnitude Diagrams of galactic globular clusters")
+# Título de la aplicación
+st.title("Analysis of Color-Magnitude Diagrams of Galactic Globular Clusters")
 
-# Cargar la imagen desde el repositorio local
-image_path = "https://github.com/SArcD/GlobClusIA/blob/main/descargar%20-%202024-05-24T172020.397.png"  # Cambia esta ruta por la ruta real de la imagen en tu repositorio
-image = Image.open(image_path)
+# URL de la imagen en GitHub
+image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
+
+# Descargar la imagen
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
 
 # Mostrar la imagen
 st.image(image, caption="Imagen cargada automáticamente.", use_column_width=True)
