@@ -189,6 +189,16 @@ df_cmd = df[columnas_seleccionadas]
 
 ################################################
 
+st.subtitle("Photometry")
+
+st.markdown("""
+<div style="text-align: justify">
+In this section, you can visualize the color-magnitude diagrams of the selected globular cluster. Please select the variables to represent the horizontal and vertical axes of the bar. The variables "bp_rp", "bp_g" and "g_rp" correspond to the colors, while "phot_g_mean_mag", "phot_bp_mean_mag" and "phot_rp_mean_mag" correspond to the magnitudes integrated in the G, BP and RP bands. In addition to color-magnitude diagrams, you can create graphs from other variables, such as estimated effective temperature, metallicity, or surface gravity.
+
+**Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its             upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
+</div>  
+""", unsafe_allow_html=True)
+
 import streamlit as st
 import numpy as np
 import plotly.express as px
@@ -224,6 +234,60 @@ import plotly.express as px
 #df_cmd = df_cmd.dropna()
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
+magnitudes = df_cmd["phot_bp_mean_mag"]  # Reemplaza con el nombre real de la columna
+# Calculate the number of clusters in each bin
+hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
+# Cumulative sum of the histogram
+cumulative_hist = np.cumsum(hist)
+# Aplicar logaritmo a los valores en el eje vertical (y)
+cumulative_hist_log = np.log(cumulative_hist)
+# Create a Plotly figure
+fig = px.line(x=bins[:-1], y=cumulative_hist_log, labels={'x': 'Apparent Magnitude (Bp-Band)', 'y': 'Log(Number of stars)'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
+# Set plot title
+fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale)')
+# Show the plot in Streamlit
+st.plotly_chart(fig)
+
+
+################################################
+################################################
+
+import streamlit as st
+import numpy as np
+import plotly.express as px
+
+df_cmd = df_cmd.dropna()
+
+# Create the histogram with a bin size of 0.15 magnitudes
+bin_size = 0.15
+magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
+
+# Calculate the histogram
+hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
+
+# Apply logarithm to the values on the vertical axis (y)
+hist_log = np.log(hist)
+
+# Create a Plotly figure
+fig = px.bar(x=bins[:-1], y=hist_log, labels={'x': 'Apparent Magnitude (G-Band)', 'y': 'Log(Number of stars)'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
+
+# Set plot title
+fig.update_layout(title='Differential Histogram of Apparent Magnitude (Log Scale)')
+
+# Show the plot in Streamlit
+st.plotly_chart(fig)
+
+
+#################################333
+import streamlit as st
+import numpy as np
+import plotly.express as px
+
+#df_cmd = df_cmd.dropna()
+# Create the histogram with a bin size of 0.15 magnitudes
+bin_size = 0.15
 magnitudes = df_cmd["phot_g_mean_mag"]  # Reemplaza con el nombre real de la columna
 # Calculate the number of clusters in each bin
 hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
@@ -240,11 +304,19 @@ fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale)'
 st.plotly_chart(fig)
 
 
+
+
 ################################################
+
+import streamlit as st
+import numpy as np
+import plotly.express as px
+
+df_cmd = df_cmd.dropna()
 
 # Create the histogram with a bin size of 0.15 magnitudes
 bin_size = 0.15
-magnitudes = df_cmd["phot_rp_mean_mag"]  # Reemplaza con el nombre real de la columna
+magnitudes = df_cmd["phot_Rp_mean_mag"]  # Reemplaza con el nombre real de la columna
 
 # Calculate the histogram
 hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
@@ -263,9 +335,28 @@ fig.update_layout(title='Differential Histogram of Apparent Magnitude (Log Scale
 st.plotly_chart(fig)
 
 
+#################################333
+import streamlit as st
+import numpy as np
+import plotly.express as px
 
-################################################
-
+#df_cmd = df_cmd.dropna()
+# Create the histogram with a bin size of 0.15 magnitudes
+bin_size = 0.15
+magnitudes = df_cmd["phot_Rp_mean_mag"]  # Reemplaza con el nombre real de la columna
+# Calculate the number of clusters in each bin
+hist, bins = np.histogram(magnitudes, bins=int((max(magnitudes) - min(magnitudes)) / bin_size))
+# Cumulative sum of the histogram
+cumulative_hist = np.cumsum(hist)
+# Aplicar logaritmo a los valores en el eje vertical (y)
+cumulative_hist_log = np.log(cumulative_hist)
+# Create a Plotly figure
+fig = px.line(x=bins[:-1], y=cumulative_hist_log, labels={'x': 'Apparent Magnitude (Rp-Band)', 'y': 'Log(Number of stars)'})
+fig.update_xaxes(type='log')  # Escala logarítmica en el eje horizontal
+# Set plot title
+fig.update_layout(title='Cumulative Histogram of Apparent Magnitude (Log Scale)')
+# Show the plot in Streamlit
+st.plotly_chart(fig)
 
 
 ################################################
