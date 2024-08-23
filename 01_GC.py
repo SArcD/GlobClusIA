@@ -517,12 +517,12 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 #Actualizar el diseño y mostrar el panel de gráficos
-fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
-                    title_text='Comparación de Clusters - Gráfico de Caja',
-                    margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
+#fig.update_layout(showlegend=False, height=subplot_height*num_rows, width=800,
+#                    title_text='Comparación de Clusters - Gráfico de Caja',
+#                    margin=dict(t=100, b=100, l=50, r=50))  # Ajustar los márgenes del layout
 
 #Mostrar la gráfica de caja en Streamlit
-st.plotly_chart(fig, use_container_width=True)
+#st.plotly_chart(fig, use_container_width=True)
 
 
 
