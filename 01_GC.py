@@ -7,7 +7,8 @@ import streamlit as st
 import requests
 from PIL import Image
 from io import BytesIO
-# Título de la aplicación
+import base64
+
 # Título de la aplicación
 st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Globular Clusters")
 
