@@ -24,7 +24,7 @@ st.image(image, caption="Graphical representation of the appearance of a globula
 
 #st.subheader("Overview of the application")
 #st.markdown("""
-#This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.  
+#This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.  
 #""")
 
 st.markdown("""
@@ -38,7 +38,7 @@ st.subheader("Individual analysis")
 st.markdown("""
 <div style="text-align: justify">
 
-**Instructions:** Please select the **photometry** (Cluster-name_photo.csv) files and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
+**Instructions:** Please select the **photometry** files (Cluster-name_photo.csv) and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters displayed below to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
 
 </div>
 """, unsafe_allow_html=True)
@@ -129,11 +129,11 @@ if len(selected_files_tuple) >= 2:
         col1, col2 = st.columns(2)
         # Agregar un botón de descarga para el dataframe en la primera columna
         with col1:
-            download_button(df, 'Cluster_data_(GDR3).xlsx', 'Descargar como Excel')
+            download_button(df, 'Cluster_data_(GDR3).xlsx', 'Download .xlsx file')
             st.write('')
         # Agregar un botón de descarga para el dataframe en la segunda columna
         with col2:
-            download_button_CSV(df, 'Cluster_data_(GDR3).csv', 'Descargar como CSV')
+            download_button_CSV(df, 'Cluster_data_(GDR3).csv', 'Download .csv file')
             st.write('')
     
 
