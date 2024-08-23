@@ -189,7 +189,7 @@ df_cmd = df[columnas_seleccionadas]
 
 ################################################
 
-st.subtitle("Photometry")
+st.subheader("Photometry")
 
 st.markdown("""
 <div style="text-align: justify">
