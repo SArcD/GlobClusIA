@@ -22,10 +22,17 @@ image = Image.open(BytesIO(response.content))
 # Mostrar la imagen
 st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_column_width=True)
 
-st.subheader("Overview of the application")
+#st.subheader("Overview of the application")
+#st.markdown("""
+#This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.  
+#""")
+
 st.markdown("""
-This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.  
-""")
+<div style="text-align: justify;">
+This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.
+</div>
+""", unsafe_allow_html=True)
+
 
 st.subheader("Individual analysis")
 st.markdown("""
