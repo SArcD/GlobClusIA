@@ -3,8 +3,6 @@ import pandas as pd
 import requests
 from tabulate import tabulate
 import plotly.express as px
-import streamlit as st
-import requests
 from PIL import Image
 from io import BytesIO
 import base64
@@ -182,9 +180,9 @@ if len(selected_files_tuple) >= 2:
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
 
-# Seleccionar las columnas deseadas del DataFrame original
-columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
-df_cmd = df[columnas_seleccionadas]
+        # Seleccionar las columnas deseadas del DataFrame original
+        columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
+        df_cmd = df[columnas_seleccionadas]
 
 
 ################################################
