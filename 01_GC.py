@@ -943,7 +943,8 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
         ax.set_title('Gráfico de Dispersión de t-SNE con Curvas de Densidad de Kernel')
 
         # Mostrar el gráfico
-        plt.show()
+        #plt.show()
+        st.pyplot(fig)
 
         import numpy as np
         import plotly.graph_objects as go
