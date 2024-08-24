@@ -23,7 +23,7 @@ st.image(image, caption="Graphical representation of the appearance of a globula
 st.subheader("Overview of the application")
 st.markdown("""
 <div style="text-align: justify;">
-This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine-learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to the similarity they have in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.
+This application allows the analysis of the color-magnitude diagrams of globular clusters in the Milky Way using machine learning. By applying the hierarchical clustering algorithm, the stars in the database are grouped into sets according to their similarity in their photometric data, surface temperature, and metallicity. In many cases, these sets correspond to different stages of stellar evolution. Using a decision tree algorithm, the rules and cut-off points are obtained in the variables of interest that define each set of stars.
 </div>
 """, unsafe_allow_html=True)
 
@@ -31,7 +31,7 @@ This application allows the analysis of the color-magnitude diagrams of globular
 st.subheader("Color-Magnitude Diagram")
 st.markdown("""
 <div style="text-align: justify">
-**Instructions:** Please select the **photometry** files (Cluster-name_photo.csv) and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters displayed below to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
+**Instructions:** Please select the files with the **photometry** (Cluster-name_photo.csv) and **observable parameters** (Cluster-name_metal.csv) for any of the globular clusters displayed below to analyze. The third GAIA data release (DR3) obtained data for each globular cluster (https://gea.esac.esa.int/archive/).
 
 </div>
 """, unsafe_allow_html=True)
@@ -154,7 +154,7 @@ if len(selected_files_tuple) >= 2:
         <div style="text-align: justify">
         In this section, you can visualize the color-magnitude diagrams of the selected globular cluster. Please select the variables to represent the horizontal and vertical axes of the bar. The variables "bp_rp", "bp_g" and "g_rp" correspond to the colors, while "phot_g_mean_mag", "phot_bp_mean_mag" and "phot_rp_mean_mag" correspond to the magnitudes integrated in the G, BP and RP bands. In addition to color-magnitude diagrams, you can create graphs from other variables, such as estimated effective temperature, metallicity, or surface gravity.
 
-        **Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its             upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
+        **Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
         </div>  
         """, unsafe_allow_html=True)
 
@@ -180,9 +180,9 @@ if len(selected_files_tuple) >= 2:
                     fig = px.scatter(df, x=column1, y=column2, title=f"Plot {column1} vs. {column2}")
                     st.plotly_chart(fig)
 
-        # Seleccionar las columnas deseadas del DataFrame original
-        columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
-        df_cmd = df[columnas_seleccionadas]
+# Seleccionar las columnas deseadas del DataFrame original
+columnas_seleccionadas = ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]
+df_cmd = df[columnas_seleccionadas]
 
 
 ################################################
@@ -677,8 +677,6 @@ from IPython.display import Image, display
 from sklearn.tree import plot_tree
 
 st.write("**Gráfica del árbol de decisión**")
-#st.markdown("En la siguiente Figura se muestra el **diagrama de árbol de desición**, creada a partir de un algoritmo de random forest que explica que **condiciones deben cumplirse** en las variables de interés **(ASMI, FA y Marcha)** para que un paciente se clasificado como miembro de un cluster. **El recorrido de clasificación se lee desde la parte superior**. Dependiendo de si el paciente en cuestión cumple o no con la condición que se lee dentro de cada recuadro, el recorrido se mueve a la **izquierda (si cumple la condición) o a la derecha (si no cumple)**. La clasificación está completa cuando se llega a recuadros que ya no tienen ninguna flecha que los conecte con uno que esté por debajo. Dentro de cada recuadro, la información que se muestra de arriba a abajo es: la condición sobre el parámetro de interés, el índice de ganancia de información *gini*, el número de árboles de desición, de un total de 100, en el que se cumplió la misma condición, la distribución de pacientes de cada cluster que cumple la condición del recuadro y la clasificación")
-
 
         
 # Convertir las etiquetas de cluster a valores numéricos
@@ -992,7 +990,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
                 x=tsne_data[indices, 0].flatten(),
                 y=tsne_data[indices, 1].flatten(),
                 mode='markers',
-                text=cluster_data.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot",         "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
+                text=cluster_data.loc[labels == gc, ["source_id", "phot_g_mean_mag", "phot_bp_mean_mag", "phot_rp_mean_mag", "bp_rp", "bp_g", "g_rp", "teff_gspphot", "logg_gspphot", "mh_gspphot"]].apply(lambda x: '<br>'.join(x.astype(str)), axis=1),
                 hovertemplate="%{text}",
                 marker=dict(
                     size=7,
@@ -1019,7 +1017,7 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 
 
         # Define una paleta de colores vibrantes
-        vibrant_colors = ["#FF6347", "#FFD700", "#8A2BE2", "#FF69B4", "#32CD32", "#00CED1", "#FF4500", "#DA70D6"]
+        #vibrant_colors = ["#FF6347", "#FFD700", "#8A2BE2", "#FF69B4", "#32CD32", "#00CED1", "#FF4500", "#DA70D6"]
 
 
         import pandas as pd
@@ -1027,20 +1025,17 @@ for cluster_num, cluster_data in dataframes_por_cluster.items():
 
         # Gráfica 1: phot_g_mean_mag vs g_rp
         fig1 = px.scatter(cluster_data, x="g_rp", y="phot_g_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp",
-                  color_discrete_sequence=vibrant_colors)
+                            hover_data=df_cmd.columns, title="phot_g_mean_mag vs g_rp")
         fig1.update_yaxes(autorange="reversed")
 
         # Gráfica 2: phot_bp_mean_mag vs bp_rp
         fig2 = px.scatter(cluster_data, x="bp_rp", y="phot_bp_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp",
-                  color_discrete_sequence=vibrant_colors )
+                            hover_data=df_cmd.columns, title="phot_bp_mean_mag vs bp_rp")
         fig2.update_yaxes(autorange="reversed")
 
         # Gráfica 3: phot_rp_mean_mag vs bp_rp
         fig3 = px.scatter(cluster_data, x="bp_rp", y="phot_rp_mean_mag", color="gc",
-                            hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp",
-                  color_discrete_sequence=vibrant_colors)
+                            hover_data=df_cmd.columns, title="phot_rp_mean_mag vs bp_rp")
         fig3.update_yaxes(autorange="reversed")
 
         # Mostrar las gráficas en Streamlit
