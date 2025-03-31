@@ -193,7 +193,7 @@ st.markdown("""
 <div style="text-align: justify">
 In this section, you can visualize the color-magnitude diagrams of the selected globular cluster. Please select the variables to represent the horizontal and vertical axes of the bar. The variables "bp_rp", "bp_g" and "g_rp" correspond to the colors, while "phot_g_mean_mag", "phot_bp_mean_mag" and "phot_rp_mean_mag" correspond to the magnitudes integrated in the G, BP and RP bands. In addition to color-magnitude diagrams, you can create graphs from other variables, such as estimated effective temperature, metallicity, or surface gravity.
 
-**Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its             upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
+**Instructions:** Select at least two variables to generate a two-dimensional plot. Some of the plot's settings can be manipulated on the menu in its upper right corner. The resulting plot can be saved by clicking on the icon with the shape of a camera.
 </div>  
 """, unsafe_allow_html=True)
 
