@@ -18,7 +18,7 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # Mostrar la imagen
-st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_column_width=True)
+st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_container_width=True)
 
 st.subheader("Overview of the application")
 st.markdown("""
