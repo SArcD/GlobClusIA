@@ -11,8 +11,8 @@ import base64
 st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Globular Clusters")
 
 # URL de la imagen en GitHub
-image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
-
+#image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
+image_url = "cluster_imag.PNG"
 # Descargar la imagen
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
