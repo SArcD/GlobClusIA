@@ -15,10 +15,14 @@ st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Gl
 #image_url = "cluster_imag.PNG"
 # Descargar la imagen
 #response = requests.get(image_url)
-image = Image.open(BytesIO(response.content))
+#image = Image.open(BytesIO(response.content))
 # Cargar imagen local directamente
+#image = Image.open("cluster_imag.PNG")
+#st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
+# Cargar imagen local
 image = Image.open("cluster_imag.PNG")
 st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
+
 
 
 # Mostrar la imagen
