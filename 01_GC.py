@@ -21,7 +21,7 @@ st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Gl
 #st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
 # Cargar imagen local
 image = Image.open("cluster_imag.PNG")
-st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
+#st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
 
 
 
