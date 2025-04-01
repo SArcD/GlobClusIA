@@ -12,10 +12,14 @@ st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Gl
 
 # URL de la imagen en GitHub
 #image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
-image_url = "cluster_imag.PNG"
+#image_url = "cluster_imag.PNG"
 # Descargar la imagen
-response = requests.get(image_url)
+#response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
+# Cargar imagen local directamente
+image = Image.open("cluster_imag.PNG")
+st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
+
 
 # Mostrar la imagen
 st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_container_width=True)
