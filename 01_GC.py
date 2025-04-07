@@ -7,6 +7,21 @@ from PIL import Image
 from io import BytesIO
 import base64
 
+# Inyectar estilo CSS para aumentar tamaño del texto en la barra lateral
+st.markdown("""
+    <style>
+    /* Aumentar tamaño de títulos y opciones en la barra lateral */
+    [data-testid="stSidebar"] .css-ng1t4o {
+        font-size: 20px !important;
+    }
+    [data-testid="stSidebar"] .css-1cpxqw2 {
+        font-size: 18px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+
 # Cargar imagen (ajusta el nombre al archivo real)
 logo = Image.open("logo_glocluster.png")
 
