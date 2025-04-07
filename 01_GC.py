@@ -15,7 +15,7 @@ col1, col2 = st.columns([3, 6])  # proporción: imagen / texto
 
 # Mostrar imagen en la columna izquierda
 with col1:
-    st.image(logo, width=200)  # puedes ajustar el tamaño
+    st.image(logo, width=400)  # puedes ajustar el tamaño
 
 # Mostrar título en la columna derecha
 with col2:
