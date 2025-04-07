@@ -19,7 +19,7 @@ with col1:
 
 # Mostrar título en la columna derecha
 with col2:
-    st.title("Machine-learning for analyzing Color-Magnitude diagrams of Globular Clusters")
+    st.title("Exploring Globular Clusters with Machine Learning")
 
 # URL de la imagen en GitHub
 #image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
