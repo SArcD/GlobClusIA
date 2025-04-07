@@ -7,8 +7,19 @@ from PIL import Image
 from io import BytesIO
 import base64
 
-# Título de la aplicación
-st.title("Machine-learning for analyzing Color-Magnitude diagrams of Galactic Globular Clusters")
+# Cargar imagen (ajusta el nombre al archivo real)
+logo = Image.open("logo_glocluster.png")
+
+# Crear dos columnas
+col1, col2 = st.columns([1, 6])  # proporción: imagen / texto
+
+# Mostrar imagen en la columna izquierda
+with col1:
+    st.image(logo, width=80)  # puedes ajustar el tamaño
+
+# Mostrar título en la columna derecha
+with col2:
+    st.title("Machine-learning for analyzing Color-Magnitude diagrams of Globular Clusters")
 
 # URL de la imagen en GitHub
 #image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
