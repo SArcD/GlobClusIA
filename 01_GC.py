@@ -21,6 +21,22 @@ with col1:
 with col2:
     st.title("Exploring Globular Clusters with Machine Learning")
 
+
+# --- BARRA LATERAL ---
+st.sidebar.title("📊 Analysis Steps")
+
+etapas = [
+    "1. Data Download",
+    "2. Preprocessing",
+    "3. Dimensionality Reduction",
+    "4. Clustering",
+    "5. Red Giant Identification",
+    "6. RGB Tip Estimation",
+    "7. Horizontal Branch Detection",
+    "8. ΔM_G Estimation"
+]
+
+
 # URL de la imagen en GitHub
 #image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
 #image_url = "cluster_imag.PNG"
