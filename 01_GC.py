@@ -11,7 +11,7 @@ import base64
 logo = Image.open("logo_glocluster.png")
 
 # Crear dos columnas
-col1, col2 = st.columns([1, 6])  # proporción: imagen / texto
+col1, col2 = st.columns([3, 6])  # proporción: imagen / texto
 
 # Mostrar imagen en la columna izquierda
 with col1:
