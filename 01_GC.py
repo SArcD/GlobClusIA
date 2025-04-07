@@ -43,7 +43,8 @@ new_height = image.height // 2
 image_resized = image.resize((new_width, new_height))
 
 # Mostrar imagen reducida
-st.image(image_resized)
+st.image(image_resized, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_container_width=True)
+)
 
 
 #st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
@@ -51,7 +52,7 @@ st.image(image_resized)
 
 
 # Mostrar la imagen
-st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_container_width=True)
+#st.image(image, caption="Graphical representation of the appearance of a globular cluster (made from a point distribution that follows the King mass distribution).", use_container_width=True)
 
 st.subheader("Overview of the application")
 st.markdown("""
