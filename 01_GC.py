@@ -31,7 +31,21 @@ with col2:
 #image = Image.open("cluster_imag.PNG")
 #st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
 # Cargar imagen local
+from PIL import Image
+import streamlit as st
+
+# Cargar imagen
 image = Image.open("cluster_imag.PNG")
+
+# Reducir tamaño a la mitad
+new_width = image.width // 2
+new_height = image.height // 2
+image_resized = image.resize((new_width, new_height))
+
+# Mostrar imagen reducida
+st.image(image_resized)
+
+
 #st.image(image, caption="Color-Magnitude Diagram", use_column_width=True)
 
 
