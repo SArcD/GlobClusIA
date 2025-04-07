@@ -37,6 +37,9 @@ etapas = [
 ]
 
 
+seleccion = st.sidebar.radio("Go to section:", etapas)
+
+
 # URL de la imagen en GitHub
 #image_url = "https://github.com/SArcD/GlobClusIA/raw/main/descargar%20-%202024-05-24T172020.397.png"
 #image_url = "cluster_imag.PNG"
